@@ -5,9 +5,9 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 65 |
-| **Automatiserade** | 63 (körs på iPhone/WebKit och Android/Chromium) |
-| **Manuella** | 2 (kräver riktig iPhone eller riktig Supabase) |
+| **Testfall** | 72 |
+| **Automatiserade** | 69 (körs på iPhone/WebKit och Android/Chromium) |
+| **Manuella** | 3 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
 
@@ -48,6 +48,18 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-PRO-07](testfall/TC-PRO-07.md) | [För hög takt sänks till 1 % av vikten med förklaring](testfall/TC-PRO-07.md) | Hög | 🤖 |
 | [TC-PRO-08](testfall/TC-PRO-08.md) | [Ogiltiga värden stoppas innan något sparas](testfall/TC-PRO-08.md) | Medel | 🤖 |
 | [TC-PRO-09](testfall/TC-PRO-09.md) | [Sparfel behåller det man fyllt i](testfall/TC-PRO-09.md) | Medel | 🤖 |
+
+## Bildanalys
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-ANA-01](testfall/TC-ANA-01.md) | [Bilden skickas till Gemini och svaret blir rader](testfall/TC-ANA-01.md) | Hög | 🤖 |
+| [TC-ANA-02](testfall/TC-ANA-02.md) | [Bara inloggade får anropa, nyckeln skickas aldrig tillbaka](testfall/TC-ANA-02.md) | Hög | 🤖 |
+| [TC-ANA-03](testfall/TC-ANA-03.md) | [Slut på gratiskvot, fel och tidsgräns ger tydliga felkoder](testfall/TC-ANA-03.md) | Hög | 🤖 |
+| [TC-ANA-04](testfall/TC-ANA-04.md) | [Ingen mat på bilden och ogiltiga svar hanteras](testfall/TC-ANA-04.md) | Medel | 🤖 |
+| [TC-ANA-05](testfall/TC-ANA-05.md) | [Saknad bild, för stor bild och saknad nyckel stoppas](testfall/TC-ANA-05.md) | Medel | 🤖 |
+| [TC-ANA-06](testfall/TC-ANA-06.md) | [Modellen kan bytas med en secret](testfall/TC-ANA-06.md) | Låg | 🤖 |
+| [TC-ANA-07](testfall/TC-ANA-07.md) | [Edge Function är driftsatt och nyckeln fungerar](testfall/TC-ANA-07.md) | Hög | 🖐️ |
 
 ## Dagsöversikt
 
