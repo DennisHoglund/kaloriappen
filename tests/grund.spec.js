@@ -8,6 +8,7 @@ test.describe('Grund', () => {
     await expect(page.locator('#view-login')).toBeVisible();
     await expect(page.locator('#view-loading')).toBeHidden();
     await expect(page.getByRole('heading', { name: 'Kaloriappen' })).toBeVisible();
+    expect(await page.evaluate(() => typeof window.KaloriBerakning.dagsmal)).toBe('function');
     expect(fel).toEqual([]);
   });
 

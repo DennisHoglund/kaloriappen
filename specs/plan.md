@@ -41,7 +41,7 @@ iPhone (PWA, GitHub Pages)
 | `styles.css` | Blåbär-tema (ljust + mörkt), komponenter |
 | `config.js` | Supabase-URL, publik nyckel, URL till Edge Function |
 | `app.js` | Tema, inloggning, session, navigering, registrering av service worker |
-| `berakning.js` | BMR, dagsmål med golv, MET-förbränning, tempo/hastighet, glidande medel |
+| `berakning.js` | BMR, dagsmål med golv, MET-förbränning, tempo/hastighet, glidande medel. Laddas både i webbläsaren (`window.KaloriBerakning`) och i Node, så att enhetstesterna körs utan webbläsare |
 | `profil.js` | Profilformulär och onboarding |
 | `idag.js` | Dagsöversikt, bläddra mellan dagar |
 | `maltid.js` | Spara, ändra, ta bort måltider och rader. Senaste livsmedel |

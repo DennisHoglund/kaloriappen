@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/plan.md](../../specs/plan.md) |
-| **Playwright** | [`tests/grund.spec.js`](../../tests/grund.spec.js#L14) – *manifestet beskriver en installerbar app* |
+| **Playwright** | [`tests/grund.spec.js`](../../tests/grund.spec.js#L15) – *manifestet beskriver en installerbar app* |
 
 ## Förutsättningar
 

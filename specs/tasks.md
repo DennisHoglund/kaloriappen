@@ -16,8 +16,8 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
-| T-04 | Inloggning med e-post + lösenord, session finns kvar efter omstart, logga ut | US-01 | 📱 | 📱 |
-| T-05 | `berakning.js`: BMR, aktivitetsfaktor, takt med 1 %-tak, golv, avrundning. Enhetstester först | US-03 | – | ⬜ |
+| T-04 | Inloggning med e-post + lösenord, session finns kvar efter omstart, logga ut | US-01 | 📱 | ✅ |
+| T-05 | `berakning.js`: BMR, aktivitetsfaktor, takt med 1 %-tak, golv, avrundning. Enhetstester först | US-03 | – | ✅ |
 | T-06 | Profil och onboarding: födelsedatum, kön, längd, aktivitet, målvikt, takt, startvikt (blir första raden i `kalori_vikt`). Dagsmålet räknas om direkt | US-02, US-03 AC3 | – | ⬜ |
 
 ## Fas 2 – Manuell loggning och dagsöversikt

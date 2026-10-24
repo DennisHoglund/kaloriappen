@@ -5,8 +5,8 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 16 |
-| **Automatiserade** | 14 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 22 |
+| **Automatiserade** | 20 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 2 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
@@ -34,6 +34,17 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-INL-06](testfall/TC-INL-06.md) | [Logga ut](testfall/TC-INL-06.md) | Medel | 🤖 |
 | [TC-INL-07](testfall/TC-INL-07.md) | [Ingen kontakt med servern ger ett begripligt fel](testfall/TC-INL-07.md) | Medel | 🤖 |
 | [TC-INL-08](testfall/TC-INL-08.md) | [Logga in med riktigt konto och Face ID](testfall/TC-INL-08.md) | Hög | 🖐️ |
+
+## Beräkning
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-BER-01](testfall/TC-BER-01.md) | [Ålder räknas från födelsedatum](testfall/TC-BER-01.md) | Medel | 🤖 |
+| [TC-BER-02](testfall/TC-BER-02.md) | [BMR enligt Mifflin-St Jeor](testfall/TC-BER-02.md) | Hög | 🤖 |
+| [TC-BER-03](testfall/TC-BER-03.md) | [Dagsmål med underskott för vald takt](testfall/TC-BER-03.md) | Hög | 🤖 |
+| [TC-BER-04](testfall/TC-BER-04.md) | [Takten begränsas till 1 % av kroppsvikten](testfall/TC-BER-04.md) | Hög | 🤖 |
+| [TC-BER-05](testfall/TC-BER-05.md) | [Dagsmålet går aldrig under golvet](testfall/TC-BER-05.md) | Hög | 🤖 |
+| [TC-BER-06](testfall/TC-BER-06.md) | [Ofullständig profil ger inget dagsmål](testfall/TC-BER-06.md) | Medel | 🤖 |
 
 ## Tema
 
