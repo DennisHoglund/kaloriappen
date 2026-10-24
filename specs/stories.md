@@ -1,6 +1,6 @@
 # Kaloriappen – User stories
 
-Status: **v1.1** (2026-10-24) – stories med acceptanskriterier, granskade för luckor. Nästa steg: `plan.md` och `tasks.md`.
+Status: **v1.2** (2026-10-24) – alla stories implementerade och testade. 38 acceptanskriterier, alla med testfall (se `testplan/sparbarhet.md`).
 
 ## Beslut
 

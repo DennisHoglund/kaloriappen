@@ -3,8 +3,8 @@
   "private": true,
   "description": "Kaloriappen – PWA för mat, träning och vikt",
   "scripts": {
-    "test": "node tests/kontrollera-testplan.js && playwright test",
-    "testplan": "node tests/testplan-lankar.js && node tests/kontrollera-testplan.js",
+    "test": "node tests/kontrollera-testplan.js && node tests/sparbarhet.js && playwright test",
+    "testplan": "node tests/testplan-lankar.js && node tests/kontrollera-testplan.js && node tests/sparbarhet.js",
     "test:ui": "playwright test --ui",
     "rapport": "npx http-server rapport -p 9324 -o"
   },

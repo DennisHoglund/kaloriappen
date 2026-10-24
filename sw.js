@@ -1,5 +1,5 @@
 // Höj versionen vid varje deploy så att telefonen hämtar nya filer.
-const CACHE = 'kalori-v14';
+const CACHE = 'kalori-v15';
 
 const SHELL = [
   './',

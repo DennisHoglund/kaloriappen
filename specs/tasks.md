@@ -1,6 +1,6 @@
 # Kaloriappen – Tasks
 
-Status: **v1.0** (2026-10-24). En task i taget. **Klar** = tester gröna i WebKit + Chromium, testfall finns i `testplan/`, och `specs/` stämmer med koden.
+Status: **v1.1** (2026-10-24). Alla tasks gjorda. En task i taget. **Klar** = tester gröna i WebKit + Chromium, testfall finns i `testplan/`, och `specs/` stämmer med koden.
 
 Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på iPhone
 
@@ -54,7 +54,7 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
-| T-17 | Täckningskontroll: varje AC har testfall. `testplan/index.md`, README och specs uppdaterade. Manuella testfall för kamera och riktig backend | Alla | 📱 Kör manuella testfall | ⬜ |
+| T-17 | Täckningskontroll: varje AC har testfall. `testplan/index.md`, README och specs uppdaterade. Manuella testfall för kamera och riktig backend | Alla | 📱 Kör manuella testfall | ✅ |
 
 ## Spårbarhet
 

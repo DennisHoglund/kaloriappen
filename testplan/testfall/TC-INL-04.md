@@ -7,7 +7,7 @@
 | **Område** | Inloggning |
 | **Prioritet** | Hög |
 | **Typ** | 🤖 Automatiserad |
-| **Krav** | [specs/stories.md US-01](../../specs/stories.md) |
+| **Krav** | [specs/stories.md US-01 AC2](../../specs/stories.md) |
 | **Playwright** | [`tests/inloggning.spec.js`](../../tests/inloggning.spec.js#L34) – *rätt uppgifter loggar in* |
 
 ## Förutsättningar

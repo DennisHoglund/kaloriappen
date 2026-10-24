@@ -1,6 +1,6 @@
 # Kaloriappen – Plan
 
-Status: **v1.0** (2026-10-24). Bygger på `stories.md` v1.1. Referensimplementation: `DennisHoglund/svampkartan`.
+Status: **v1.1** (2026-10-24). Bygger på `stories.md` v1.2. Implementerad. Referensimplementation: `DennisHoglund/svampkartan`.
 
 ## 1. Principer (gäller alla tasks)
 
@@ -103,11 +103,19 @@ iPhone (PWA, GitHub Pages)
 - Rapport på `https://dennishoglund.github.io/kaloriappen/rapport/` i Blåbär-tema.
 - Varje AC i `stories.md` ska ha minst ett testfall. Täckning listas i `testplan/index.md`.
 
-## 8. Det Dennis behöver göra (manuellt)
+## 8. Manuella steg (gjorda 2026-10-24)
 
-| När | Vad |
+| Steg | Status |
 |---|---|
-| T-01 | GitHub: Settings → Pages → Source = **GitHub Actions** |
-| T-03 | Supabase (Jaktvinds projekt): SQL Editor → klistra in `schema.sql` → Run |
-| T-11 | Google AI Studio: skapa API-nyckel. Supabase: Edge Functions → Secrets → `KALORI_GEMINI_KEY`. Deploya funktionen via editorn |
-| Efter T-04, T-09, T-12, T-14, T-16 | Testa på iPhone |
+| GitHub: Settings → Pages → Source = **GitHub Actions** | ✅ |
+| Supabase (Jaktvinds projekt): kör `schema.sql` i SQL Editor | ✅ |
+| Google AI Studio: projekt + API-nyckel. Supabase: secret `KALORI_GEMINI_KEY`, Edge Function `kalori-analys` | ✅ |
+| Supabase: secrets `KALORI_GEMINI_MODELL=gemini-flash-lite-latest`, `KALORI_GEMINI_TANKANDE=minimal` (numera standard i koden) | ✅ |
+
+## 9. Lärdomar
+
+- **Testerna hittade riktiga fel** innan Dennis såg dem: `display: grid` slog ut `hidden` (T-01), datumet för foton från dagsöversikten (T-12). Flera gånger var det istället testets förväntan som var fel räknad – då rättades testet, inte koden.
+- **Brownfield-anpassning:** planen ändrades efter att Svampkartans kod lästes (tabellprefix i stället för schema, e-post + lösenord).
+- **Bildanalysens hastighet** gick inte att förutse i test: vanliga Flash tänkte för länge på gratisnivån. Modell och tänkande gjordes konfigurerbara som secrets, så att det kunde lösas utan ny driftsättning.
+- **Spårbarheten** (`tests/sparbarhet.js`) hittade tre kriterier som var testade men inte refererade.
+- **Ett instabilt test** (TC-TRA-08) föll en gång under last: det kontrollerade texten på ett dolt element som alltid fanns, och läste sedan databasen innan borttagningen var klar. Rättat genom att vänta på att elementet syns och listan är tom – aldrig genom omförsök eller väntetid.

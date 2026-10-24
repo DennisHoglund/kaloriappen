@@ -10,6 +10,16 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | **Manuella** | 4 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
+| **Spårbarhet** | [sparbarhet.md](sparbarhet.md) – alla 38 acceptanskriterier har testfall |
+
+## Manuella körningar
+
+| Testfall | Senast | Resultat | Kommentar |
+|---|---|---|---|
+| [TC-DB-01](testfall/TC-DB-01.md) | 2026-10-24 | ✅ | Schemat kört i Jaktvinds projekt |
+| [TC-ANA-07](testfall/TC-ANA-07.md) | 2026-10-24 | ✅ | Efter byte till Flash-Lite + minimalt tänkande |
+| [TC-FOT-13](testfall/TC-FOT-13.md) | 2026-10-24 | ✅ | Banan fotad. Första försöket tog > 30 s med vanliga Flash |
+| [TC-INL-08](testfall/TC-INL-08.md) | 2026-10-24 | ✅ | Inloggning med riktigt konto fungerar (T-04) |
 
 **Typ:** 🤖 automatiserad · 🖐️ manuell  **Prioritet:** Hög = måste fungera, Medel = viktig, Låg = bekvämlighet
 

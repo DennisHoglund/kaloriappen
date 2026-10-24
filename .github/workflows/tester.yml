@@ -52,6 +52,9 @@ jobs:
       - name: Kontrollera att testplanen stämmer med testerna
         run: node tests/kontrollera-testplan.js
 
+      - name: Kontrollera att varje acceptanskriterium har testfall
+        run: node tests/sparbarhet.js
+
       - name: Testa databasschemat
         id: schema
         continue-on-error: true

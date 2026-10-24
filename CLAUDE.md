@@ -28,7 +28,8 @@ Appen byggs **spec-drivet**. Läs `specs/stories.md` (krav och beslut), `specs/p
 4. Lägg till eller uppdatera tester i `tests/`. All extern trafik mockas i `tests/mock.js`.
    Använd `bild(page, 'Namn')` för skärmdumpar som ska synas i rapporten.
 5. Lägg till eller uppdatera testfall i `testplan/` (fil i `testfall/` + rad i `index.md`) och koppla automatiserade tester med
-   `{ annotation: { type: 'testfall', description: 'TC-…' } }`. Kör `npm run testplan`.
+   `{ annotation: { type: 'testfall', description: 'TC-…' } }`. Ange vilka acceptanskriterier testfallet verifierar i fältet
+   **Krav** (t.ex. `US-07 AC1–2`). Kör `npm run testplan` – den kontrollerar också att varje acceptanskriterium har testfall.
 6. Uppdatera `specs/` (status i `tasks.md`) och `README.md` så att de stämmer med koden.
 7. Committa med beskrivande svenskt meddelande och pusha till `main`. CI testar och publicerar.
 

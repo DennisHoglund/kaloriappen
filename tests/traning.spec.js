@@ -82,7 +82,9 @@ test.describe('Träning', () => {
     await page.getByRole('button', { name: 'Ta bort' }).click();
     await expect(page.locator('#tra-fraga')).toHaveText('Ta bort löpning 28 min?');
     await page.locator('#tra-ja').click();
-    await expect(page.locator('#ida-tra-tom')).toHaveText('Ingen träning loggad');
+    // Texten finns alltid i sidan men är dold när det finns pass – kontrollera att den syns och att listan är tom
+    await expect(page.locator('#ida-tra-tom')).toBeVisible();
+    await expect(page.locator('#ida-traning li')).toHaveCount(0);
     expect(api.tabeller.kalori_traning).toHaveLength(0);
   });
 
