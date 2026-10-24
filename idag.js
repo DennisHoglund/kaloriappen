@@ -147,6 +147,7 @@
     $('btn-logga-mat').addEventListener('click', () => opts.loggaMat({ datum }));
     $('btn-logga-traning').addEventListener('click', () => opts.traning({ datum }));
     $('btn-vikt').addEventListener('click', () => opts.vikt({ datum }));
+    $('btn-vecka').addEventListener('click', () => opts.vecka({ datum }));
     $('ida-traning').addEventListener('click', (e) => {
       const b = e.target.closest('button.tra-knapp');
       const p = b && senasteTraning.find((x) => String(x.id) === b.dataset.id);

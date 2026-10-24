@@ -238,3 +238,10 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 .vik-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .vik-rad { display: flex; justify-content: space-between; padding: 10px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); }
 .vik-rad .num { font-family: var(--mono); }
+
+/* Träning per vecka */
+.kort-knappar { display: flex; justify-content: space-between; gap: 12px; }
+.vec-titel { flex: 1; display: flex; flex-direction: column; align-items: center; }
+.vec-tid { font-size: 1.05rem; }
+.vec-typ { display: flex; justify-content: space-between; gap: 8px; padding: 10px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); }
+.vec-typ .num { font-family: var(--mono); font-size: .85rem; color: var(--text-2); text-align: right; }

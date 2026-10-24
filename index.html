@@ -201,6 +201,32 @@
     </div>
   </main>
 
+  <main id="view-vecka" class="app-view" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="vec-tillbaka" type="button">← Tillbaka</button>
+      <div class="brand">Träning per vecka</div>
+      <span class="topbar-plats" aria-hidden="true"></span>
+    </header>
+    <div class="page">
+      <nav class="dagval" aria-label="Välj vecka">
+        <button class="icon-btn" id="vec-forra" type="button" aria-label="Föregående vecka">‹</button>
+        <div class="vec-titel"><h1 id="vec-rubrik" class="dagval-datum">Vecka</h1><span id="vec-datum" class="muted small"></span></div>
+        <button class="icon-btn" id="vec-nasta" type="button" aria-label="Nästa vecka">›</button>
+      </nav>
+      <div class="rutor">
+        <div class="ruta"><span class="ruta-etikett">Pass</span><span id="vec-pass" class="ruta-tal num">0</span></div>
+        <div class="ruta"><span class="ruta-etikett">Tid</span><span id="vec-tid" class="ruta-tal num vec-tid">0 min</span></div>
+        <div class="ruta"><span class="ruta-etikett">Km</span><span id="vec-km" class="ruta-tal num">0</span></div>
+      </div>
+      <p id="vec-kcal" class="muted small"></p>
+      <p id="vec-fel" class="msg error" hidden>Kunde inte hämta träningen. Kontrollera nätet.</p>
+      <ul id="vec-typer" class="vik-lista"></ul>
+      <h2 class="lista-rubrik">Alla pass</h2>
+      <p id="vec-tom" class="muted small">Ingen träning den här veckan.</p>
+      <ul id="vec-lista" class="vik-lista"></ul>
+    </div>
+  </main>
+
   <main id="view-vikt" class="app-view" hidden>
     <header class="topbar">
       <button class="icon-btn" id="vik-tillbaka" type="button">← Tillbaka</button>
@@ -349,7 +375,10 @@
         <header class="maltid-huvud"><h3>Träning</h3><span id="ida-tra-summa" class="num"></span></header>
         <ul id="ida-traning" class="rader"></ul>
         <p id="ida-tra-tom" class="muted small tom">Ingen träning loggad</p>
-        <button type="button" class="lagg-till" id="btn-logga-traning">+ Logga träning</button>
+        <div class="kort-knappar">
+          <button type="button" class="lagg-till" id="btn-logga-traning">+ Logga träning</button>
+          <button type="button" class="lagg-till" id="btn-vecka">Veckan →</button>
+        </div>
       </section>
 
       <section class="maltid vikt-kort" aria-label="Vikt">
@@ -375,6 +404,7 @@
   <script src="foto.js"></script>
   <script src="traning.js"></script>
   <script src="vikt.js"></script>
+  <script src="vecka.js"></script>
   <script src="redigera.js"></script>
   <script src="idag.js"></script>
   <script src="app.js"></script>

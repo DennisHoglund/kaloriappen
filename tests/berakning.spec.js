@@ -116,4 +116,12 @@ test.describe('Beräkning', () => {
     expect(B.dagarMellan('2026-10-24', '2026-10-24')).toBe(0);
     expect(B.dagarMellan('2026-10-25', '2026-10-26')).toBe(1); // över sommartidsbytet
   });
+
+  test('ISO-vecka med måndag som första dag', { annotation: { type: 'testfall', description: 'TC-TRA-12' } }, () => {
+    expect(B.vecka('2026-10-24')).toEqual({ nummer: 43, start: '2026-10-19', slut: '2026-10-25' }); // lördag
+    expect(B.vecka('2026-10-19')).toEqual({ nummer: 43, start: '2026-10-19', slut: '2026-10-25' }); // måndag
+    expect(B.vecka('2026-10-25')).toEqual({ nummer: 43, start: '2026-10-19', slut: '2026-10-25' }); // söndag
+    expect(B.vecka('2027-01-01')).toEqual({ nummer: 53, start: '2026-12-28', slut: '2027-01-03' }); // 2026 har vecka 53
+    expect(B.vecka('2025-12-31')).toEqual({ nummer: 1, start: '2025-12-29', slut: '2026-01-04' });
+  });
 });

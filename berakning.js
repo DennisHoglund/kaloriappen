@@ -155,7 +155,19 @@
     });
   }
 
-  const api = { AKTIVITET, GOLV, KCAL_PER_KG, alder, bmr, maxTakt, dagsmal, dygnUTC, flyttaDag, met, forbranning, tempo, fart, dagarMellan, glidandeMedel };
+  // ISO-vecka: nummer och måndag–söndag för ett datum
+  function vecka(datum) {
+    const [a, m, d] = datum.split('-').map(Number);
+    const dag = new Date(Date.UTC(a, m - 1, d));
+    const veckodag = (dag.getUTCDay() + 6) % 7; // måndag = 0
+    const start = flyttaDag(datum, -veckodag);
+    const torsdag = new Date(Date.UTC(a, m - 1, d - veckodag + 3));
+    const forstaTorsdag = new Date(Date.UTC(torsdag.getUTCFullYear(), 0, 4));
+    const nummer = 1 + Math.round(((torsdag - forstaTorsdag) / 86400000 - 3 + ((forstaTorsdag.getUTCDay() + 6) % 7)) / 7);
+    return { nummer, start, slut: flyttaDag(start, 6) };
+  }
+
+  const api = { vecka, AKTIVITET, GOLV, KCAL_PER_KG, alder, bmr, maxTakt, dagsmal, dygnUTC, flyttaDag, met, forbranning, tempo, fart, dagarMellan, glidandeMedel };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KaloriBerakning = api;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -5,8 +5,8 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 106 |
-| **Automatiserade** | 102 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 110 |
+| **Automatiserade** | 106 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 4 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
@@ -155,6 +155,10 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-TRA-09](testfall/TC-TRA-09.md) | [Ogiltiga värden stoppas](testfall/TC-TRA-09.md) | Medel | 🤖 |
 | [TC-TRA-10](testfall/TC-TRA-10.md) | [Träning på en tidigare dag sparas på den dagen](testfall/TC-TRA-10.md) | Medel | 🤖 |
 | [TC-TRA-11](testfall/TC-TRA-11.md) | [Sparfel behåller det man fyllt i](testfall/TC-TRA-11.md) | Låg | 🤖 |
+| [TC-TRA-12](testfall/TC-TRA-12.md) | [ISO-vecka med måndag som första dag](testfall/TC-TRA-12.md) | Medel | 🤖 |
+| [TC-TRA-13](testfall/TC-TRA-13.md) | [Veckans pass med total tid, sträcka och tid per typ](testfall/TC-TRA-13.md) | Hög | 🤖 |
+| [TC-TRA-14](testfall/TC-TRA-14.md) | [Bläddra bakåt vecka för vecka](testfall/TC-TRA-14.md) | Hög | 🤖 |
+| [TC-TRA-15](testfall/TC-TRA-15.md) | [Tillbaka går till dagsöversikten](testfall/TC-TRA-15.md) | Låg | 🤖 |
 
 ## Beräkning
 
