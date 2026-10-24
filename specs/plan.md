@@ -47,7 +47,7 @@ iPhone (PWA, GitHub Pages)
 | `maltid.js` | Sök-och-logga-vyn: spara måltid med rad, föreslagen måltid, Senaste |
 | `redigera.js` | Ändra mängd (kcal i samma proportion) och ta bort rad med bekräftelse i appen. Sista raden tar bort måltiden |
 | `livsmedel.js` | Laddar `data/livsmedel.json` och söker (diakritik-okänslig) |
-| `foto.js` | Kamera/bildval, nedskalning, anrop till analys, miniatyr ≤ 30 kB |
+| `foto.js` | Kamera/bildval (`capture="environment"`), nedskalning till 1024 px, anrop till `kalori-analys` via `sb.functions.invoke`, justeringsvy (gram räknar om kcal proportionellt, ändra kcal/namn, ta bort/lägg till rad), miniatyr ≤ 30 kB i `kalori-foton`. Misslyckad uppladdning av miniatyr stoppar inte sparningen |
 | `vikt.js` | Viktlogg och graf |
 | `traning.js` | Träningslogg, historik per vecka |
 | `sw.js` | Appfiler nätet först, CDN cache först. Höj `kalori-vN` vid ändring |

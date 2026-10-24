@@ -26,12 +26,22 @@
 
   async function hamtaDag(d) {
     const [start, slut] = B.dygnUTC(d);
-    const m = await sb.from('kalori_maltid').select('id,tid,typ,kalla').eq('user_id', userId).gte('tid', start).lt('tid', slut).order('tid');
+    const m = await sb.from('kalori_maltid').select('id,tid,typ,kalla,miniatyr').eq('user_id', userId).gte('tid', start).lt('tid', slut).order('tid');
     if (m.error) throw m.error;
     if (!m.data.length) return [];
     const r = await sb.from('kalori_maltid_rad').select('id,maltid_id,namn,gram,kcal').in('maltid_id', m.data.map((x) => x.id));
     if (r.error) throw r.error;
-    return m.data.map((x) => ({ ...x, rader: r.data.filter((y) => y.maltid_id === x.id) }));
+    const maltider = m.data.map((x) => ({ ...x, rader: r.data.filter((y) => y.maltid_id === x.id) }));
+    // Signerade länkar till miniatyrerna (privat bucket). Fel här ska inte stoppa översikten.
+    const sokvagar = maltider.map((x) => x.miniatyr).filter(Boolean);
+    if (sokvagar.length) {
+      try {
+        const s = await sb.storage.from('kalori-foton').createSignedUrls(sokvagar, 3600);
+        const url = new Map((s.data || []).filter((x) => x.signedUrl).map((x) => [x.path, x.signedUrl]));
+        maltider.forEach((x) => { x.bildUrl = url.get(x.miniatyr) || null; });
+      } catch (e) { /* utan bilder */ }
+    }
+    return maltider;
   }
 
   let senaste = [];
@@ -51,13 +61,16 @@
     $('ida-stapel').classList.toggle('over', kvar !== null && kvar < 0);
 
     $('ida-maltider').innerHTML = TYPER.map(([typ, namn]) => {
-      const rader = maltider.filter((m) => m.typ === typ).flatMap((m) => m.rader.map((r) => ({ ...r, kalla: m.kalla })));
+      const dessa = maltider.filter((m) => m.typ === typ);
+      const rader = dessa.flatMap((m) => m.rader.map((r) => ({ ...r, kalla: m.kalla })));
+      const bilder = dessa.filter((m) => m.bildUrl).map((m) => `<img src="${esc(m.bildUrl)}" alt="Foto av ${namn.toLowerCase()}" loading="lazy">`).join('');
       const summa = rader.reduce((s, r) => s + Number(r.kcal), 0);
       const lista = rader.map((r) =>
         `<li><button type="button" class="rad-knapp" data-id="${esc(r.id)}" aria-label="Ändra ${esc(r.namn)}, ${fmt(r.gram)} gram, ${fmt(r.kcal)} kcal">` +
         `<span class="rad-namn">${esc(r.namn)}</span><span class="rad-gram num">${fmt(r.gram)} g</span><span class="rad-kcal num">${fmt(r.kcal)}</span></button></li>`).join('');
       return `<section class="maltid" data-typ="${typ}" aria-label="${namn}">
         <header class="maltid-huvud"><h3>${namn}</h3><span class="num">${rader.length ? fmt(summa) + ' kcal' : ''}</span></header>
+        ${bilder ? `<div class="maltid-bilder">${bilder}</div>` : ''}
         ${rader.length ? `<ul class="rader">${lista}</ul>` : `<p class="muted small tom">Inte loggat</p>`}
         <button type="button" class="lagg-till" data-typ="${typ}">+ Lägg till ${namn.toLowerCase()}</button>
       </section>`;

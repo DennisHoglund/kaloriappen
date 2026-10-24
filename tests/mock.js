@@ -80,7 +80,12 @@ function filtrera(rader, params) {
 
 // Installerar alla mockar på sidan. Returnerar ett "api" med databasens tillstånd och loggade anrop.
 async function mocka(page, data = standardData()) {
-  const api = { tabeller: data, anrop: [], nere: false, felVidSparning: false };
+  const api = {
+    tabeller: data, anrop: [], nere: false, felVidSparning: false,
+    // Bildanalysen: { status, body } som Edge Function svarar med
+    analys: { status: 200, body: { rader: [{ namn: 'Köttbullar', gram: 150, kcal: 330 }, { namn: 'Kokt potatis', gram: 200, kcal: 156 }, { namn: 'Lingonsylt', gram: 30, kcal: 48 }], modell: 'gemini-flash-latest' } },
+    analysAnrop: [], uppladdade: [], borttagnaFoton: [], uppladdningFel: false
+  };
 
   await page.route(/cdn\.jsdelivr\.net/, (route) => {
     const hit = CDN.find(([re]) => re.test(route.request().url()));
@@ -114,6 +119,31 @@ async function mocka(page, data = standardData()) {
     }
     if (p === '/auth/v1/user') return json(route, 200, ANVANDARE);
     if (p === '/auth/v1/logout') return route.fulfill({ status: 204, headers: cors() });
+
+    // ---- Edge Function: bildanalys ----
+    if (p === '/functions/v1/kalori-analys' && m === 'POST') {
+      api.analysAnrop.push({ body: req.postDataJSON(), auth: req.headers()['authorization'] });
+      return json(route, api.analys.status, api.analys.body);
+    }
+
+    // ---- Foton ----
+    if (p.startsWith('/storage/v1/object/kalori-foton/') && (m === 'POST' || m === 'PUT')) {
+      if (api.uppladdningFel) return json(route, 500, { message: 'Testfel vid uppladdning' });
+      const fil = decodeURIComponent(p.replace('/storage/v1/object/kalori-foton/', ''));
+      api.uppladdade.push({ fil, storlek: (req.postDataBuffer() || Buffer.alloc(0)).length, typ: req.headers()['content-type'] });
+      return json(route, 200, { Key: 'kalori-foton/' + fil, Id: fil });
+    }
+    if (p === '/storage/v1/object/sign/kalori-foton' && m === 'POST') {
+      const { paths } = req.postDataJSON();
+      return json(route, 200, paths.map((x) => ({ path: x, signedURL: '/object/sign/kalori-foton/' + x + '?token=test', error: null })));
+    }
+    if (p === '/storage/v1/object/kalori-foton' && m === 'DELETE') {
+      api.borttagnaFoton.push(...((req.postDataJSON() || {}).prefixes || []));
+      return json(route, 200, []);
+    }
+    if (p.startsWith('/storage/v1/object/sign/kalori-foton/')) {
+      return route.fulfill({ path: path.join(__dirname, 'data', 'tallrik.jpg'), contentType: 'image/jpeg', headers: cors() });
+    }
 
     // ---- Databas: generisk tabell per namn ----
     const t = p.match(/^\/rest\/v1\/(kalori_[a-z_]+)$/);

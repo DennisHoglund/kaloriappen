@@ -119,6 +119,10 @@
     </header>
     <div class="page">
       <div id="sok-lista">
+        <label class="btn primary foto-knapp">
+          <input class="foto-input visually-hidden" type="file" accept="image/*" capture="environment">
+          Fota maten
+        </label>
         <label for="sok-falt" class="visually-hidden">Sök livsmedel</label>
         <input id="sok-falt" class="sokfalt" type="search" placeholder="Sök livsmedel, t.ex. havregryn" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
         <p id="sok-tips" class="muted small">Skriv minst 2 tecken.</p>
@@ -152,6 +156,48 @@
         </form>
       </div>
       <p class="muted small kalla">Livsmedelsdata: Livsmedelsverkets livsmedelsdatabas (CC BY 4.0)</p>
+    </div>
+  </main>
+
+  <main id="view-foto" class="app-view" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="fot-tillbaka" type="button">← Tillbaka</button>
+      <div class="brand">Foto</div>
+      <span class="topbar-plats" aria-hidden="true"></span>
+    </header>
+    <div class="page">
+      <img id="fot-bild" class="fot-bild" alt="Ditt foto" hidden>
+      <div id="fot-laddar" class="fot-laddar" role="status">
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="muted">Analyserar bilden …</p>
+      </div>
+      <div id="fot-fel" hidden>
+        <p id="fot-feltext" class="msg error"></p>
+        <button class="btn primary" id="fot-manuellt" type="button">Sök manuellt i stället</button>
+      </div>
+      <form id="form-foto" class="form" novalidate hidden>
+        <div id="fot-forslag">
+          <h2 class="val-namn">Förslag</h2>
+          <p class="muted small">Uppskattat från bilden. Ändra mängd, kcal eller namn om något inte stämmer.</p>
+          <ul id="fot-rader" class="fot-rader"></ul>
+          <button class="lank" id="fot-lagg-till" type="button">+ Lägg till rad</button>
+          <fieldset>
+            <legend>Måltid</legend>
+            <div class="segment segment-4">
+              <input type="radio" name="fot-typ" id="fot-typ-frukost" value="frukost"><label for="fot-typ-frukost">Frukost</label>
+              <input type="radio" name="fot-typ" id="fot-typ-lunch" value="lunch"><label for="fot-typ-lunch">Lunch</label>
+              <input type="radio" name="fot-typ" id="fot-typ-middag" value="middag"><label for="fot-typ-middag">Middag</label>
+              <input type="radio" name="fot-typ" id="fot-typ-mellanmal" value="mellanmal"><label for="fot-typ-mellanmal">Mellanmål</label>
+            </div>
+          </fieldset>
+          <section class="mal-ruta" aria-live="polite">
+            <span class="muted small">Totalt</span>
+            <span class="mal-siffra"><span id="fot-summa" class="num">0</span> <span class="enhet">kcal</span></span>
+          </section>
+          <p id="fot-msg" class="msg" role="status" aria-live="polite"></p>
+          <button class="btn primary" type="submit">Spara</button>
+        </div>
+      </form>
     </div>
   </main>
 
@@ -210,7 +256,13 @@
       <div id="ida-stapel" class="stapel" role="img" aria-label=""><div id="ida-stapel-fyllning" class="stapel-fyllning"></div></div>
       <p id="ida-fel" class="msg error" hidden>Kunde inte hämta dagens måltider. Kontrollera nätet.</p>
 
-      <button class="btn primary" id="btn-logga-mat" type="button">Logga mat</button>
+      <div class="tva knapprad">
+        <label class="btn primary foto-knapp" id="btn-fota">
+          <input class="foto-input visually-hidden" type="file" accept="image/*" capture="environment">
+          Fota maten
+        </label>
+        <button class="btn ghost" id="btn-logga-mat" type="button">Logga mat</button>
+      </div>
 
       <div id="ida-maltider" class="maltider"></div>
 
@@ -228,6 +280,7 @@
   <script src="livsmedel.js"></script>
   <script src="profil.js"></script>
   <script src="maltid.js"></script>
+  <script src="foto.js"></script>
   <script src="redigera.js"></script>
   <script src="idag.js"></script>
   <script src="app.js"></script>

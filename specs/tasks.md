@@ -34,7 +34,7 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
 | T-11 | Edge Function `kalori-analys`: JWT-kontroll, Gemini Flash med JSON-svar, timeout och felkoder. Mockad i testerna | US-04 AC4 | Skapar Gemini-nyckel, lägger secret, deployar via editorn | 🔄 |
-| T-12 | Fota/välj bild → nedskalning → analys → justeringsvy (ändra gram, lägg till/ta bort rad) → spara med miniatyr ≤ 30 kB. Fel och 429 leder till manuell sökning | US-04, US-05 | 📱 | ⬜ |
+| T-12 | Fota/välj bild → nedskalning → analys → justeringsvy (ändra gram, lägg till/ta bort rad) → spara med miniatyr ≤ 30 kB. Fel och 429 leder till manuell sökning | US-04, US-05 | 📱 | 📱 |
 
 ## Fas 4 – Vikt
 

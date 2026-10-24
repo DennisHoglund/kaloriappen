@@ -168,5 +168,8 @@
     $('sok-stang').addEventListener('click', () => { if (opts.avbryt) opts.avbryt(); });
   }
 
-  window.KaloriMaltid = { setup, setUser(id) { userId = id; }, oppna, foreslagenTyp };
+  // Måltid och dag som Logga mat öppnades för (används av fotoflödet)
+  function aktuella() { return { typ: forvaltTyp, datum }; }
+
+  window.KaloriMaltid = { setup, setUser(id) { userId = id; }, oppna, foreslagenTyp, tidFor, aktuella };
 })();

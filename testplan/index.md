@@ -5,9 +5,9 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 72 |
-| **Automatiserade** | 69 (körs på iPhone/WebKit och Android/Chromium) |
-| **Manuella** | 3 (kräver riktig iPhone eller riktig Supabase) |
+| **Testfall** | 85 |
+| **Automatiserade** | 81 (körs på iPhone/WebKit och Android/Chromium) |
+| **Manuella** | 4 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
 
@@ -48,6 +48,24 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-PRO-07](testfall/TC-PRO-07.md) | [För hög takt sänks till 1 % av vikten med förklaring](testfall/TC-PRO-07.md) | Hög | 🤖 |
 | [TC-PRO-08](testfall/TC-PRO-08.md) | [Ogiltiga värden stoppas innan något sparas](testfall/TC-PRO-08.md) | Medel | 🤖 |
 | [TC-PRO-09](testfall/TC-PRO-09.md) | [Sparfel behåller det man fyllt i](testfall/TC-PRO-09.md) | Medel | 🤖 |
+
+## Fota mat
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-FOT-01](testfall/TC-FOT-01.md) | [Fotot analyseras och förslaget visas](testfall/TC-FOT-01.md) | Hög | 🤖 |
+| [TC-FOT-02](testfall/TC-FOT-02.md) | [Bilden krymps innan den skickas](testfall/TC-FOT-02.md) | Medel | 🤖 |
+| [TC-FOT-03](testfall/TC-FOT-03.md) | [Ändrad mängd räknar om kcal](testfall/TC-FOT-03.md) | Hög | 🤖 |
+| [TC-FOT-04](testfall/TC-FOT-04.md) | [Ta bort och lägga till rader](testfall/TC-FOT-04.md) | Hög | 🤖 |
+| [TC-FOT-05](testfall/TC-FOT-05.md) | [Spara sparar måltid, rader och miniatyr](testfall/TC-FOT-05.md) | Hög | 🤖 |
+| [TC-FOT-06](testfall/TC-FOT-06.md) | [Slut på gratiskvot erbjuder manuell sökning](testfall/TC-FOT-06.md) | Hög | 🤖 |
+| [TC-FOT-07](testfall/TC-FOT-07.md) | [Ingen mat eller ingen kontakt ger begripligt fel](testfall/TC-FOT-07.md) | Medel | 🤖 |
+| [TC-FOT-08](testfall/TC-FOT-08.md) | [Miniatyren visas i dagsöversikten](testfall/TC-FOT-08.md) | Medel | 🤖 |
+| [TC-FOT-09](testfall/TC-FOT-09.md) | [Ta bort sista raden tar bort miniatyren](testfall/TC-FOT-09.md) | Medel | 🤖 |
+| [TC-FOT-10](testfall/TC-FOT-10.md) | [Miniatyr som inte kan laddas upp stoppar inte sparningen](testfall/TC-FOT-10.md) | Låg | 🤖 |
+| [TC-FOT-11](testfall/TC-FOT-11.md) | [Ogiltiga rader stoppas](testfall/TC-FOT-11.md) | Medel | 🤖 |
+| [TC-FOT-12](testfall/TC-FOT-12.md) | [Foto från en tidigare dag sparas på den dagen](testfall/TC-FOT-12.md) | Medel | 🤖 |
+| [TC-FOT-13](testfall/TC-FOT-13.md) | [Fota riktig mat med iPhone-kameran](testfall/TC-FOT-13.md) | Hög | 🖐️ |
 
 ## Bildanalys
 
