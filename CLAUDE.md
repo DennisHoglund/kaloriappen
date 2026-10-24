@@ -32,6 +32,10 @@ Appen byggs **spec-drivet**. Läs `specs/stories.md` (krav och beslut), `specs/p
 6. Uppdatera `specs/` (status i `tasks.md`) och `README.md` så att de stämmer med koden.
 7. Committa med beskrivande svenskt meddelande och pusha till `main`. CI testar och publicerar.
 
+## Livsmedelsdata
+- `data/livsmedel.json` skapas av `scripts/hamta-livsmedel.js` via arbetsflödet **Uppdatera livsmedel**. Redigera aldrig filen för hand.
+- Källan (Livsmedelsverkets livsmedelsdatabas, CC BY 4.0) ska alltid synas i appen där livsmedel visas.
+
 ## Design
 - Färgprofil **Blåbär** med ljust och mörkt läge via CSS-variabler i `styles.css`. Använd alltid variablerna, aldrig hårdkodade färger.
 - Stora tryckytor (≥ 44 px), `env(safe-area-inset-*)` för iPhone. Siffror i IBM Plex Mono.

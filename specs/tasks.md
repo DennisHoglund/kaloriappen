@@ -24,7 +24,7 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
-| T-07 | `scripts/hamta-livsmedel.js` + CI-steg som skapar `data/livsmedel.json` från Livsmedelsverkets API. Källa anges i appen | D-07 | – | ⬜ |
+| T-07 | `scripts/hamta-livsmedel.js` + CI-steg som skapar `data/livsmedel.json` från Livsmedelsverkets API. Källa anges i appen | D-07 | – | ✅ |
 | T-08 | Sök livsmedel (≥ 2 tecken, diakritik-okänsligt), ange gram, spara som måltid med typ. "Senaste" för snabbval | US-06, US-05 AC3 | – | ⬜ |
 | T-09 | Dagsöversikt: ätit/mål/kvar, stapel, måltider per typ, bläddra mellan dagar | US-07 | 📱 | ⬜ |
 | T-10 | Ändra mängd och ta bort måltid/rad (med bekräftelse) | US-08 | – | ⬜ |

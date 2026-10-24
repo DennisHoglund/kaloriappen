@@ -29,7 +29,7 @@ iPhone (PWA, GitHub Pages)
 | Hosting | GitHub Pages via Actions | Som övriga appar |
 | Data | Supabase, delat projekt (Jaktvinds) | Gratisnivån tillåter bara två projekt |
 | Bildanalys | Gemini Flash via Edge Function `kalori-analys` | 0 kr (D-06), nyckeln hålls utanför klienten |
-| Livsmedel | Livsmedelsverkets API, nedladdat till `data/livsmedel.json` i CI | Inga CORS-problem, snabb sökning, inga anrop per sökning. ~2 500 rader, ca 150 kB |
+| Livsmedel | Livsmedelsverkets API (2 606 livsmedel), nedladdat till `data/livsmedel.json` av arbetsflödet **Uppdatera livsmedel** varje måndag och vid behov. Filen committas i repot | API:et kräver ett anrop per livsmedel för näringsvärden, så hämtningen tar några minuter och görs inte vid varje push. Inga CORS-problem, snabb sökning. 102 kB |
 | Graf | Egen inline-SVG | Inget extra bibliotek, styrs av temavariablerna |
 | Beräkningar | Rena funktioner i `berakning.js` | Lätta att enhetstesta |
 
@@ -51,11 +51,12 @@ iPhone (PWA, GitHub Pages)
 | `traning.js` | Träningslogg, historik per vecka |
 | `sw.js` | Appfiler nätet först, CDN cache först. Höj `kalori-vN` vid ändring |
 | `manifest.webmanifest`, `icons/` | PWA och egen ikon |
-| `data/livsmedel.json` | Genereras av `scripts/hamta-livsmedel.js` (namn, nummer, kcal/100 g) |
+| `data/livsmedel.json` | Genereras av `scripts/hamta-livsmedel.js`: `{ kalla, licens, hamtad, antal, livsmedel: [[nummer, namn, kcal/100 g], …] }`, sorterad på svenska. Redigeras aldrig för hand |
 | `supabase/schema.sql` | Tabeller, index, RLS, bucket, storage-policies. Ska gå att köra om |
 | `supabase/functions/kalori-analys/index.ts` | Edge Function för bildanalys |
 | `tests/`, `playwright.config.js`, `testplan/` | Som i Svampkartan, inklusive egen rapport |
-| `.github/workflows/tester.yml` | Hämta livsmedel → test → bygg `_site` → publicera |
+| `.github/workflows/tester.yml` | Schematester → Playwright → bygg `_site` → publicera |
+| `.github/workflows/uppdatera-livsmedel.yml` | Hämtar livsmedel varje måndag, committar vid ändring och startar `tester.yml` |
 | `CLAUDE.md`, `AGENTS.md` | Regler för AI-assistenter (pekar på `specs/`) |
 
 ## 4. Datamodell (`supabase/schema.sql`)

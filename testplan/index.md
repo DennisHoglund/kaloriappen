@@ -5,8 +5,8 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 31 |
-| **Automatiserade** | 29 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 34 |
+| **Automatiserade** | 32 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 2 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
@@ -59,6 +59,14 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-BER-04](testfall/TC-BER-04.md) | [Takten begränsas till 1 % av kroppsvikten](testfall/TC-BER-04.md) | Hög | 🤖 |
 | [TC-BER-05](testfall/TC-BER-05.md) | [Dagsmålet går aldrig under golvet](testfall/TC-BER-05.md) | Hög | 🤖 |
 | [TC-BER-06](testfall/TC-BER-06.md) | [Ofullständig profil ger inget dagsmål](testfall/TC-BER-06.md) | Medel | 🤖 |
+
+## Livsmedelsdata
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-LIV-01](testfall/TC-LIV-01.md) | [kcal per 100 g plockas ur näringsvärdena](testfall/TC-LIV-01.md) | Hög | 🤖 |
+| [TC-LIV-02](testfall/TC-LIV-02.md) | [Filen byggs sorterad på svenska och utan ogiltiga rader](testfall/TC-LIV-02.md) | Medel | 🤖 |
+| [TC-LIV-03](testfall/TC-LIV-03.md) | [Den sparade livsmedelsfilen är komplett och rimlig](testfall/TC-LIV-03.md) | Hög | 🤖 |
 
 ## Tema
 
