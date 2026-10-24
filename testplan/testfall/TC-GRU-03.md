@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/plan.md](../../specs/plan.md) |
-| **Playwright** | [`tests/grund.spec.js`](../../tests/grund.spec.js#L24) – *alla filer i service workerns appskal finns* |
+| **Playwright** | [`tests/grund.spec.js`](../../tests/grund.spec.js#L35) – *alla filer i service workerns appskal finns* |
 
 ## Förutsättningar
 

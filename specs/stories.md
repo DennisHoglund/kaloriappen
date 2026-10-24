@@ -16,7 +16,7 @@ Status: **v1.1** (2026-10-24) – stories med acceptanskriterier, granskade för
 | D-08 | Inga streckkoder |
 | D-09 | v1 kräver nät. Offline-kö kan läggas till senare |
 | D-10 | En liten miniatyr av matfotot (ca 20–30 kB) sparas i Supabase Storage och visas i loggen. Originalbilden sparas inte |
-| D-11 | Design: **C · Blåbär** (mörkblå #0E1430, accent #8C9BFF, IBM Plex Sans + Plex Mono för siffror) |
+| D-11 | Design: **C · Blåbär**. Mörkt: bakgrund #0E1430, kort #182042, accent #8C9BFF. Ljust: bakgrund #F4F6FC, kort #FFFFFF, accent #4F5FD9. IBM Plex Sans, siffror i Plex Mono. Följer telefonen, temaknapp Auto/Ljust/Mörkt. Ikon: tre blåbär på mörkblå botten |
 | D-12 | Träning loggas: styrketräning, löpning, promenad, cykling. Styrka = bara tid; löpning/promenad/cykling = tid + sträcka |
 | D-13 | Brända kcal visas separat men ändrar **inte** dagsmålet |
 | D-14 | Supabase: Jaktvinds projekt (delas med Svampkartan och Appspec). Tabellprefix `kalori_` i `public` i stället för eget schema, som i Svampkartan, så att API-inställningarna i det delade projektet inte behöver ändras. RLS på alla tabeller |

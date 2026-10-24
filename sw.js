@@ -1,5 +1,5 @@
 // Höj versionen vid varje deploy så att telefonen hämtar nya filer.
-const CACHE = 'kalori-v1';
+const CACHE = 'kalori-v2';
 
 const SHELL = [
   './',
@@ -7,10 +7,14 @@ const SHELL = [
   './styles.css',
   './config.js',
   './app.js',
-  './manifest.webmanifest'
+  './manifest.webmanifest',
+  './icons/icon.svg',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/apple-touch-icon.png'
 ];
 
-const CDN_HOSTS = ['cdn.jsdelivr.net'];
+const CDN_HOSTS = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)));
@@ -30,7 +34,7 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
 
-  // Bibliotek från CDN: cache först (låsta versioner ändras aldrig)
+  // Bibliotek och typsnitt från CDN: cache först (låsta versioner ändras aldrig)
   if (CDN_HOSTS.includes(url.hostname)) {
     event.respondWith(
       caches.match(req).then((hit) => hit || fetch(req).then((res) => {

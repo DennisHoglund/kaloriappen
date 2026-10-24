@@ -21,6 +21,17 @@ test.describe('Grund', () => {
     expect(m.lang).toBe('sv');
   });
 
+  test('ikonerna finns i alla storlekar', { annotation: { type: 'testfall', description: 'TC-GRU-04' } }, async ({ page, api }) => {
+    const m = await (await page.request.get('manifest.webmanifest')).json();
+    expect(m.icons.map((i) => i.sizes + ' ' + i.purpose)).toEqual(['192x192 any', '512x512 any', '512x512 maskable']);
+    for (const fil of [...m.icons.map((i) => i.src), 'icons/apple-touch-icon.png', 'icons/icon.svg']) {
+      const res = await page.request.get(fil);
+      expect(res.ok(), fil + ' ska finnas').toBeTruthy();
+    }
+    await page.goto('./');
+    await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute('href', 'icons/apple-touch-icon.png');
+  });
+
   test('alla filer i service workerns appskal finns', { annotation: { type: 'testfall', description: 'TC-GRU-03' } }, async ({ page, api }) => {
     const src = await (await page.request.get('sw.js')).text();
     expect(src).toMatch(/const CACHE = 'kalori-v\d+'/);
