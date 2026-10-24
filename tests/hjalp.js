@@ -1,12 +1,20 @@
 // Gemensamma hjälpfunktioner och fixturer för testerna.
 const base = require('@playwright/test');
-const { mocka } = require('./mock');
+const { mocka, inloggad } = require('./mock');
 
 const test = base.test.extend({
   // Mockar allt externt innan varje test. api ger tillgång till "databasen".
   api: async ({ page }, use) => {
     const api = await mocka(page);
     await use(api);
+  },
+
+  // Sida där användaren redan är inloggad
+  appen: async ({ page, api }, use) => {
+    await inloggad(page);
+    await page.goto('./');
+    await base.expect(page.locator('#view-app')).toBeVisible();
+    await use(page);
   }
 });
 

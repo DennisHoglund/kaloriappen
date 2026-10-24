@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md D-11](../../specs/stories.md) |
-| **Playwright** | [`tests/tema.spec.js`](../../tests/tema.spec.js#L31) – *ljust läge har Blåbär-färgerna* |
+| **Playwright** | [`tests/tema.spec.js`](../../tests/tema.spec.js#L32) – *ljust läge har Blåbär-färgerna* |
 
 ## Förutsättningar
 

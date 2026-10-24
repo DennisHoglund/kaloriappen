@@ -1,6 +1,6 @@
 [← Testplan](../index.md)
 
-# TC-GRU-01 · Appen startar och visar startsidan
+# TC-GRU-01 · Appen startar utan fel
 
 | | |
 |---|---|
@@ -8,7 +8,7 @@
 | **Prioritet** | Hög |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/plan.md](../../specs/plan.md) |
-| **Playwright** | [`tests/grund.spec.js`](../../tests/grund.spec.js#L4) – *appen startar och visar startsidan* |
+| **Playwright** | [`tests/grund.spec.js`](../../tests/grund.spec.js#L4) – *appen startar utan fel* |
 
 ## Förutsättningar
 
@@ -18,8 +18,7 @@
 
 | # | Gör så här | Förväntat resultat |
 |---|---|---|
-| 1 | Öppna https://dennishoglund.github.io/kaloriappen/ i Safari | En snurra visas kort, sedan startsidan med rubriken **Kaloriappen** |
-| 2 | Kontrollera versionsraden | Texten **Version T-01** (eller senare) visas |
+| 1 | Öppna https://dennishoglund.github.io/kaloriappen/ i Safari | En snurra visas kort, sedan inloggningen (eller appen om du redan är inloggad) |
 
 ## Resultat
 

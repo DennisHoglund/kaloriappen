@@ -1,15 +1,14 @@
 const { test, expect, bild } = require('./hjalp');
 
 test.describe('Grund', () => {
-  test('appen startar och visar startsidan', { annotation: { type: 'testfall', description: 'TC-GRU-01' } }, async ({ page, api }) => {
+  test('appen startar utan fel', { annotation: { type: 'testfall', description: 'TC-GRU-01' } }, async ({ page, api }) => {
     const fel = [];
     page.on('pageerror', (e) => fel.push(e.message));
     await page.goto('./');
-    await expect(page.locator('#view-start')).toBeVisible();
+    await expect(page.locator('#view-login')).toBeVisible();
     await expect(page.locator('#view-loading')).toBeHidden();
     await expect(page.getByRole('heading', { name: 'Kaloriappen' })).toBeVisible();
     expect(fel).toEqual([]);
-    await bild(page, 'Startsidan');
   });
 
   test('manifestet beskriver en installerbar app', { annotation: { type: 'testfall', description: 'TC-GRU-02' } }, async ({ page, api }) => {

@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md D-11](../../specs/stories.md) |
-| **Playwright** | [`tests/grund.spec.js`](../../tests/grund.spec.js#L24) – *ikonerna finns i alla storlekar* |
+| **Playwright** | [`tests/grund.spec.js`](../../tests/grund.spec.js#L23) – *ikonerna finns i alla storlekar* |
 
 ## Förutsättningar
 

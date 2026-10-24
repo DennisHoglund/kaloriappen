@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const VERSION = 'T-02';
+  const VERSION = 'T-04';
   const $ = (id) => document.getElementById(id);
   const THEME_KEY = 'kalori-theme';
 
@@ -44,14 +44,80 @@
     document.querySelectorAll('main').forEach((m) => { m.hidden = m.id !== id; });
   }
 
-  function start() {
-    initTheme();
-    const v = document.getElementById('version');
-    if (v) v.textContent = 'Version ' + VERSION;
-    visa('view-start');
+  function setMsg(text, kind) {
+    const el = $('login-msg');
+    el.textContent = text || '';
+    el.className = 'msg' + (kind ? ' ' + kind : '');
   }
 
-  window.KaloriApp = { visa };
+  // ---------- Inloggning med lösenord (samma konto som Svampkartan och Jaktvind) ----------
+  function vanligtFel(err) {
+    const m = (err && err.message || '').toLowerCase();
+    if (m.includes('invalid login') || m.includes('invalid credentials')) return 'Fel e-post eller lösenord.';
+    if (m.includes('email not confirmed')) return 'E-postadressen är inte bekräftad.';
+    if ((err && err.status === 429) || m.includes('rate limit')) return 'För många försök. Vänta en stund och prova igen.';
+    if (m.includes('fetch') || m.includes('network') || m.includes('load failed')) return 'Ingen kontakt med servern. Kontrollera nätet och försök igen.';
+    return 'Något gick fel: ' + (err && err.message || 'okänt fel');
+  }
+
+  let sb = null;
+
+  function initAuth() {
+    const cfg = window.KALORI_CONFIG || {};
+    if (!window.supabase || !cfg.supabaseUrl) {
+      visa('view-login');
+      $('form-login').hidden = true;
+      setMsg('Kunde inte ladda inloggningen. Kontrollera nätet och ladda om sidan.', 'error');
+      return;
+    }
+    sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseAnonKey, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+    });
+
+    $('form-login').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = $('email').value.trim().toLowerCase();
+      const password = $('password').value;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setMsg('Ange en giltig e-postadress.', 'error'); return; }
+      if (!password) { setMsg('Ange ditt lösenord.', 'error'); return; }
+
+      const btn = $('form-login').querySelector('button[type="submit"]');
+      btn.disabled = true;
+      setMsg('Loggar in…');
+      let error = null;
+      try { ({ error } = await sb.auth.signInWithPassword({ email, password })); } catch (err) { error = err; }
+      btn.disabled = false;
+      if (error) { setMsg(vanligtFel(error), 'error'); return; }
+      $('password').value = '';
+      setMsg('');
+    });
+
+    $('btn-logout').addEventListener('click', async () => {
+      await sb.auth.signOut().catch(() => {});
+      render(null);
+    });
+
+    sb.auth.onAuthStateChange((_event, session) => render(session));
+    sb.auth.getSession().then(({ data }) => render(data.session)).catch(() => render(null));
+  }
+
+  function render(session) {
+    if (session && session.user) {
+      $('user-email').textContent = session.user.email || '';
+      visa('view-app');
+    } else {
+      visa('view-login');
+    }
+  }
+
+  function start() {
+    initTheme();
+    const v = $('version');
+    if (v) v.textContent = 'Version ' + VERSION;
+    initAuth();
+  }
+
+  window.KaloriApp = { visa, get sb() { return sb; } };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();

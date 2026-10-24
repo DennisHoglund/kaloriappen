@@ -5,9 +5,9 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 8 |
-| **Automatiserade** | 7 (körs på iPhone/WebKit och Android/Chromium) |
-| **Manuella** | 1 (kräver riktig Supabase) |
+| **Testfall** | 16 |
+| **Automatiserade** | 14 (körs på iPhone/WebKit och Android/Chromium) |
+| **Manuella** | 2 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
 
@@ -17,10 +17,23 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | ID | Testfall | Prio | Typ |
 |---|---|---|---|
-| [TC-GRU-01](testfall/TC-GRU-01.md) | [Appen startar och visar startsidan](testfall/TC-GRU-01.md) | Hög | 🤖 |
+| [TC-GRU-01](testfall/TC-GRU-01.md) | [Appen startar utan fel](testfall/TC-GRU-01.md) | Hög | 🤖 |
 | [TC-GRU-02](testfall/TC-GRU-02.md) | [Manifestet beskriver en installerbar app](testfall/TC-GRU-02.md) | Medel | 🤖 |
 | [TC-GRU-03](testfall/TC-GRU-03.md) | [Alla filer i service workerns appskal finns](testfall/TC-GRU-03.md) | Medel | 🤖 |
 | [TC-GRU-04](testfall/TC-GRU-04.md) | [Ikonerna finns i alla storlekar](testfall/TC-GRU-04.md) | Medel | 🤖 |
+
+## Inloggning
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-INL-01](testfall/TC-INL-01.md) | [Inloggningen visas när man inte är inloggad](testfall/TC-INL-01.md) | Hög | 🤖 |
+| [TC-INL-02](testfall/TC-INL-02.md) | [Fel lösenord ger tydligt felmeddelande](testfall/TC-INL-02.md) | Hög | 🤖 |
+| [TC-INL-03](testfall/TC-INL-03.md) | [Ogiltig e-post stoppas innan något skickas](testfall/TC-INL-03.md) | Medel | 🤖 |
+| [TC-INL-04](testfall/TC-INL-04.md) | [Rätt uppgifter loggar in](testfall/TC-INL-04.md) | Hög | 🤖 |
+| [TC-INL-05](testfall/TC-INL-05.md) | [Inloggningen finns kvar efter omstart](testfall/TC-INL-05.md) | Hög | 🤖 |
+| [TC-INL-06](testfall/TC-INL-06.md) | [Logga ut](testfall/TC-INL-06.md) | Medel | 🤖 |
+| [TC-INL-07](testfall/TC-INL-07.md) | [Ingen kontakt med servern ger ett begripligt fel](testfall/TC-INL-07.md) | Medel | 🤖 |
+| [TC-INL-08](testfall/TC-INL-08.md) | [Logga in med riktigt konto och Face ID](testfall/TC-INL-08.md) | Hög | 🖐️ |
 
 ## Tema
 

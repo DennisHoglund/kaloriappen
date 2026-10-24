@@ -97,8 +97,13 @@ function json(route, status, body, extra) {
 // Lägger in en inloggad session innan sidan laddas (snabbare än att logga in via formuläret)
 async function inloggad(page) {
   const s = session();
+  // Bara vid första sidladdningen, så att en utloggning inte "loggar in" igen vid omladdning
   await page.addInitScript(([key, val]) => {
-    try { localStorage.setItem(key, val); } catch (e) {}
+    try {
+      if (sessionStorage.getItem('kalori-test-inloggad')) return;
+      sessionStorage.setItem('kalori-test-inloggad', '1');
+      localStorage.setItem(key, val);
+    } catch (e) {}
   }, [STORAGE_KEY, JSON.stringify(s)]);
 }
 

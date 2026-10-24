@@ -29,19 +29,39 @@
     <div class="spinner" role="status" aria-label="Laddar"></div>
   </main>
 
-  <main id="view-start" class="app-view" hidden>
+  <main id="view-login" class="center" hidden>
+    <section class="card login">
+      <img class="logo" src="icons/icon.svg" alt="" width="72" height="72">
+      <h1>Kaloriappen</h1>
+      <p class="muted">Mat, träning och vikt – bara för dig.</p>
+
+      <form id="form-login" novalidate>
+        <label for="email">E-post</label>
+        <input id="email" type="email" inputmode="email" autocomplete="username" autocapitalize="off" spellcheck="false" placeholder="namn@exempel.se" required>
+        <label for="password">Lösenord</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+        <button class="btn primary" type="submit">Logga in</button>
+        <p class="muted small hint">Samma konto som i Svampkartan och Jaktvind.</p>
+      </form>
+
+      <p id="login-msg" class="msg" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <main id="view-app" class="app-view" hidden>
     <header class="topbar">
       <div class="brand"><img src="icons/icon.svg" alt="" width="32" height="32"> Kaloriappen</div>
       <div class="actions">
         <button class="icon-btn" id="btn-theme" type="button" aria-label="Byt tema">
           <span id="theme-label">Auto</span>
         </button>
+        <button class="icon-btn" id="btn-logout" type="button">Logga ut</button>
       </div>
     </header>
     <div class="content">
       <section class="card">
-        <h1>Kaloriappen</h1>
-        <p class="muted">Appen byggs steg för steg. Inloggning kommer i nästa steg.</p>
+        <h1>Inloggad</h1>
+        <p class="muted">Som <span id="user-email"></span>. Profil och dagsöversikt kommer i nästa steg.</p>
         <p class="muted small" id="version"></p>
       </section>
     </div>
