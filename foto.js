@@ -118,7 +118,7 @@
       const svar = error && error.context;
       if (svar && typeof svar.json === 'function') {
         const j = await svar.json();
-        if (j && j.meddelande) return j.meddelande;
+        if (j && j.meddelande) return j.meddelande + (j.detalj ? ' (' + j.detalj + ')' : '');
       }
     } catch (e) { /* allmänt meddelande nedan */ }
     return 'Bildanalysen fungerade inte just nu. Kontrollera nätet eller logga manuellt.';

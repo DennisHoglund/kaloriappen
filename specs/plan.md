@@ -87,8 +87,8 @@ iPhone (PWA, GitHub Pages)
 
 1. Klienten skalar ner bilden till max 1024 px JPEG och skickar base64 + användarens JWT.
 2. Funktionen kontrollerar själv att anroparen är inloggad (anrop till Supabase Auth `/auth/v1/user` med användarens JWT, så "Verify JWT" i inställningarna kan vara av) och skickar bilden till Gemini med en svensk prompt och **strukturerat JSON-svar** (`responseSchema`): `[{ namn, gram, kcal }]`. Orimliga rader tas bort, högst 10 rader.
-3. Timeout 20 s. Svar: `200 { rader, modell }` eller fel med `{ fel, meddelande }`: `401 behorighet`, `400 indata`, `413 stor`, `429 kvot`, `502 analys`, `504 tid`, `422 tom`, `500 konfig`. Klienten visar meddelandet och erbjuder manuell sökning (US-04 AC3).
-4. Modell: `gemini-flash-latest` (alias för senaste Flash på gratisnivån). Kan bytas med secret `KALORI_GEMINI_MODELL` utan kodändring (D-06).
+3. Timeout 30 s. Tänkande `thinkingLevel: low` (Gemini 3 tänker annars "medium" och blev för långsam, se test 2026-10-24), temperaturen lämnas på standard. Svar: `200 { rader, modell }` eller fel med `{ fel, meddelande }`: `401 behorighet`, `400 indata`, `413 stor`, `429 kvot`, `502 analys`, `504 tid`, `422 tom`, `500 konfig`. Klienten visar meddelandet och erbjuder manuell sökning (US-04 AC3).
+4. Modell: `gemini-flash-latest` (alias för senaste Flash på gratisnivån). Kan bytas med secret `KALORI_GEMINI_MODELL`, och tänkandet med `KALORI_GEMINI_TANKANDE`, utan kodändring (D-06). Vid fel från Google skickas Googles felmeddelande med som `detalj`.
 6. Funktionen är en enda fil (`index.ts`) så att den kan klistras in i Supabase-editorn från telefonen. Logiken exporteras och testas i Node (`tests/analys.spec.js`); `Deno.serve` körs bara i Supabase.
 5. Secret: `KALORI_GEMINI_KEY`. Edge Function skapas och deployas i Supabase Dashboard (Edge Functions → Deploy a new function → Via Editor), så det fungerar från telefonen.
 

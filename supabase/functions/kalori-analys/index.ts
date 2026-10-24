@@ -4,12 +4,14 @@
 //
 // Driftsättning (Supabase, Jaktvinds projekt): Edge Functions → Deploy a new function → Via Editor,
 // namn kalori-analys, klistra in hela filen, Deploy. Secret: KALORI_GEMINI_KEY (nyckel från Google AI Studio).
-// Valfri secret: KALORI_GEMINI_MODELL för att byta modell utan kodändring.
+// Valfria secrets: KALORI_GEMINI_MODELL (byt modell) och KALORI_GEMINI_TANKANDE (minimal/low/medium/high)
+// utan kodändring.
 // Funktionen kontrollerar själv att anroparen är inloggad, så "Verify JWT" i inställningarna kan vara av.
 
 export const STANDARDMODELL = 'gemini-flash-latest';
 export const MAX_BILD_TECKEN = 2_000_000; // base64, ca 1,5 MB – appen skickar ca 150 kB
-export const TIDSGRANS_MS = 20_000;
+export const STANDARDTANKANDE = 'low'; // snabbt svar räcker för att känna igen mat (Gemini 3 tänker annars "medium")
+export const TIDSGRANS_MS = 30_000;
 
 const CORS = {
   'access-control-allow-origin': '*',
@@ -38,11 +40,11 @@ export const SCHEMA = {
   }
 };
 
-// Bygger anropet till Gemini
-export function byggAnrop(bild: string, mime: string) {
+// Bygger anropet till Gemini. Temperaturen lämnas på standard (Google avråder från att ändra den för Gemini 3).
+export function byggAnrop(bild: string, mime: string, tankande: string = STANDARDTANKANDE) {
   return {
     contents: [{ parts: [{ text: PROMPT }, { inline_data: { mime_type: mime, data: bild } }] }],
-    generationConfig: { responseMimeType: 'application/json', responseSchema: SCHEMA, temperature: 0.2 }
+    generationConfig: { responseMimeType: 'application/json', responseSchema: SCHEMA, thinkingConfig: { thinkingLevel: tankande } }
   };
 }
 
@@ -96,25 +98,30 @@ export function skapaHanterare({ env, fetch: hamta }: Miljo) {
     const nyckel = env('KALORI_GEMINI_KEY');
     if (!nyckel) return json(500, { fel: 'konfig', meddelande: 'Bildanalysen är inte konfigurerad.' });
     const modell = env('KALORI_GEMINI_MODELL') || STANDARDMODELL;
+    const tankande = env('KALORI_GEMINI_TANKANDE') || STANDARDTANKANDE;
 
     let svar: Response;
     try {
       svar = await hamta(`https://generativelanguage.googleapis.com/v1beta/models/${modell}:generateContent`, {
         method: 'POST',
         headers: { 'content-type': 'application/json', 'x-goog-api-key': nyckel },
-        body: JSON.stringify(byggAnrop(bild, mime)),
+        body: JSON.stringify(byggAnrop(bild, mime, tankande)),
         signal: AbortSignal.timeout(TIDSGRANS_MS)
       });
     } catch (e) {
       const tid = e instanceof Error && (e.name === 'TimeoutError' || e.name === 'AbortError');
-      return json(504, { fel: tid ? 'tid' : 'tjanst', meddelande: tid ? 'Analysen tog för lång tid.' : 'Kunde inte nå bildanalysen.' });
+      return json(504, { fel: tid ? 'tid' : 'tjanst', meddelande: tid ? 'Analysen tog för lång tid. Försök igen eller sök manuellt.' : 'Kunde inte nå bildanalysen.' });
     }
     if (svar.status === 429) return json(429, { fel: 'kvot', meddelande: 'Dagens gratisanalyser är slut. Försök senare eller logga manuellt.' });
-    if (!svar.ok) return json(502, { fel: 'analys', meddelande: 'Bildanalysen svarade med fel (' + svar.status + ').' });
+    if (!svar.ok) {
+      // Googles felmeddelande hjälper vid felsökning (t.ex. okänd modell eller ogiltig inställning)
+      const detalj = await svar.json().then((j: any) => j?.error?.message || '').catch(() => '');
+      return json(502, { fel: 'analys', meddelande: 'Bildanalysen svarade med fel (' + svar.status + ').', detalj: String(detalj).slice(0, 300) });
+    }
 
     const rader = tolkaSvar(await svar.json().catch(() => null));
     if (!rader.length) return json(422, { fel: 'tom', meddelande: 'Hittade ingen mat på bilden.' });
-    return json(200, { rader, modell });
+    return json(200, { rader, modell, tankande });
   };
 }
 

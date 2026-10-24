@@ -8,7 +8,7 @@
 | **Prioritet** | Låg |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md D-06](../../specs/stories.md), [plan.md avsnitt 6](../../specs/plan.md) |
-| **Playwright** | [`tests/analys.spec.js`](../../tests/analys.spec.js#L90) – *modellen kan bytas med en secret* |
+| **Playwright** | [`tests/analys.spec.js`](../../tests/analys.spec.js#L92) – *modell och tänkande kan bytas med secrets* |
 
 ## Förutsättningar
 

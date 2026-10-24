@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-04 AC3](../../specs/stories.md), [plan.md avsnitt 6](../../specs/plan.md) |
-| **Playwright** | [`tests/analys.spec.js`](../../tests/analys.spec.js#L65) – *ingen mat på bilden och ogiltiga svar hanteras* |
+| **Playwright** | [`tests/analys.spec.js`](../../tests/analys.spec.js#L67) – *ingen mat på bilden och ogiltiga svar hanteras* |
 
 ## Förutsättningar
 

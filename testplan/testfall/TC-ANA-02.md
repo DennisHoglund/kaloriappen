@@ -8,7 +8,7 @@
 | **Prioritet** | Hög |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-04 AC4](../../specs/stories.md), [plan.md avsnitt 6](../../specs/plan.md) |
-| **Playwright** | [`tests/analys.spec.js`](../../tests/analys.spec.js#L40) – *bara inloggade får anropa och nyckeln skickas aldrig tillbaka* |
+| **Playwright** | [`tests/analys.spec.js`](../../tests/analys.spec.js#L42) – *bara inloggade får anropa och nyckeln skickas aldrig tillbaka* |
 
 ## Förutsättningar
 

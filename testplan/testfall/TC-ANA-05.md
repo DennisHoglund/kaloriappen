@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-04](../../specs/stories.md), [plan.md avsnitt 6](../../specs/plan.md) |
-| **Playwright** | [`tests/analys.spec.js`](../../tests/analys.spec.js#L77) – *saknad bild, för stor bild och saknad nyckel stoppas* |
+| **Playwright** | [`tests/analys.spec.js`](../../tests/analys.spec.js#L79) – *saknad bild, för stor bild och saknad nyckel stoppas* |
 
 ## Förutsättningar
 

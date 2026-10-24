@@ -8,7 +8,7 @@
 | **Prioritet** | Hög |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-04 AC3](../../specs/stories.md), [plan.md avsnitt 6](../../specs/plan.md) |
-| **Playwright** | [`tests/analys.spec.js`](../../tests/analys.spec.js#L53) – *slut på gratiskvot, fel och tidsgräns ger tydliga felkoder* |
+| **Playwright** | [`tests/analys.spec.js`](../../tests/analys.spec.js#L55) – *slut på gratiskvot, fel och tidsgräns ger tydliga felkoder* |
 
 ## Förutsättningar
 

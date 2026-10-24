@@ -27,13 +27,15 @@ test.describe('Bildanalys (Edge Function)', () => {
     ]))) });
     const res = await h(post({ bild: 'QUJD', mime: 'image/jpeg' }));
     expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ rader: [{ namn: 'Kokt potatis', gram: 152, kcal: 118 }, { namn: 'Köttbullar', gram: 120, kcal: 270 }], modell: 'gemini-flash-latest' });
+    expect(await res.json()).toEqual({ rader: [{ namn: 'Kokt potatis', gram: 152, kcal: 118 }, { namn: 'Köttbullar', gram: 120, kcal: 270 }], modell: 'gemini-flash-latest', tankande: 'low' });
     const g = anrop.find((a) => a.url.includes('generativelanguage'));
     expect(g.url).toBe('https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent');
     expect(g.init.headers['x-goog-api-key']).toBe('hemlig');
     const body = JSON.parse(g.init.body);
     expect(body.contents[0].parts[1]).toEqual({ inline_data: { mime_type: 'image/jpeg', data: 'QUJD' } });
     expect(body.generationConfig.responseMimeType).toBe('application/json');
+    expect(body.generationConfig.thinkingConfig).toEqual({ thinkingLevel: 'low' }); // snabbt svar
+    expect(body.generationConfig.temperature).toBeUndefined();                       // standard enligt Google
     expect(body.contents[0].parts[0].text).toContain('svenskt namn');
   });
 
@@ -54,9 +56,9 @@ test.describe('Bildanalys (Edge Function)', () => {
     let r = await hanterare({ gemini: () => new Response('{}', { status: 429 }) }).h(post({ bild: 'QUJD' }));
     expect(r.status).toBe(429);
     expect(await r.json()).toMatchObject({ fel: 'kvot' });
-    r = await hanterare({ gemini: () => new Response('{}', { status: 500 }) }).h(post({ bild: 'QUJD' }));
+    r = await hanterare({ gemini: () => new Response(JSON.stringify({ error: { message: 'models/x is not found' } }), { status: 404 }) }).h(post({ bild: 'QUJD' }));
     expect(r.status).toBe(502);
-    expect((await r.json()).fel).toBe('analys');
+    expect(await r.json()).toMatchObject({ fel: 'analys', detalj: 'models/x is not found' });
     r = await hanterare({ gemini: () => { const e = new Error('tid'); e.name = 'TimeoutError'; throw e; } }).h(post({ bild: 'QUJD' }));
     expect(r.status).toBe(504);
     expect((await r.json()).fel).toBe('tid');
@@ -87,10 +89,11 @@ test.describe('Bildanalys (Edge Function)', () => {
     expect(r.headers.get('access-control-allow-origin')).toBe('*');
   });
 
-  test('modellen kan bytas med en secret', { annotation: { type: 'testfall', description: 'TC-ANA-06' } }, async () => {
-    const { h, anrop } = hanterare({ env: { ...ENV, KALORI_GEMINI_MODELL: 'gemini-2.5-flash' }, gemini: () => new Response(JSON.stringify(geminiSvar([{ namn: 'Äpple', gram: 150, kcal: 72 }]))) });
+  test('modell och tänkande kan bytas med secrets', { annotation: { type: 'testfall', description: 'TC-ANA-06' } }, async () => {
+    const { h, anrop } = hanterare({ env: { ...ENV, KALORI_GEMINI_MODELL: 'gemini-2.5-flash', KALORI_GEMINI_TANKANDE: 'minimal' }, gemini: () => new Response(JSON.stringify(geminiSvar([{ namn: 'Äpple', gram: 150, kcal: 72 }]))) });
     const r = await h(post({ bild: 'QUJD' }));
-    expect((await r.json()).modell).toBe('gemini-2.5-flash');
+    expect(await r.json()).toMatchObject({ modell: 'gemini-2.5-flash', tankande: 'minimal' });
+    expect(JSON.parse(anrop.at(-1).init.body).generationConfig.thinkingConfig).toEqual({ thinkingLevel: 'minimal' });
     expect(anrop.at(-1).url).toContain('/models/gemini-2.5-flash:generateContent');
   });
 });
