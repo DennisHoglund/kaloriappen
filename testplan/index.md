@@ -5,9 +5,9 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 7 |
+| **Testfall** | 8 |
 | **Automatiserade** | 7 (körs på iPhone/WebKit och Android/Chromium) |
-| **Manuella** | 0 |
+| **Manuella** | 1 (kräver riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
 
@@ -29,3 +29,11 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-TEM-01](testfall/TC-TEM-01.md) | [Temaknappen växlar Auto → Ljust → Mörkt och sparar valet](testfall/TC-TEM-01.md) | Medel | 🤖 |
 | [TC-TEM-02](testfall/TC-TEM-02.md) | [Mörkt läge följer telefonens inställning](testfall/TC-TEM-02.md) | Medel | 🤖 |
 | [TC-TEM-03](testfall/TC-TEM-03.md) | [Ljust läge har Blåbär-färgerna](testfall/TC-TEM-03.md) | Medel | 🤖 |
+
+## Databas
+
+Rättigheter och regler i `supabase/schema.sql` testas automatiskt i CI av `tests/schema.sh` (17 kontroller mot en tom Postgres).
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-DB-01](testfall/TC-DB-01.md) | [Databasschemat körs i Supabase](testfall/TC-DB-01.md) | Hög | 🖐️ |

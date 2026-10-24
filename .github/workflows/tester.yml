@@ -25,6 +25,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}rapport/
 
+    # Tom Postgres för att testa supabase/schema.sql (rättigheter och regler)
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+
     steps:
       - uses: actions/checkout@v4
 
@@ -41,6 +51,15 @@ jobs:
 
       - name: Kontrollera att testplanen stämmer med testerna
         run: node tests/kontrollera-testplan.js
+
+      - name: Testa databasschemat
+        id: schema
+        continue-on-error: true
+        env:
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+        run: tests/schema.sh
 
       - name: Hämta tidigare körningar till trenden
         run: |
@@ -80,6 +99,12 @@ jobs:
       - name: Publicera på GitHub Pages
         id: deploy
         uses: actions/deploy-pages@v4
+
+      - name: Markera commit som röd om databasschemat inte klarar testerna
+        if: steps.schema.outcome == 'failure'
+        run: |
+          echo "::error::Schematesterna misslyckades – se steget Testa databasschemat"
+          exit 1
 
       - name: Markera commit som röd om tester misslyckades
         if: steps.tester.outcome == 'failure'

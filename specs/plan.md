@@ -94,6 +94,7 @@ iPhone (PWA, GitHub Pages)
 - Playwright på iPhone 14 (WebKit) och Pixel 7 (Chromium), sv-SE, Europe/Stockholm, `serviceWorkers: 'block'`.
 - `tests/mock.js`: Supabase auth/REST/storage (in-memory), Edge Function (fasta svar inklusive fel och 429), `data/livsmedel.json` (liten fixtur), CDN från `node_modules`. Mockad kamera via `setInputFiles`.
 - Enhetstester för `berakning.js` körs i samma svit (sida som laddar bara skriptet).
+- `tests/schema.sh` kör `supabase/schema.sql` två gånger mot en tom Postgres (med `supabase/stub.sql` som låtsas-auth/storage) och sedan `supabase/tester.sql`: RLS mellan användare, anon nekas, regler i tabellerna, foton bara i egen mapp. Körs i CI med en Postgres-tjänst.
 - Testfall i `testplan/testfall/TC-<OMR>-NN.md`, kopplade via `annotation: { type: 'testfall' }`. Områden: INL, PRO, MAL, SOK, FOT, IDA, VIK, TRA.
 - Rapport på `https://dennishoglund.github.io/kaloriappen/rapport/` i Blåbär-tema.
 - Varje AC i `stories.md` ska ha minst ett testfall. Täckning listas i `testplan/index.md`.
