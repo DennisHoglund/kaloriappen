@@ -34,7 +34,10 @@
     return m.data.map((x) => ({ ...x, rader: r.data.filter((y) => y.maltid_id === x.id) }));
   }
 
+  let senaste = [];
+
   function rita(maltider) {
+    senaste = maltider;
     const atit = maltider.reduce((s, m) => s + m.rader.reduce((t, r) => t + Number(r.kcal), 0), 0);
     $('ida-atit').textContent = fmt(atit);
     $('ida-mal').textContent = mal ? fmt(mal) : '–';
@@ -51,7 +54,8 @@
       const rader = maltider.filter((m) => m.typ === typ).flatMap((m) => m.rader.map((r) => ({ ...r, kalla: m.kalla })));
       const summa = rader.reduce((s, r) => s + Number(r.kcal), 0);
       const lista = rader.map((r) =>
-        `<li class="rad"><span class="rad-namn">${esc(r.namn)}</span><span class="rad-gram num">${fmt(r.gram)} g</span><span class="rad-kcal num">${fmt(r.kcal)}</span></li>`).join('');
+        `<li><button type="button" class="rad-knapp" data-id="${esc(r.id)}" aria-label="Ändra ${esc(r.namn)}, ${fmt(r.gram)} gram, ${fmt(r.kcal)} kcal">` +
+        `<span class="rad-namn">${esc(r.namn)}</span><span class="rad-gram num">${fmt(r.gram)} g</span><span class="rad-kcal num">${fmt(r.kcal)}</span></button></li>`).join('');
       return `<section class="maltid" data-typ="${typ}" aria-label="${namn}">
         <header class="maltid-huvud"><h3>${namn}</h3><span class="num">${rader.length ? fmt(summa) + ' kcal' : ''}</span></header>
         ${rader.length ? `<ul class="rader">${lista}</ul>` : `<p class="muted small tom">Inte loggat</p>`}
@@ -86,7 +90,12 @@
     $('ida-tillbaka-idag').addEventListener('click', () => visa({ datum: window.KaloriApp.idag() }));
     $('ida-maltider').addEventListener('click', (e) => {
       const b = e.target.closest('button.lagg-till');
-      if (b) opts.loggaMat({ typ: b.dataset.typ, datum });
+      if (b) { opts.loggaMat({ typ: b.dataset.typ, datum }); return; }
+      const r = e.target.closest('button.rad-knapp');
+      if (r) {
+        const rad = senaste.flatMap((m) => m.rader).find((x) => String(x.id) === r.dataset.id);
+        if (rad) opts.redigera(rad);
+      }
     });
     $('btn-logga-mat').addEventListener('click', () => opts.loggaMat({ datum }));
   }

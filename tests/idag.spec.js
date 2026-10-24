@@ -44,7 +44,7 @@ test.describe('Dagsöversikt', () => {
     const frukost = page.locator('section.maltid[data-typ="frukost"]');
     await expect(frukost.locator('.maltid-huvud')).toContainText('312 kcal');
     await expect(frukost.locator('.rad-namn')).toHaveText(['Havregrynsgröt fullkorn', 'Banan']);
-    await expect(frukost.locator('.rad').first()).toContainText('300 g');
+    await expect(frukost.locator('.rad-knapp').first()).toContainText('300 g');
     await expect(page.locator('section.maltid[data-typ="lunch"] .maltid-huvud')).toContainText('312 kcal');
     await expect(page.locator('section.maltid[data-typ="middag"] .tom')).toHaveText('Inte loggat');
     await expect(page.locator('section.maltid[data-typ="mellanmal"] .rad-namn')).toHaveText(['Äpple m. skal']);

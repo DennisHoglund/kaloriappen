@@ -5,8 +5,8 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 57 |
-| **Automatiserade** | 55 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 65 |
+| **Automatiserade** | 63 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 2 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
@@ -63,6 +63,19 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-IDA-08](testfall/TC-IDA-08.md) | [Lägg till från en måltid förväljer måltiden](testfall/TC-IDA-08.md) | Medel | 🤖 |
 | [TC-IDA-09](testfall/TC-IDA-09.md) | [Loggning på en tidigare dag sparas på den dagen](testfall/TC-IDA-09.md) | Medel | 🤖 |
 | [TC-IDA-10](testfall/TC-IDA-10.md) | [Fel vid hämtning ger begripligt meddelande](testfall/TC-IDA-10.md) | Låg | 🤖 |
+
+## Ändra och ta bort
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-RED-01](testfall/TC-RED-01.md) | [Tryck på en rad öppnar den med mängden ifylld](testfall/TC-RED-01.md) | Hög | 🤖 |
+| [TC-RED-02](testfall/TC-RED-02.md) | [Ändrad mängd räknar om kcal och sparas](testfall/TC-RED-02.md) | Hög | 🤖 |
+| [TC-RED-03](testfall/TC-RED-03.md) | [AI-rader kan också ändras](testfall/TC-RED-03.md) | Medel | 🤖 |
+| [TC-RED-04](testfall/TC-RED-04.md) | [Ta bort kräver bekräftelse](testfall/TC-RED-04.md) | Hög | 🤖 |
+| [TC-RED-05](testfall/TC-RED-05.md) | [Ta bort en av flera rader behåller måltiden](testfall/TC-RED-05.md) | Hög | 🤖 |
+| [TC-RED-06](testfall/TC-RED-06.md) | [Ta bort sista raden tar bort hela måltiden](testfall/TC-RED-06.md) | Medel | 🤖 |
+| [TC-RED-07](testfall/TC-RED-07.md) | [Ogiltig mängd stoppas](testfall/TC-RED-07.md) | Medel | 🤖 |
+| [TC-RED-08](testfall/TC-RED-08.md) | [Fel vid sparning eller borttagning behåller raden](testfall/TC-RED-08.md) | Medel | 🤖 |
 
 ## Logga mat
 

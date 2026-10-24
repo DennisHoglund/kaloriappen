@@ -24,11 +24,11 @@ test.describe('Logga mat', () => {
     await page.getByLabel('Sök livsmedel').fill('gröt');
     await page.getByRole('button', { name: /Havregrynsgröt fullkorn/ }).click();
     await expect(page.locator('#val-namn')).toHaveText('Havregrynsgröt fullkorn');
-    await expect(page.getByLabel('Mängd (gram)')).toHaveValue('100');
+    await expect(page.locator('#form-val').getByLabel('Mängd (gram)')).toHaveValue('100');
     await expect(page.locator('#val-kcal')).toHaveText('66');
-    await page.getByLabel('Mängd (gram)').fill('250');
+    await page.locator('#form-val').getByLabel('Mängd (gram)').fill('250');
     await expect(page.locator('#val-kcal')).toHaveText('165');
-    await page.getByLabel('Mängd (gram)').fill('37,5');
+    await page.locator('#form-val').getByLabel('Mängd (gram)').fill('37,5');
     await expect(page.locator('#val-kcal')).toHaveText('25');
     await bild(page, 'Ange mängd');
   });
@@ -37,7 +37,7 @@ test.describe('Logga mat', () => {
     await oppnaSok(page);
     await page.getByLabel('Sök livsmedel').fill('ägg');
     await page.getByRole('button', { name: /Ägg kokt/ }).click();
-    await page.getByLabel('Mängd (gram)').fill('120');
+    await page.locator('#form-val').getByLabel('Mängd (gram)').fill('120');
     await page.locator('#form-val').getByText('Frukost', { exact: true }).click();
     await page.getByRole('button', { name: 'Spara' }).click();
     await expect(page.locator('#view-app')).toBeVisible();
@@ -82,7 +82,7 @@ test.describe('Logga mat', () => {
     await expect(page.locator('#sok-rubrik')).toHaveText('Senaste');
     await expect(page.locator('.traff-namn')).toHaveText(['Banan', 'Havregrynsgröt fullkorn']); // unika, nyast först, inga AI-rader
     await page.getByRole('button', { name: /Havregrynsgröt/ }).click();
-    await expect(page.getByLabel('Mängd (gram)')).toHaveValue('250');
+    await expect(page.locator('#form-val').getByLabel('Mängd (gram)')).toHaveValue('250');
     await expect(page.locator('#val-kcal')).toHaveText('165');
     await bild(page, 'Senaste');
   });
@@ -92,7 +92,7 @@ test.describe('Logga mat', () => {
     await page.getByLabel('Sök livsmedel').fill('smör');
     await page.getByRole('button', { name: /Smör/ }).click();
     for (const v of ['0', '6000', 'mycket']) {
-      await page.getByLabel('Mängd (gram)').fill(v);
+      await page.locator('#form-val').getByLabel('Mängd (gram)').fill(v);
       await page.getByRole('button', { name: 'Spara' }).click();
       await expect(page.locator('#val-msg')).toHaveText('Ange en mängd mellan 1 och 5 000 gram.');
     }
@@ -103,11 +103,11 @@ test.describe('Logga mat', () => {
     await oppnaSok(page);
     await page.getByLabel('Sök livsmedel').fill('lax');
     await page.getByRole('button', { name: /Lax gravad/ }).click();
-    await page.getByLabel('Mängd (gram)').fill('80');
+    await page.locator('#form-val').getByLabel('Mängd (gram)').fill('80');
     api.felVidSparning = true;
     await page.getByRole('button', { name: 'Spara' }).click();
     await expect(page.locator('#val-msg')).toHaveText('Kunde inte spara. Kontrollera nätet och försök igen.');
-    await expect(page.getByLabel('Mängd (gram)')).toHaveValue('80');
+    await expect(page.locator('#form-val').getByLabel('Mängd (gram)')).toHaveValue('80');
     expect(api.tabeller.kalori_maltid).toHaveLength(0);
     api.felVidSparning = false;
     await page.getByRole('button', { name: 'Spara' }).click();

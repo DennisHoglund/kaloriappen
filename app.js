@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const VERSION = 'T-09';
+  const VERSION = 'T-10';
   const $ = (id) => document.getElementById(id);
   const THEME_KEY = 'kalori-theme';
 
@@ -100,7 +100,8 @@
     window.KaloriProfil.setup(sb, { klar: laddaProfil, avbryt: visaApp });
     $('btn-profil').addEventListener('click', () => window.KaloriProfil.oppna(data.profil, data.viktKg, false));
     window.KaloriMaltid.setup(sb, { klar: visaApp, avbryt: visaApp });
-    window.KaloriIdag.setup(sb, { loggaMat: (o) => window.KaloriMaltid.oppna(o) });
+    window.KaloriRedigera.setup(sb, { klar: visaApp, avbryt: visaApp });
+    window.KaloriIdag.setup(sb, { loggaMat: (o) => window.KaloriMaltid.oppna(o), redigera: (r) => window.KaloriRedigera.oppna(r) });
 
     sb.auth.onAuthStateChange((_event, session) => render(session));
     sb.auth.getSession().then(({ data }) => render(data.session)).catch(() => render(null));

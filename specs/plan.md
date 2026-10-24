@@ -44,7 +44,8 @@ iPhone (PWA, GitHub Pages)
 | `berakning.js` | BMR, dagsmål med golv, MET-förbränning, tempo/hastighet, glidande medel. Laddas både i webbläsaren (`window.KaloriBerakning`) och i Node, så att enhetstesterna körs utan webbläsare |
 | `profil.js` | Profilformulär och onboarding |
 | `idag.js` | Dagsöversikt, bläddra mellan dagar |
-| `maltid.js` | Spara, ändra, ta bort måltider och rader. Senaste livsmedel |
+| `maltid.js` | Sök-och-logga-vyn: spara måltid med rad, föreslagen måltid, Senaste |
+| `redigera.js` | Ändra mängd (kcal i samma proportion) och ta bort rad med bekräftelse i appen. Sista raden tar bort måltiden |
 | `livsmedel.js` | Laddar `data/livsmedel.json` och söker (diakritik-okänslig) |
 | `foto.js` | Kamera/bildval, nedskalning, anrop till analys, miniatyr ≤ 30 kB |
 | `vikt.js` | Viktlogg och graf |

@@ -155,6 +155,35 @@
     </div>
   </main>
 
+  <main id="view-redigera" class="app-view" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="red-tillbaka" type="button">← Tillbaka</button>
+      <div class="brand">Ändra</div>
+      <span class="topbar-plats" aria-hidden="true"></span>
+    </header>
+    <div class="page">
+      <form id="form-redigera" class="form" novalidate>
+        <h2 id="red-namn" class="val-namn"></h2>
+        <label for="red-gram">Mängd (gram)</label>
+        <input id="red-gram" type="text" inputmode="decimal" autocomplete="off">
+        <section class="mal-ruta" aria-live="polite">
+          <span class="muted small">Det här blir</span>
+          <span class="mal-siffra"><span id="red-kcal" class="num">–</span> <span class="enhet">kcal</span></span>
+        </section>
+        <p id="red-msg" class="msg" role="status" aria-live="polite"></p>
+        <button class="btn primary" type="submit">Spara</button>
+      </form>
+      <button class="btn fara" id="red-ta-bort" type="button">Ta bort</button>
+      <div id="red-bekrafta" class="bekrafta" hidden>
+        <p id="red-fraga" class="bekrafta-fraga"></p>
+        <div class="tva">
+          <button class="btn ghost" id="red-nej" type="button">Avbryt</button>
+          <button class="btn fara-fylld" id="red-ja" type="button">Ta bort</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <main id="view-app" class="app-view" hidden>
     <header class="topbar">
       <div class="brand"><img src="icons/icon.svg" alt="" width="32" height="32"> Kaloriappen</div>
@@ -199,6 +228,7 @@
   <script src="livsmedel.js"></script>
   <script src="profil.js"></script>
   <script src="maltid.js"></script>
+  <script src="redigera.js"></script>
   <script src="idag.js"></script>
   <script src="app.js"></script>
 </body>

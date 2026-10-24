@@ -168,7 +168,7 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 .maltid-huvud h3 { margin: 0; font-size: 1rem; }
 .maltid-huvud .num { font-family: var(--mono); font-weight: 600; }
 .rader { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
-.rad { display: grid; grid-template-columns: minmax(0, 1fr) auto 4.5em; gap: 10px; align-items: baseline; font-size: .95rem; }
+.rader li { font-size: .95rem; }
 .rad-namn { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rad-gram, .rad-kcal { font-family: var(--mono); font-size: .85rem; color: var(--text-2); text-align: right; }
 .rad-kcal { color: var(--text); }
@@ -176,3 +176,15 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 .lagg-till { margin-top: 8px; min-height: 44px; padding: 0; background: none; border: 0; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
 #btn-logout { width: 100%; }
 @media (prefers-reduced-motion: reduce) { .stapel-fyllning { transition: none; } }
+
+/* Ändra och ta bort */
+.rad-knapp {
+  width: 100%; min-height: 44px; padding: 4px 0; background: none; border: 0; color: inherit; font: inherit; text-align: left; cursor: pointer;
+  display: grid; grid-template-columns: minmax(0, 1fr) auto 4.5em; gap: 10px; align-items: center;
+}
+.rad-knapp:active { background: var(--surface-2); }
+.btn.fara { width: 100%; background: transparent; color: var(--danger); border-color: var(--border); margin-top: 8px; }
+.btn.fara-fylld { background: var(--danger); color: var(--surface); }
+.bekrafta { margin-top: 8px; padding: 14px; border-radius: 16px; border: 1px solid var(--danger); background: var(--surface); }
+.bekrafta-fraga { margin: 0; font-weight: 700; }
+.bekrafta .btn { width: 100%; margin-top: 12px; }
