@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const VERSION = 'T-15';
+  const VERSION = 'T-14';
   const $ = (id) => document.getElementById(id);
   const THEME_KEY = 'kalori-theme';
 
@@ -103,10 +103,13 @@
     window.KaloriRedigera.setup(sb, { klar: visaApp, avbryt: visaApp });
     window.KaloriFoto.setup(sb, { klar: visaApp, avbryt: visaApp });
     window.KaloriTraning.setup(sb, { klar: visaApp, avbryt: visaApp, viktKg: () => data.viktKg });
+    // Ny vikt ändrar dagsmålet, så profil och vikt hämtas om (US-09 AC2)
+    window.KaloriVikt.setup(sb, { klar: laddaProfil, avbryt: visaApp, malvikt: () => data.profil ? Number(data.profil.malvikt_kg) : null });
     window.KaloriIdag.setup(sb, {
       loggaMat: (o) => window.KaloriMaltid.oppna(o),
       redigera: (r) => window.KaloriRedigera.oppna(r),
-      traning: (o) => window.KaloriTraning.oppna(o)
+      traning: (o) => window.KaloriTraning.oppna(o),
+      vikt: (o) => window.KaloriVikt.oppna(o)
     });
 
     sb.auth.onAuthStateChange((_event, session) => render(session));
@@ -163,6 +166,7 @@
       window.KaloriIdag.setUser(session.user.id);
       window.KaloriFoto.setUser(session.user.id);
       window.KaloriTraning.setUser(session.user.id);
+      window.KaloriVikt.setUser(session.user.id);
       if (aktuellAnvandare !== session.user.id) {
         aktuellAnvandare = session.user.id;
         laddaProfil();

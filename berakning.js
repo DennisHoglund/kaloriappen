@@ -139,7 +139,23 @@
     return m === null ? null : Math.round(m * viktKg * minuter / 60);
   }
 
-  const api = { AKTIVITET, GOLV, KCAL_PER_KG, alder, bmr, maxTakt, dagsmal, dygnUTC, flyttaDag, met, forbranning, tempo, fart };
+  // ---------- Vikt (US-10) ----------
+  function dagarMellan(fran, till) {
+    const d = (s) => { const [a, m, dd] = s.split('-').map(Number); return Date.UTC(a, m - 1, dd); };
+    return Math.round((d(till) - d(fran)) / 86400000);
+  }
+
+  // Medelvärde av mätningarna de senaste `dagar` dagarna (inklusive dagen), för varje mätning
+  function glidandeMedel(punkter, dagar = 7) {
+    const p = punkter.slice().sort((a, b) => a.datum.localeCompare(b.datum));
+    return p.map((x) => {
+      const fonster = p.filter((y) => y.datum <= x.datum && dagarMellan(y.datum, x.datum) < dagar);
+      const medel = fonster.reduce((s, y) => s + Number(y.vikt), 0) / fonster.length;
+      return { datum: x.datum, medel: Math.round(medel * 10) / 10 };
+    });
+  }
+
+  const api = { AKTIVITET, GOLV, KCAL_PER_KG, alder, bmr, maxTakt, dagsmal, dygnUTC, flyttaDag, met, forbranning, tempo, fart, dagarMellan, glidandeMedel };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KaloriBerakning = api;
 })(typeof window !== 'undefined' ? window : globalThis);

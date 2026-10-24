@@ -5,8 +5,8 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 96 |
-| **Automatiserade** | 92 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 106 |
+| **Automatiserade** | 102 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 4 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
@@ -124,6 +124,21 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-SOK-11](testfall/TC-SOK-11.md) | [kcal räknas från kcal per 100 g och gram](testfall/TC-SOK-11.md) | Hög | 🤖 |
 | [TC-SOK-12](testfall/TC-SOK-12.md) | [Tillbaka stänger utan att spara](testfall/TC-SOK-12.md) | Medel | 🤖 |
 | [TC-SOK-13](testfall/TC-SOK-13.md) | [Livsmedlen kan inte laddas ger begripligt fel](testfall/TC-SOK-13.md) | Låg | 🤖 |
+
+## Vikt
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-VIK-01](testfall/TC-VIK-01.md) | [Logga vikt, ny mätning samma dag ersätter](testfall/TC-VIK-01.md) | Hög | 🤖 |
+| [TC-VIK-02](testfall/TC-VIK-02.md) | [Ny vikt uppdaterar dagsmålet](testfall/TC-VIK-02.md) | Hög | 🤖 |
+| [TC-VIK-03](testfall/TC-VIK-03.md) | [Grafen visar mätningar, medel och målvikt](testfall/TC-VIK-03.md) | Hög | 🤖 |
+| [TC-VIK-04](testfall/TC-VIK-04.md) | [Period 30 dagar, 90 dagar eller allt](testfall/TC-VIK-04.md) | Medel | 🤖 |
+| [TC-VIK-05](testfall/TC-VIK-05.md) | [Glidande medel över 7 dagar](testfall/TC-VIK-05.md) | Hög | 🤖 |
+| [TC-VIK-06](testfall/TC-VIK-06.md) | [En mätning ger förklaring i stället för graf](testfall/TC-VIK-06.md) | Låg | 🤖 |
+| [TC-VIK-07](testfall/TC-VIK-07.md) | [Ogiltig vikt stoppas](testfall/TC-VIK-07.md) | Medel | 🤖 |
+| [TC-VIK-08](testfall/TC-VIK-08.md) | [Vikt på en tidigare dag](testfall/TC-VIK-08.md) | Medel | 🤖 |
+| [TC-VIK-09](testfall/TC-VIK-09.md) | [Viktkortet visar senaste vikt och förändring](testfall/TC-VIK-09.md) | Medel | 🤖 |
+| [TC-VIK-10](testfall/TC-VIK-10.md) | [Dagar mellan två datum](testfall/TC-VIK-10.md) | Låg | 🤖 |
 
 ## Träning
 

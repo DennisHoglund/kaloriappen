@@ -215,3 +215,26 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 .tra-knapp { grid-template-columns: minmax(0, 1fr) 4.5em; }
 .tra-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .tra-text .rad-gram { text-align: left; }
+
+/* Vikt och graf */
+.vikt-kort { margin-top: 10px; }
+.graf-kort { padding: 16px; }
+.graf-huvud { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.graf-huvud h2 { margin: 0; font-size: 1rem; }
+.segment-sma { margin: 0; }
+.segment-sma label { min-height: 36px; min-width: 52px; padding: 0 8px; font-size: .85rem; flex: 0 0 auto; }
+#vik-graf { margin-top: 8px; }
+.graf { width: 100%; height: auto; display: block; }
+.graf-axel { stroke: var(--border); stroke-width: 1; }
+.graf-text { fill: var(--text-2); font: 11px var(--mono); }
+.graf-punkt { fill: var(--text-2); opacity: .6; }
+.graf-medel { fill: none; stroke: var(--accent); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.graf-mal { stroke: var(--text-2); stroke-width: 1.5; stroke-dasharray: 5 5; }
+.graf-tom { margin: 16px 0; text-align: center; }
+.graf-forklaring { margin: 8px 0 0; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.prick { width: 8px; height: 8px; border-radius: 50%; background: var(--text-2); opacity: .6; display: inline-block; }
+.streck { width: 18px; height: 0; border-top: 3px solid var(--accent); display: inline-block; }
+.streck.streckad { border-top: 2px dashed var(--text-2); }
+.vik-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.vik-rad { display: flex; justify-content: space-between; padding: 10px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); }
+.vik-rad .num { font-family: var(--mono); }

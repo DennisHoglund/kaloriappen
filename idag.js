@@ -47,6 +47,15 @@
     }).join('');
   }
 
+  function ritaVikt(v) {
+    $('ida-vikt').textContent = v ? v.vikt.toLocaleString('sv-SE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' kg' : '';
+    if (!v) { $('ida-vikt-info').textContent = 'Ingen vikt loggad'; return; }
+    const f = v.forandring;
+    const delar = ['Senast ' + window.KaloriVikt.kortDatum(v.datum)];
+    if (v.antal > 1) delar.push((f > 0 ? '+' : f < 0 ? '−' : '±') + Math.abs(f).toLocaleString('sv-SE', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' kg sedan ' + window.KaloriVikt.kortDatum(v.sedan));
+    $('ida-vikt-info').textContent = delar.join(' · ');
+  }
+
   async function hamtaDag(d) {
     const [start, slut] = B.dygnUTC(d);
     const m = await sb.from('kalori_maltid').select('id,tid,typ,kalla,miniatyr').eq('user_id', userId).gte('tid', start).lt('tid', slut).order('tid');
@@ -112,6 +121,7 @@
     $('ida-tillbaka-idag').hidden = datum === idag;
     $('ida-fel').hidden = true;
     const nr = ++laddning;
+    window.KaloriVikt.sammanfattning().then((v) => { if (nr === laddning) ritaVikt(v); }).catch(() => ritaVikt(null));
     try {
       const [maltider, pass] = await Promise.all([hamtaDag(datum), hamtaTraning(datum)]);
       if (nr === laddning) { rita(maltider); ritaTraning(pass); }
@@ -136,6 +146,7 @@
     });
     $('btn-logga-mat').addEventListener('click', () => opts.loggaMat({ datum }));
     $('btn-logga-traning').addEventListener('click', () => opts.traning({ datum }));
+    $('btn-vikt').addEventListener('click', () => opts.vikt({ datum }));
     $('ida-traning').addEventListener('click', (e) => {
       const b = e.target.closest('button.tra-knapp');
       const p = b && senasteTraning.find((x) => String(x.id) === b.dataset.id);

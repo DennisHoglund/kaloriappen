@@ -96,4 +96,24 @@ test.describe('Beräkning', () => {
     expect(B.fart(45, 15)).toBe(20);
     expect(B.tempo(30, 0)).toBeNull();
   });
+
+  test('glidande medel över 7 dagar jämnar ut dagliga svängningar', { annotation: { type: 'testfall', description: 'TC-VIK-05' } }, () => {
+    const p = [
+      { datum: '2026-10-01', vikt: 93.0 },
+      { datum: '2026-10-03', vikt: 92.0 },
+      { datum: '2026-10-05', vikt: 92.6 },
+      { datum: '2026-10-07', vikt: 91.8 },  // 01–07: 93,0 92,0 92,6 91,8
+      { datum: '2026-10-09', vikt: 91.6 }   // 03–09: 92,0 92,6 91,8 91,6 (01 faller bort)
+    ];
+    expect(B.glidandeMedel(p, 7).map((x) => x.medel)).toEqual([93.0, 92.5, 92.5, 92.4, 92.0]);
+    expect(B.glidandeMedel([], 7)).toEqual([]);
+    // osorterad indata sorteras
+    expect(B.glidandeMedel([p[1], p[0]], 7).map((x) => x.datum)).toEqual(['2026-10-01', '2026-10-03']);
+  });
+
+  test('dagar mellan två datum', { annotation: { type: 'testfall', description: 'TC-VIK-10' } }, () => {
+    expect(B.dagarMellan('2026-10-01', '2026-10-24')).toBe(23);
+    expect(B.dagarMellan('2026-10-24', '2026-10-24')).toBe(0);
+    expect(B.dagarMellan('2026-10-25', '2026-10-26')).toBe(1); // över sommartidsbytet
+  });
 });

@@ -40,8 +40,8 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
-| T-13 | Logga vikt (en per dag, ny ersätter). Aktuell vikt och dagsmål uppdateras | US-09 | – | ⬜ |
-| T-14 | Viktgraf i SVG: vikt, 7-dagars medel, linje för målvikt, period 30/90/allt. Kort på dagsöversikten | US-10 | 📱 | ⬜ |
+| T-13 | Logga vikt (en per dag, ny ersätter). Aktuell vikt och dagsmål uppdateras | US-09 | – | 📱 |
+| T-14 | Viktgraf i SVG: vikt, 7-dagars medel, linje för målvikt, period 30/90/allt. Kort på dagsöversikten | US-10 | 📱 | 📱 |
 
 ## Fas 5 – Träning
 

@@ -48,7 +48,7 @@ iPhone (PWA, GitHub Pages)
 | `redigera.js` | Ändra mängd (kcal i samma proportion) och ta bort rad med bekräftelse i appen. Sista raden tar bort måltiden |
 | `livsmedel.js` | Laddar `data/livsmedel.json` och söker (diakritik-okänslig) |
 | `foto.js` | Kamera/bildval (`capture="environment"`), nedskalning till 1024 px, anrop till `kalori-analys` via `sb.functions.invoke`, justeringsvy (gram räknar om kcal proportionellt, ändra kcal/namn, ta bort/lägg till rad), miniatyr ≤ 30 kB i `kalori-foton`. Misslyckad uppladdning av miniatyr stoppar inte sparningen |
-| `vikt.js` | Viktlogg och graf |
+| `vikt.js` | Logga vikt (upsert per dag, ny vikt hämtar om profilen så att dagsmålet räknas om), SVG-graf med mätningar, 7-dagars medel och målvikt, period 30/90/allt, senaste mätningar, viktkort i dagsöversikten |
 | `traning.js` | Logga, ändra och ta bort träning. Förbränning (MET × vikt × tid) räknas vid sparning och lagras. Träningskortet i dagsöversikten ritas av `idag.js` |
 | `sw.js` | Appfiler nätet först, CDN cache först. Höj `kalori-vN` vid ändring |
 | `manifest.webmanifest`, `icons/` | PWA och egen ikon |

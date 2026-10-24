@@ -201,6 +201,36 @@
     </div>
   </main>
 
+  <main id="view-vikt" class="app-view" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="vik-tillbaka" type="button">← Tillbaka</button>
+      <div class="brand">Vikt</div>
+      <span class="topbar-plats" aria-hidden="true"></span>
+    </header>
+    <div class="page">
+      <form id="form-vikt" class="form" novalidate>
+        <label for="vik-vikt">Vikt <span id="vik-datum">idag</span> (kg)</label>
+        <input id="vik-vikt" type="text" inputmode="decimal" autocomplete="off">
+        <p id="vik-msg" class="msg" role="status" aria-live="polite"></p>
+        <button class="btn primary" type="submit">Spara vikt</button>
+      </form>
+      <section class="card graf-kort">
+        <div class="graf-huvud">
+          <h2>Utveckling</h2>
+          <div class="segment segment-sma" role="radiogroup" aria-label="Period">
+            <input type="radio" name="vik-period" id="vik-period-30" value="30" checked><label for="vik-period-30">30 d</label>
+            <input type="radio" name="vik-period" id="vik-period-90" value="90"><label for="vik-period-90">90 d</label>
+            <input type="radio" name="vik-period" id="vik-period-0" value="0"><label for="vik-period-0">Allt</label>
+          </div>
+        </div>
+        <div id="vik-graf"></div>
+        <p class="muted small graf-forklaring"><span class="prick"></span> mätning · <span class="streck"></span> 7-dagars medel · <span class="streck streckad"></span> målvikt</p>
+      </section>
+      <h2 class="lista-rubrik">Senaste mätningar</h2>
+      <ul id="vik-lista" class="vik-lista"></ul>
+    </div>
+  </main>
+
   <main id="view-traning" class="app-view" hidden>
     <header class="topbar">
       <button class="icon-btn" id="tra-tillbaka" type="button">← Tillbaka</button>
@@ -322,6 +352,12 @@
         <button type="button" class="lagg-till" id="btn-logga-traning">+ Logga träning</button>
       </section>
 
+      <section class="maltid vikt-kort" aria-label="Vikt">
+        <header class="maltid-huvud"><h3>Vikt</h3><span id="ida-vikt" class="num"></span></header>
+        <p id="ida-vikt-info" class="muted small tom"></p>
+        <button type="button" class="lagg-till" id="btn-vikt">Logga vikt och se graf</button>
+      </section>
+
       <p class="muted small">Inloggad som <span id="user-email"></span></p>
       <p class="muted small" id="version"></p>
       <p class="muted small kalla">Livsmedelsdata: Livsmedelsverkets livsmedelsdatabas (CC BY 4.0)</p>
@@ -338,6 +374,7 @@
   <script src="maltid.js"></script>
   <script src="foto.js"></script>
   <script src="traning.js"></script>
+  <script src="vikt.js"></script>
   <script src="redigera.js"></script>
   <script src="idag.js"></script>
   <script src="app.js"></script>
