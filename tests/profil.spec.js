@@ -45,33 +45,33 @@ test.describe('Profil', () => {
     await fyllProfil(page, { vikt: '92,4' });
     await page.getByRole('button', { name: 'Spara' }).click();
     await expect(page.locator('#view-app')).toBeVisible();
-    await expect(page.locator('#app-mal')).toHaveText('1 980'); // 92,4 kg ger lite högre mål än 92
+    await expect(page.locator('#ida-mal')).toHaveText('1 980'); // 92,4 kg ger lite högre mål än 92
     expect(api.tabeller.kalori_profil).toHaveLength(1);
     expect(api.tabeller.kalori_profil[0]).toMatchObject({ user_id: ANVANDARE.id, kon: 'man', langd_cm: 182, aktivitet: 'latt', malvikt_kg: 85, takt_kg_vecka: 0.5, fodelsedatum: '1980-05-01' });
     expect(api.tabeller.kalori_vikt).toEqual([{ user_id: ANVANDARE.id, datum: '2026-10-24', vikt_kg: 92.4 }]);
     await page.reload();
-    await expect(page.locator('#app-mal')).toHaveText('1 980');
+    await expect(page.locator('#ida-mal')).toHaveText('1 980');
     await bild(page, 'Dagsmålet efter sparad profil');
   });
 
   test('ändra profil räknar om dagsmålet', { annotation: { type: 'testfall', description: 'TC-PRO-04' } }, async ({ appen: page, api }) => {
-    await expect(page.locator('#app-mal')).toHaveText('1 970');
-    await page.getByRole('button', { name: 'Ändra profil' }).click();
+    await expect(page.locator('#ida-mal')).toHaveText('1 970');
+    await page.getByRole('button', { name: 'Profil', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Din profil' })).toBeVisible();
     await expect(page.getByLabel('Vikt nu (kg)')).toHaveValue('92');
     await page.getByLabel('Aktivitet till vardags').selectOption('mattlig');
     await expect(page.locator('#pro-mal')).toHaveText('2 290');
     await page.getByRole('button', { name: 'Spara' }).click();
-    await expect(page.locator('#app-mal')).toHaveText('2 290');
+    await expect(page.locator('#ida-mal')).toHaveText('2 290');
     expect(api.tabeller.kalori_profil).toHaveLength(1);
     expect(api.tabeller.kalori_profil[0].aktivitet).toBe('mattlig');
   });
 
   test('avbryt lämnar profilen oförändrad', { annotation: { type: 'testfall', description: 'TC-PRO-05' } }, async ({ appen: page, api }) => {
-    await page.getByRole('button', { name: 'Ändra profil' }).click();
+    await page.getByRole('button', { name: 'Profil', exact: true }).click();
     await page.getByLabel('Aktivitet till vardags').selectOption('hog');
     await page.getByRole('button', { name: 'Avbryt' }).click();
-    await expect(page.locator('#app-mal')).toHaveText('1 970');
+    await expect(page.locator('#ida-mal')).toHaveText('1 970');
     expect(api.tabeller.kalori_profil[0].aktivitet).toBe('latt');
   });
 

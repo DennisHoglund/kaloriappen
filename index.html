@@ -107,6 +107,7 @@
         <button class="btn primary" type="submit">Spara</button>
         <button class="btn ghost" id="pro-avbryt" type="button" hidden>Avbryt</button>
       </form>
+      <button class="btn ghost" id="btn-logout" type="button">Logga ut</button>
     </div>
   </main>
 
@@ -161,19 +162,32 @@
         <button class="icon-btn" id="btn-theme" type="button" aria-label="Byt tema">
           <span id="theme-label">Auto</span>
         </button>
-        <button class="icon-btn" id="btn-logout" type="button">Logga ut</button>
+        <button class="icon-btn" id="btn-profil" type="button">Profil</button>
       </div>
     </header>
     <div class="page">
-      <section class="card mal-kort">
-        <span class="muted small">Dagsmål</span>
-        <span class="mal-siffra"><span id="app-mal" class="num">–</span> <span class="enhet">kcal</span></span>
-        <p id="app-mal-info" class="muted small"></p>
-        <button class="btn ghost" id="btn-profil" type="button">Ändra profil</button>
-      </section>
+      <nav class="dagval" aria-label="Välj dag">
+        <button class="icon-btn" id="ida-forra" type="button" aria-label="Föregående dag">‹</button>
+        <h1 id="ida-datum" class="dagval-datum">Idag</h1>
+        <button class="icon-btn" id="ida-nasta" type="button" aria-label="Nästa dag">›</button>
+      </nav>
+      <button class="lank" id="ida-tillbaka-idag" type="button" hidden>Tillbaka till idag</button>
+
+      <div class="rutor">
+        <div class="ruta"><span class="ruta-etikett">Ätit</span><span id="ida-atit" class="ruta-tal num">–</span></div>
+        <div class="ruta"><span class="ruta-etikett">Mål</span><span id="ida-mal" class="ruta-tal num">–</span></div>
+        <div class="ruta" id="ida-kvar-ruta"><span class="ruta-etikett" id="ida-kvar-etikett">Kvar</span><span id="ida-kvar" class="ruta-tal num accent">–</span></div>
+      </div>
+      <div id="ida-stapel" class="stapel" role="img" aria-label=""><div id="ida-stapel-fyllning" class="stapel-fyllning"></div></div>
+      <p id="ida-fel" class="msg error" hidden>Kunde inte hämta dagens måltider. Kontrollera nätet.</p>
+
       <button class="btn primary" id="btn-logga-mat" type="button">Logga mat</button>
-      <p class="muted small">Inloggad som <span id="user-email"></span>. Dagsöversikten kommer i nästa steg.</p>
+
+      <div id="ida-maltider" class="maltider"></div>
+
+      <p class="muted small">Inloggad som <span id="user-email"></span></p>
       <p class="muted small" id="version"></p>
+      <p class="muted small kalla">Livsmedelsdata: Livsmedelsverkets livsmedelsdatabas (CC BY 4.0)</p>
     </div>
   </main>
 
@@ -185,6 +199,7 @@
   <script src="livsmedel.js"></script>
   <script src="profil.js"></script>
   <script src="maltid.js"></script>
+  <script src="idag.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

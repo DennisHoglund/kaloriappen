@@ -64,7 +64,33 @@
     };
   }
 
-  const api = { AKTIVITET, GOLV, KCAL_PER_KG, alder, bmr, maxTakt, dagsmal };
+  // Minuter som Stockholm ligger före UTC vid ett visst ögonblick (60 eller 120)
+  function stockholmOffset(ms) {
+    const delar = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Stockholm', hourCycle: 'h23',
+      year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }).formatToParts(new Date(ms));
+    const v = Object.fromEntries(delar.map((d) => [d.type, d.value]));
+    return (Date.UTC(+v.year, +v.month - 1, +v.day, +v.hour, +v.minute) - Math.floor(ms / 60000) * 60000) / 60000;
+  }
+
+  // UTC-tid för midnatt svensk tid ett visst datum
+  function midnattUTC(datum) {
+    const [a, m, d] = datum.split('-').map(Number);
+    const naiv = Date.UTC(a, m - 1, d);
+    return naiv - stockholmOffset(naiv - 2 * 3600000) * 60000;
+  }
+
+  // [början, slut) för ett dygn svensk tid (D-15), som ISO-strängar i UTC
+  function dygnUTC(datum) {
+    return [new Date(midnattUTC(datum)).toISOString(), new Date(midnattUTC(flyttaDag(datum, 1))).toISOString()];
+  }
+
+  // Datum ± antal dagar (ÅÅÅÅ-MM-DD)
+  function flyttaDag(datum, dagar) {
+    const [a, m, d] = datum.split('-').map(Number);
+    return new Date(Date.UTC(a, m - 1, d + dagar)).toISOString().slice(0, 10);
+  }
+
+  const api = { AKTIVITET, GOLV, KCAL_PER_KG, alder, bmr, maxTakt, dagsmal, dygnUTC, flyttaDag };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KaloriBerakning = api;
 })(typeof window !== 'undefined' ? window : globalThis);

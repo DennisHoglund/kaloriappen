@@ -18,7 +18,7 @@
 
 | # | Gör så här | Förväntat resultat |
 |---|---|---|
-| 1 | Tryck **Logga ut** | Inloggningen visas |
+| 1 | Tryck **Profil** och sedan **Logga ut** längst ner | Inloggningen visas |
 | 2 | Stäng och öppna appen | Fortfarande utloggad |
 
 ## Resultat

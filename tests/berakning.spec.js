@@ -53,4 +53,14 @@ test.describe('Beräkning', () => {
     expect(B.dagsmal({ ...DENNIS, aktivitet: 'okand' }, IDAG)).toBeNull();
     expect(B.dagsmal({ ...DENNIS, fodelsedatum: '' }, IDAG)).toBeNull();
   });
+
+  test('ett dygn räknas i svensk tid, även när sommartiden slutar', { annotation: { type: 'testfall', description: 'TC-IDA-07' } }, () => {
+    expect(B.dygnUTC('2026-10-24')).toEqual(['2026-10-23T22:00:00.000Z', '2026-10-24T22:00:00.000Z']);
+    expect(B.dygnUTC('2026-10-25')).toEqual(['2026-10-24T22:00:00.000Z', '2026-10-25T23:00:00.000Z']); // 25 timmar
+    expect(B.dygnUTC('2026-03-29')).toEqual(['2026-03-28T23:00:00.000Z', '2026-03-29T22:00:00.000Z']); // 23 timmar
+    expect(B.dygnUTC('2027-01-15')).toEqual(['2027-01-14T23:00:00.000Z', '2027-01-15T23:00:00.000Z']);
+    expect(B.flyttaDag('2026-10-24', -1)).toBe('2026-10-23');
+    expect(B.flyttaDag('2026-11-01', -1)).toBe('2026-10-31');
+    expect(B.flyttaDag('2026-12-31', 1)).toBe('2027-01-01');
+  });
 });

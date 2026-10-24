@@ -55,7 +55,7 @@ test.describe('Logga mat', () => {
     await oppnaSok(page);
     await page.getByLabel('Sök livsmedel').fill('banan');
     await page.getByRole('button', { name: /Banan/ }).click();
-    await expect(page.getByLabel('Lunch')).toBeChecked();
+    await expect(page.locator('#val-typ-lunch')).toBeChecked();
     const typ = (h) => page.evaluate((t) => window.KaloriMaltid.foreslagenTyp(new Date(t)), '2026-10-24T' + h + ':00+02:00');
     expect(await typ('07:30')).toBe('frukost');
     expect(await typ('12:00')).toBe('lunch');

@@ -18,7 +18,7 @@
 
 | # | Gör så här | Förväntat resultat |
 |---|---|---|
-| 1 | Tryck **Ändra profil**, ändra något och tryck **Avbryt** | Dagsmålet är som förut |
+| 1 | Tryck **Profil**, ändra något och tryck **Avbryt** | Dagsmålet är som förut |
 
 ## Resultat
 

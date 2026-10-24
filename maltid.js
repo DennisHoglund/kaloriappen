@@ -16,6 +16,8 @@
   let lista = [];
   let senaste = [];  // [{ nr, namn, kcal100, gram }]
   let valt = null;   // { nr, namn, kcal100 }
+  let forvaltTyp = null;
+  let datum = null;  // dagen måltiden sparas på (null = nu)
 
   // Föreslagen måltid efter tid på dagen
   function foreslagenTyp(d = new Date()) {
@@ -57,7 +59,7 @@
     $('val-namn').textContent = valt.namn;
     $('val-kcal100').textContent = fmt(valt.kcal100) + ' kcal per 100 g';
     $('sok-gram').value = forvaltGram ? fmt(forvaltGram, 1) : '100';
-    const typ = foreslagenTyp();
+    const typ = forvaltTyp || foreslagenTyp();
     document.querySelectorAll('input[name="val-typ"]').forEach((r) => { r.checked = r.value === typ; });
     setMsg('');
     raknaOm();
@@ -88,7 +90,7 @@
     knapp.disabled = true;
     setMsg('Sparar…');
     try {
-      const m = await sb.from('kalori_maltid').insert({ id, user_id: userId, tid: new Date().toISOString(), typ: typEl.value, kalla: 'manuell' });
+      const m = await sb.from('kalori_maltid').insert({ id, user_id: userId, tid: tidFor(datum), typ: typEl.value, kalla: 'manuell' });
       if (m.error) throw m.error;
       const r = await sb.from('kalori_maltid_rad').insert({ maltid_id: id, user_id: userId, namn: valt.namn, livsmedel_nr: valt.nr, gram: g, kcal });
       if (r.error) {
@@ -104,6 +106,13 @@
     const typNamn = TYPER.find((t) => t[0] === typEl.value)[1].toLowerCase();
     window.KaloriApp.toast(valt.namn + ' (' + fmt(kcal) + ' kcal) sparat till ' + typNamn);
     if (klar) klar();
+  }
+
+  // Tid att spara: nu för idag, annars kl 12 svensk tid den valda dagen (D-21)
+  function tidFor(d) {
+    if (!d || d === window.KaloriApp.idag()) return new Date().toISOString();
+    const start = Date.parse(window.KaloriBerakning.dygnUTC(d)[0]);
+    return new Date(start + 12 * 3600000).toISOString();
   }
 
   // Senast loggade livsmedel (unika), nyaste först
@@ -122,8 +131,10 @@
     }).slice(0, 8).map((x) => ({ nr: x.livsmedel_nr, namn: x.namn, gram: Number(x.gram), kcal100: Number(x.gram) > 0 ? Math.round(Number(x.kcal) * 1000 / Number(x.gram)) / 10 : 0 }));
   }
 
-  async function oppna() {
+  async function oppna(opts = {}) {
     valt = null;
+    forvaltTyp = opts.typ || null;
+    datum = opts.datum || null;
     $('sok-falt').value = '';
     $('sok-traffar').innerHTML = '';
     $('sok-rubrik').textContent = '';

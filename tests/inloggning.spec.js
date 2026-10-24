@@ -48,6 +48,7 @@ test.describe('Inloggning', () => {
   });
 
   test('logga ut tar en tillbaka till inloggningen', { annotation: { type: 'testfall', description: 'TC-INL-06' } }, async ({ appen: page }) => {
+    await page.getByRole('button', { name: 'Profil', exact: true }).click();
     await page.getByRole('button', { name: 'Logga ut' }).click();
     await expect(page.locator('#view-login')).toBeVisible();
     await page.reload();

@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-01](../../specs/stories.md) |
-| **Playwright** | [`tests/inloggning.spec.js`](../../tests/inloggning.spec.js#L57) – *ingen kontakt med servern ger ett begripligt fel* |
+| **Playwright** | [`tests/inloggning.spec.js`](../../tests/inloggning.spec.js#L58) – *ingen kontakt med servern ger ett begripligt fel* |
 
 ## Förutsättningar
 

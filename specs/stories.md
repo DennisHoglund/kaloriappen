@@ -26,6 +26,7 @@ Status: **v1.1** (2026-10-24) – stories med acceptanskriterier, granskade för
 | D-18 | Gemini gratisnivå accepteras, inklusive att Google kan använda matfotona |
 | D-19 | Profilen lagrar födelsedatum; åldern räknas fram |
 | D-20 | Sökningen ignorerar versaler och accenter (å/ä/ö hittas med a/o). Föreslagen måltid efter klockan: frukost före 10, lunch 10–14, mellanmål 14–17, middag 17–21, annars mellanmål |
+| D-21 | Bläddrar man till en tidigare dag och loggar mat sparas måltiden den dagen kl 12 svensk tid. Logga ut ligger i profilen |
 
 ## Stories
 

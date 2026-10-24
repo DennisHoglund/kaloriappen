@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const VERSION = 'T-08';
+  const VERSION = 'T-09';
   const $ = (id) => document.getElementById(id);
   const THEME_KEY = 'kalori-theme';
 
@@ -100,7 +100,7 @@
     window.KaloriProfil.setup(sb, { klar: laddaProfil, avbryt: visaApp });
     $('btn-profil').addEventListener('click', () => window.KaloriProfil.oppna(data.profil, data.viktKg, false));
     window.KaloriMaltid.setup(sb, { klar: visaApp, avbryt: visaApp });
-    $('btn-logga-mat').addEventListener('click', () => window.KaloriMaltid.oppna());
+    window.KaloriIdag.setup(sb, { loggaMat: (o) => window.KaloriMaltid.oppna(o) });
 
     sb.auth.onAuthStateChange((_event, session) => render(session));
     sb.auth.getSession().then(({ data }) => render(data.session)).catch(() => render(null));
@@ -114,15 +114,16 @@
   let data = { profil: null, viktKg: null };
   let aktuellAnvandare = null;
 
-  function visaApp() {
-    const B = window.KaloriBerakning;
+  function dagsmalNu() {
     const p = data.profil;
-    const r = p && B.dagsmal({ kon: p.kon, viktKg: data.viktKg, langdCm: p.langd_cm, fodelsedatum: p.fodelsedatum,
+    const r = p && window.KaloriBerakning.dagsmal({ kon: p.kon, viktKg: data.viktKg, langdCm: p.langd_cm, fodelsedatum: p.fodelsedatum,
       aktivitet: p.aktivitet, taktKgVecka: Number(p.takt_kg_vecka) }, idag());
-    $('app-mal').textContent = r ? Math.round(r.mal).toLocaleString('sv-SE') : '–';
-    $('app-mal-info').textContent = r ? ('Vikt ' + data.viktKg.toLocaleString('sv-SE') + ' kg · mål ' + Number(p.malvikt_kg).toLocaleString('sv-SE') + ' kg · ' +
-      Number(p.takt_kg_vecka).toLocaleString('sv-SE') + ' kg/vecka' + (r.golv ? ' · lägsta säkra nivå' : '')) : '';
+    return r ? r.mal : null;
+  }
+
+  function visaApp() {
     visa('view-app');
+    window.KaloriIdag.visa({ mal: dagsmalNu() });
   }
 
   async function laddaProfil() {
@@ -152,6 +153,7 @@
       $('user-email').textContent = session.user.email || '';
       window.KaloriProfil.setUser(session.user.id);
       window.KaloriMaltid.setUser(session.user.id);
+      window.KaloriIdag.setUser(session.user.id);
       if (aktuellAnvandare !== session.user.id) {
         aktuellAnvandare = session.user.id;
         laddaProfil();

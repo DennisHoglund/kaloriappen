@@ -5,8 +5,8 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 47 |
-| **Automatiserade** | 45 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 57 |
+| **Automatiserade** | 55 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 2 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
@@ -48,6 +48,21 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-PRO-07](testfall/TC-PRO-07.md) | [För hög takt sänks till 1 % av vikten med förklaring](testfall/TC-PRO-07.md) | Hög | 🤖 |
 | [TC-PRO-08](testfall/TC-PRO-08.md) | [Ogiltiga värden stoppas innan något sparas](testfall/TC-PRO-08.md) | Medel | 🤖 |
 | [TC-PRO-09](testfall/TC-PRO-09.md) | [Sparfel behåller det man fyllt i](testfall/TC-PRO-09.md) | Medel | 🤖 |
+
+## Dagsöversikt
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-IDA-01](testfall/TC-IDA-01.md) | [Ätit, mål och kvar för dagen](testfall/TC-IDA-01.md) | Hög | 🤖 |
+| [TC-IDA-02](testfall/TC-IDA-02.md) | [Måltiderna grupperas per typ med summa](testfall/TC-IDA-02.md) | Hög | 🤖 |
+| [TC-IDA-03](testfall/TC-IDA-03.md) | [Bläddra mellan dagar](testfall/TC-IDA-03.md) | Hög | 🤖 |
+| [TC-IDA-04](testfall/TC-IDA-04.md) | [Ny måltid syns direkt](testfall/TC-IDA-04.md) | Hög | 🤖 |
+| [TC-IDA-05](testfall/TC-IDA-05.md) | [Över målet visas tydligt](testfall/TC-IDA-05.md) | Medel | 🤖 |
+| [TC-IDA-06](testfall/TC-IDA-06.md) | [Måltider kring midnatt hamnar på rätt dag](testfall/TC-IDA-06.md) | Medel | 🤖 |
+| [TC-IDA-07](testfall/TC-IDA-07.md) | [Ett dygn räknas i svensk tid](testfall/TC-IDA-07.md) | Medel | 🤖 |
+| [TC-IDA-08](testfall/TC-IDA-08.md) | [Lägg till från en måltid förväljer måltiden](testfall/TC-IDA-08.md) | Medel | 🤖 |
+| [TC-IDA-09](testfall/TC-IDA-09.md) | [Loggning på en tidigare dag sparas på den dagen](testfall/TC-IDA-09.md) | Medel | 🤖 |
+| [TC-IDA-10](testfall/TC-IDA-10.md) | [Fel vid hämtning ger begripligt meddelande](testfall/TC-IDA-10.md) | Låg | 🤖 |
 
 ## Logga mat
 

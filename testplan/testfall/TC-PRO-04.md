@@ -18,7 +18,7 @@
 
 | # | Gör så här | Förväntat resultat |
 |---|---|---|
-| 1 | Tryck **Ändra profil** | Formuläret visas ifyllt, rubriken **Din profil** |
+| 1 | Tryck **Profil** | Formuläret visas ifyllt, rubriken **Din profil** |
 | 2 | Byt aktivitet och tryck **Spara** | Nytt dagsmål visas |
 
 ## Resultat

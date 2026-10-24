@@ -111,8 +111,7 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 }
 .segment input:checked + label { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .segment input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
-.mal-ruta, .mal-kort { margin-top: 12px; padding: 16px; border-radius: 16px; background: var(--surface-2); display: flex; flex-direction: column; gap: 4px; }
-.mal-kort { background: var(--surface); border: 1px solid var(--border); }
+.mal-ruta { margin-top: 12px; padding: 16px; border-radius: 16px; background: var(--surface-2); display: flex; flex-direction: column; gap: 4px; }
 .mal-siffra { font-size: 2.2rem; font-weight: 700; line-height: 1.1; }
 .mal-siffra .num { font-family: var(--mono); }
 .mal-siffra .enhet { font-size: 1rem; color: var(--text-2); font-weight: 600; }
@@ -147,3 +146,33 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
   max-width: 480px; margin: 0 auto; padding: 14px 16px; border-radius: 14px;
   background: var(--text); color: var(--bg); font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.25);
 }
+
+/* Dagsöversikt */
+.dagval { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.dagval .icon-btn { font-size: 1.4rem; line-height: 1; padding: 0; }
+.dagval .icon-btn:disabled { opacity: .35; cursor: default; }
+.dagval-datum { margin: 0; font-size: 1.4rem; text-align: center; flex: 1; }
+.lank { align-self: center; background: none; border: 0; color: var(--accent); font: inherit; font-weight: 600; min-height: 44px; cursor: pointer; }
+.rutor { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.ruta { padding: 14px 12px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+.ruta-etikett { font-size: .8rem; color: var(--text-2); font-weight: 600; }
+.ruta-tal { font-family: var(--mono); font-size: 1.35rem; font-weight: 600; }
+.ruta-tal.accent { color: var(--accent); }
+.ruta.over .ruta-tal { color: var(--danger); }
+.stapel { height: 10px; border-radius: 5px; background: var(--track); overflow: hidden; }
+.stapel-fyllning { height: 100%; width: 0; border-radius: 5px; background: var(--accent); transition: width .3s; }
+.stapel.over .stapel-fyllning { background: var(--danger); }
+.maltider { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.maltid { padding: 12px 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); }
+.maltid-huvud { display: flex; justify-content: space-between; align-items: baseline; }
+.maltid-huvud h3 { margin: 0; font-size: 1rem; }
+.maltid-huvud .num { font-family: var(--mono); font-weight: 600; }
+.rader { list-style: none; margin: 8px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.rad { display: grid; grid-template-columns: minmax(0, 1fr) auto 4.5em; gap: 10px; align-items: baseline; font-size: .95rem; }
+.rad-namn { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rad-gram, .rad-kcal { font-family: var(--mono); font-size: .85rem; color: var(--text-2); text-align: right; }
+.rad-kcal { color: var(--text); }
+.tom { margin: 6px 0 0; }
+.lagg-till { margin-top: 8px; min-height: 44px; padding: 0; background: none; border: 0; color: var(--accent); font: inherit; font-weight: 600; cursor: pointer; }
+#btn-logout { width: 100%; }
+@media (prefers-reduced-motion: reduce) { .stapel-fyllning { transition: none; } }
