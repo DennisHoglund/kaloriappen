@@ -8,7 +8,7 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
-| T-01 | Projektskelett: `CLAUDE.md`/`AGENTS.md`, `package.json`, Playwright-config, `tests/mock.js`, rapport-reporter, CI-workflow, `sw.js`, manifest, tom app som visar laddning | – | Pages Source = GitHub Actions | ⬜ |
+| T-01 | Projektskelett: `CLAUDE.md`/`AGENTS.md`, `package.json`, Playwright-config, `tests/mock.js`, rapport-reporter, CI-workflow, `sw.js`, manifest, tom app som visar laddning | – | Pages Source = GitHub Actions | ✅ |
 | T-02 | Blåbär-tema i `styles.css` (ljust + mörkt läge, temaknapp) och ikon (SVG + PNG 180/192/512/maskable). Ljust läge och ikon visas som förslag först | D-11 | Väljer ljust läge och ikon | ⬜ |
 | T-03 | `supabase/schema.sql`: alla `kalori_`-tabeller, index, RLS, grants, bucket och storage-policies. Ska gå att köra om | US-01 AC3 | Kör SQL:en | ⬜ |
 

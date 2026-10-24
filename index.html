@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="sv" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Kaloriappen</title>
+  <meta name="description" content="Mat, träning och vikt – bara för dig">
+  <meta name="theme-color" content="#0E1430">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Kaloriappen">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    try {
+      var t = localStorage.getItem('kalori-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
+</head>
+<body>
+
+  <main id="view-loading" class="center">
+    <div class="spinner" role="status" aria-label="Laddar"></div>
+  </main>
+
+  <main id="view-start" class="center" hidden>
+    <section class="card">
+      <h1>Kaloriappen</h1>
+      <p class="muted">Appen byggs steg för steg. Inloggning kommer i nästa steg.</p>
+      <p class="muted small" id="version"></p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.75.0/dist/umd/supabase.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

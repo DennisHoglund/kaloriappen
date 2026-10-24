@@ -1,0 +1,13 @@
+{
+  "name": "Kaloriappen",
+  "short_name": "Kalorier",
+  "description": "Mat, träning och vikt – bara för dig",
+  "lang": "sv",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0E1430",
+  "theme_color": "#0E1430",
+  "icons": []
+}
