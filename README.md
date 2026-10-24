@@ -6,9 +6,9 @@ Byggs spec-drivet: allt börjar i `specs/`.
 
 | Fil | Innehåll |
 |---|---|
-| `specs/stories.md` | User stories med acceptanskriterier och beslut (v1.0) |
-| `specs/plan.md` | Arkitektur och datamodell *(nästa steg)* |
-| `specs/tasks.md` | Tasks kopplade till US-ID:n *(nästa steg)* |
+| `specs/stories.md` | User stories med acceptanskriterier och beslut (v1.1) |
+| `specs/plan.md` | Principer, arkitektur, datamodell, beräkningar |
+| `specs/tasks.md` | 17 tasks i 6 faser, kopplade till US-ID:n |
 
 Designförslag: claude.ai-kanvasen "Kaloriappen – designförslag" (vald: C · Blåbär).
 

@@ -1,6 +1,6 @@
 # Kaloriappen – User stories
 
-Status: **v1.0** (2026-10-24) – stories med acceptanskriterier, granskade för luckor. Nästa steg: `plan.md` och `tasks.md`.
+Status: **v1.1** (2026-10-24) – stories med acceptanskriterier, granskade för luckor. Nästa steg: `plan.md` och `tasks.md`.
 
 ## Beslut
 
@@ -10,7 +10,7 @@ Status: **v1.0** (2026-10-24) – stories med acceptanskriterier, granskade för
 | D-02 | Kalorier tas fram via foto + AI-uppskattning, med möjlighet att justera och söka livsmedel manuellt |
 | D-03 | Dagligt kalorimål beräknas utifrån profil och önskad viktminskningstakt |
 | D-04 | Vikt loggas över tid och visas i graf mot målvikt |
-| D-05 | Supabase: delar befintligt projekt (samma som Jaktvind/Svampkartan), eget schema `kalori` |
+| D-05 | Supabase: delar befintligt projekt (samma som Jaktvind/Svampkartan). Allt eget har prefixet `kalori_`, bucketen heter `kalori-foton` (se D-14) |
 | D-06 | **0 kr extra i drift.** Bildanalys med Google Gemini Flash (gratisnivå) via Supabase Edge Function. Leverantören kapslas in så att den kan bytas |
 | D-07 | Manuell sökning mot Livsmedelsverkets livsmedelsdatabas (gratis API, CC BY 4.0, källa anges i appen) |
 | D-08 | Inga streckkoder |
@@ -19,9 +19,9 @@ Status: **v1.0** (2026-10-24) – stories med acceptanskriterier, granskade för
 | D-11 | Design: **C · Blåbär** (mörkblå #0E1430, accent #8C9BFF, IBM Plex Sans + Plex Mono för siffror) |
 | D-12 | Träning loggas: styrketräning, löpning, promenad, cykling. Styrka = bara tid; löpning/promenad/cykling = tid + sträcka |
 | D-13 | Brända kcal visas separat men ändrar **inte** dagsmålet |
-| D-14 | Supabase: Jaktvinds projekt (delas med Svampkartan och Appspec), eget schema `kalori`, RLS på alla tabeller |
+| D-14 | Supabase: Jaktvinds projekt (delas med Svampkartan och Appspec). Tabellprefix `kalori_` i `public` i stället för eget schema, som i Svampkartan, så att API-inställningarna i det delade projektet inte behöver ändras. RLS på alla tabeller |
 | D-15 | Ett dygn = 00:00–23:59 svensk tid (Europe/Stockholm). Svenskt talformat (decimalkomma, mellanslag som tusentalsavgränsare) |
-| D-16 | Inloggning: samma metod som i Svampkartan/Jaktvind (samma Supabase Auth, samma konto). Exakt metod läses från Svampkartans repo vid implementationen |
+| D-16 | Inloggning: e-post + lösenord (`signInWithPassword`), samma konto som i Svampkartan/Jaktvind |
 | D-17 | Säker miniminivå för dagsmålet: 1 500 kcal (man) / 1 200 kcal (kvinna) |
 | D-18 | Gemini gratisnivå accepteras, inklusive att Google kan använda matfotona |
 | D-19 | Profilen lagrar födelsedatum; åldern räknas fram |
