@@ -1,0 +1,17 @@
+name: Utforska Livsmedelsverkets API (tillfällig)
+on: workflow_dispatch
+permissions:
+  contents: read
+jobs:
+  utforska:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Swagger
+        run: |
+          B=https://dataportal.livsmedelsverket.se/livsmedel
+          for u in swagger/v1/swagger.json api/info api/v1/info; do echo "=== $u"; curl -sS -m 30 "$B/$u" | head -c 6000; echo; done
+      - name: Exempelanrop
+        run: |
+          B=https://dataportal.livsmedelsverket.se/livsmedel/api/v1
+          echo "=== livsmedel?offset=0&limit=3"; curl -sS -m 60 "$B/livsmedel?offset=0&limit=3&sprak=1" | head -c 3000; echo
+          echo "=== livsmedel/1/naringsvarden"; curl -sS -m 60 "$B/livsmedel/1/naringsvarden?sprak=1" | head -c 2500; echo
