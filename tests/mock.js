@@ -32,9 +32,51 @@ const CDN = [
   [/cdn\.jsdelivr\.net\/npm\/@supabase\/supabase-js/, 'node_modules/@supabase/supabase-js/dist/umd/supabase.js', 'application/javascript']
 ];
 
+// Standarddata: en ifylld profil och en vikt, så att appen hamnar på dagsöversikten efter inloggning.
+// Tester som vill börja från noll tömmer tabellerna innan page.goto.
+function standardData() {
+  return {
+    kalori_profil: [{ user_id: ANVANDARE.id, fodelsedatum: '1980-05-01', kon: 'man', langd_cm: 182, aktivitet: 'latt', malvikt_kg: 85, takt_kg_vecka: 0.5, uppdaterad: '2026-10-20T08:00:00Z' }],
+    kalori_vikt: [{ user_id: ANVANDARE.id, datum: '2026-10-20', vikt_kg: 92 }],
+    kalori_maltid: [], kalori_maltid_rad: [], kalori_traning: []
+  };
+}
+
+// Primärnycklar för upsert
+const NYCKLAR = { kalori_profil: ['user_id'], kalori_vikt: ['user_id', 'datum'] };
+
+// Tolkar PostgREST-filter som supabase-js skickar: kolumn=eq.värde, order=kol.desc, limit=N
+function filtrera(rader, params) {
+  let ut = rader.slice();
+  for (const [k, v] of params) {
+    if (['select', 'order', 'limit', 'offset', 'on_conflict', 'columns'].includes(k)) continue;
+    const m = v.match(/^(eq|gte|lte|gt|lt|neq)\.(.*)$/);
+    if (!m) continue;
+    const [, op, val] = m;
+    ut = ut.filter((r) => {
+      const a = r[k] == null ? '' : String(r[k]);
+      if (op === 'eq') return a === val;
+      if (op === 'neq') return a !== val;
+      if (op === 'gte') return a >= val;
+      if (op === 'lte') return a <= val;
+      if (op === 'gt') return a > val;
+      if (op === 'lt') return a < val;
+      return true;
+    });
+  }
+  const order = params.get('order');
+  if (order) {
+    const [kol, riktning] = order.split('.');
+    ut.sort((x, y) => String(x[kol]).localeCompare(String(y[kol])) * (riktning === 'desc' ? -1 : 1));
+  }
+  const limit = params.get('limit');
+  if (limit) ut = ut.slice(0, Number(limit));
+  return ut;
+}
+
 // Installerar alla mockar på sidan. Returnerar ett "api" med databasens tillstånd och loggade anrop.
-async function mocka(page, data = {}) {
-  const api = { tabeller: { ...data }, anrop: [], nere: false };
+async function mocka(page, data = standardData()) {
+  const api = { tabeller: data, anrop: [], nere: false, felVidSparning: false };
 
   await page.route(/cdn\.jsdelivr\.net/, (route) => {
     const hit = CDN.find(([re]) => re.test(route.request().url()));
@@ -64,14 +106,42 @@ async function mocka(page, data = {}) {
     if (p === '/auth/v1/user') return json(route, 200, ANVANDARE);
     if (p === '/auth/v1/logout') return route.fulfill({ status: 204, headers: cors() });
 
-    // ---- Databas: enkel generisk tabell per namn ----
+    // ---- Databas: generisk tabell per namn ----
     const t = p.match(/^\/rest\/v1\/(kalori_[a-z_]+)$/);
     if (t) {
-      const rader = api.tabeller[t[1]] || (api.tabeller[t[1]] = []);
-      if (m === 'GET' || m === 'HEAD') return json(route, 200, m === 'HEAD' ? '' : rader, { 'content-range': '0-' + (rader.length - 1) + '/' + rader.length });
+      const namn = t[1];
+      const rader = api.tabeller[namn] || (api.tabeller[namn] = []);
+      const params = url.searchParams;
+      const retur = (req.headers()['prefer'] || '').includes('return=representation');
+      if (m !== 'GET' && m !== 'HEAD' && api.felVidSparning) return json(route, 500, { message: 'Testfel vid sparning' });
+
+      if (m === 'GET' || m === 'HEAD') {
+        const ut = filtrera(rader, params);
+        const objekt = (req.headers()['accept'] || '').includes('vnd.pgrst.object');
+        if (objekt) return ut.length === 1 ? json(route, 200, ut[0]) : json(route, 406, { code: 'PGRST116', message: 'JSON object requested, multiple (or no) rows returned' });
+        return json(route, 200, m === 'HEAD' ? '' : ut, { 'content-range': '0-' + (ut.length - 1) + '/' + ut.length });
+      }
       if (m === 'POST') {
-        [].concat(req.postDataJSON()).forEach((r) => rader.push({ user_id: ANVANDARE.id, ...r }));
-        return route.fulfill({ status: 201, headers: cors() });
+        const nycklar = (params.get('on_conflict') || '').split(',').filter(Boolean);
+        const nya = [].concat(req.postDataJSON()).map((r) => ({ user_id: ANVANDARE.id, ...r }));
+        const upsert = (req.headers()['prefer'] || '').includes('resolution=merge-duplicates');
+        for (const r of nya) {
+          const k = nycklar.length ? nycklar : (NYCKLAR[namn] || ['id']);
+          const i = upsert ? rader.findIndex((x) => k.every((kol) => String(x[kol]) === String(r[kol]))) : -1;
+          if (i >= 0) rader[i] = { ...rader[i], ...r }; else rader.push(r);
+        }
+        return retur ? json(route, 201, nya) : route.fulfill({ status: 201, headers: cors() });
+      }
+      if (m === 'PATCH') {
+        const andra = req.postDataJSON();
+        const traffar = filtrera(rader, params);
+        traffar.forEach((r) => Object.assign(r, andra));
+        return retur ? json(route, 200, traffar) : route.fulfill({ status: 204, headers: cors() });
+      }
+      if (m === 'DELETE') {
+        const bort = new Set(filtrera(rader, params));
+        api.tabeller[namn] = rader.filter((r) => !bort.has(r));
+        return route.fulfill({ status: 204, headers: cors() });
       }
     }
 
@@ -107,4 +177,4 @@ async function inloggad(page) {
   }, [STORAGE_KEY, JSON.stringify(s)]);
 }
 
-module.exports = { mocka, inloggad, ANVANDARE, LOSENORD };
+module.exports = { mocka, inloggad, standardData, ANVANDARE, LOSENORD };

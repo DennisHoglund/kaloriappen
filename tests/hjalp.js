@@ -4,7 +4,9 @@ const { mocka, inloggad } = require('./mock');
 
 const test = base.test.extend({
   // Mockar allt externt innan varje test. api ger tillgång till "databasen".
+  // Klockan står still på lördag 24 oktober 2026 kl 10, så att ålder och "idag" blir samma varje körning.
   api: async ({ page }, use) => {
+    await page.clock.setFixedTime(new Date('2026-10-24T10:00:00+02:00'));
     const api = await mocka(page);
     await use(api);
   },

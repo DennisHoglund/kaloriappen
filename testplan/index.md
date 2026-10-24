@@ -5,8 +5,8 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 22 |
-| **Automatiserade** | 20 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 31 |
+| **Automatiserade** | 29 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 2 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
@@ -34,6 +34,20 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-INL-06](testfall/TC-INL-06.md) | [Logga ut](testfall/TC-INL-06.md) | Medel | 🤖 |
 | [TC-INL-07](testfall/TC-INL-07.md) | [Ingen kontakt med servern ger ett begripligt fel](testfall/TC-INL-07.md) | Medel | 🤖 |
 | [TC-INL-08](testfall/TC-INL-08.md) | [Logga in med riktigt konto och Face ID](testfall/TC-INL-08.md) | Hög | 🖐️ |
+
+## Profil
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-PRO-01](testfall/TC-PRO-01.md) | [Ny användare guidas till profilen](testfall/TC-PRO-01.md) | Hög | 🤖 |
+| [TC-PRO-02](testfall/TC-PRO-02.md) | [Dagsmålet visas direkt medan man fyller i](testfall/TC-PRO-02.md) | Hög | 🤖 |
+| [TC-PRO-03](testfall/TC-PRO-03.md) | [Spara sparar profil och startvikt och visar dagsmålet](testfall/TC-PRO-03.md) | Hög | 🤖 |
+| [TC-PRO-04](testfall/TC-PRO-04.md) | [Ändra profil räknar om dagsmålet](testfall/TC-PRO-04.md) | Hög | 🤖 |
+| [TC-PRO-05](testfall/TC-PRO-05.md) | [Avbryt lämnar profilen oförändrad](testfall/TC-PRO-05.md) | Medel | 🤖 |
+| [TC-PRO-06](testfall/TC-PRO-06.md) | [För lågt mål sätts till golvet med förklaring](testfall/TC-PRO-06.md) | Hög | 🤖 |
+| [TC-PRO-07](testfall/TC-PRO-07.md) | [För hög takt sänks till 1 % av vikten med förklaring](testfall/TC-PRO-07.md) | Hög | 🤖 |
+| [TC-PRO-08](testfall/TC-PRO-08.md) | [Ogiltiga värden stoppas innan något sparas](testfall/TC-PRO-08.md) | Medel | 🤖 |
+| [TC-PRO-09](testfall/TC-PRO-09.md) | [Sparfel behåller det man fyllt i](testfall/TC-PRO-09.md) | Medel | 🤖 |
 
 ## Beräkning
 

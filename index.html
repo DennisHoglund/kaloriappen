@@ -48,6 +48,68 @@
     </section>
   </main>
 
+  <main id="view-profil" class="app-view" hidden>
+    <div class="page">
+      <h1 id="pro-rubrik">Din profil</h1>
+      <p id="pro-intro" class="muted">Uppgifterna behövs för att räkna ut ditt dagliga kalorimål. Du kan ändra dem när som helst.</p>
+
+      <form id="form-profil" class="form" novalidate>
+        <label for="pro-fodd">Födelsedatum</label>
+        <input id="pro-fodd" type="date" required>
+
+        <fieldset>
+          <legend>Kön</legend>
+          <div class="segment">
+            <input type="radio" name="pro-kon" id="pro-kon-man" value="man"><label for="pro-kon-man">Man</label>
+            <input type="radio" name="pro-kon" id="pro-kon-kvinna" value="kvinna"><label for="pro-kon-kvinna">Kvinna</label>
+          </div>
+        </fieldset>
+
+        <div class="tva">
+          <div>
+            <label for="pro-langd">Längd (cm)</label>
+            <input id="pro-langd" type="text" inputmode="numeric" autocomplete="off" required>
+          </div>
+          <div>
+            <label for="pro-vikt">Vikt nu (kg)</label>
+            <input id="pro-vikt" type="text" inputmode="decimal" autocomplete="off" required>
+          </div>
+        </div>
+
+        <label for="pro-aktivitet">Aktivitet till vardags</label>
+        <select id="pro-aktivitet" required>
+          <option value="">Välj …</option>
+          <option value="stillasittande">Stillasittande – lite rörelse</option>
+          <option value="latt">Lätt aktiv – träning 1–3 ggr/v</option>
+          <option value="mattlig">Måttligt aktiv – träning 3–5 ggr/v</option>
+          <option value="hog">Mycket aktiv – träning 6–7 ggr/v</option>
+        </select>
+
+        <label for="pro-malvikt">Målvikt (kg)</label>
+        <input id="pro-malvikt" type="text" inputmode="decimal" autocomplete="off" required>
+
+        <fieldset>
+          <legend>Takt</legend>
+          <div class="segment">
+            <input type="radio" name="pro-takt" id="pro-takt-025" value="0.25"><label for="pro-takt-025">0,25 kg/v</label>
+            <input type="radio" name="pro-takt" id="pro-takt-05" value="0.5" checked><label for="pro-takt-05">0,5 kg/v</label>
+            <input type="radio" name="pro-takt" id="pro-takt-075" value="0.75"><label for="pro-takt-075">0,75 kg/v</label>
+          </div>
+        </fieldset>
+
+        <section class="mal-ruta" aria-live="polite">
+          <span class="muted small">Ditt dagsmål</span>
+          <span class="mal-siffra"><span id="pro-mal" class="num">–</span> <span class="enhet">kcal</span></span>
+          <p id="pro-noter" class="muted small" hidden></p>
+        </section>
+
+        <p id="pro-msg" class="msg" role="status" aria-live="polite"></p>
+        <button class="btn primary" type="submit">Spara</button>
+        <button class="btn ghost" id="pro-avbryt" type="button" hidden>Avbryt</button>
+      </form>
+    </div>
+  </main>
+
   <main id="view-app" class="app-view" hidden>
     <header class="topbar">
       <div class="brand"><img src="icons/icon.svg" alt="" width="32" height="32"> Kaloriappen</div>
@@ -58,18 +120,22 @@
         <button class="icon-btn" id="btn-logout" type="button">Logga ut</button>
       </div>
     </header>
-    <div class="content">
-      <section class="card">
-        <h1>Inloggad</h1>
-        <p class="muted">Som <span id="user-email"></span>. Profil och dagsöversikt kommer i nästa steg.</p>
-        <p class="muted small" id="version"></p>
+    <div class="page">
+      <section class="card mal-kort">
+        <span class="muted small">Dagsmål</span>
+        <span class="mal-siffra"><span id="app-mal" class="num">–</span> <span class="enhet">kcal</span></span>
+        <p id="app-mal-info" class="muted small"></p>
+        <button class="btn ghost" id="btn-profil" type="button">Ändra profil</button>
       </section>
+      <p class="muted small">Inloggad som <span id="user-email"></span>. Dagsöversikten kommer i nästa steg.</p>
+      <p class="muted small" id="version"></p>
     </div>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.75.0/dist/umd/supabase.js"></script>
   <script src="config.js"></script>
   <script src="berakning.js"></script>
+  <script src="profil.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

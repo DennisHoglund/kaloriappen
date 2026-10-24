@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const VERSION = 'T-04';
+  const VERSION = 'T-06';
   const $ = (id) => document.getElementById(id);
   const THEME_KEY = 'kalori-theme';
 
@@ -97,15 +97,55 @@
       render(null);
     });
 
+    window.KaloriProfil.setup(sb, { klar: laddaProfil, avbryt: visaApp });
+    $('btn-profil').addEventListener('click', () => window.KaloriProfil.oppna(data.profil, data.viktKg, false));
+
     sb.auth.onAuthStateChange((_event, session) => render(session));
     sb.auth.getSession().then(({ data }) => render(data.session)).catch(() => render(null));
+  }
+
+  // Dagens datum i svensk tid (D-15), ÅÅÅÅ-MM-DD
+  function idag() {
+    return new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Stockholm', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+  }
+
+  let data = { profil: null, viktKg: null };
+  let aktuellAnvandare = null;
+
+  function visaApp() {
+    const B = window.KaloriBerakning;
+    const p = data.profil;
+    const r = p && B.dagsmal({ kon: p.kon, viktKg: data.viktKg, langdCm: p.langd_cm, fodelsedatum: p.fodelsedatum,
+      aktivitet: p.aktivitet, taktKgVecka: Number(p.takt_kg_vecka) }, idag());
+    $('app-mal').textContent = r ? Math.round(r.mal).toLocaleString('sv-SE') : '–';
+    $('app-mal-info').textContent = r ? ('Vikt ' + data.viktKg.toLocaleString('sv-SE') + ' kg · mål ' + Number(p.malvikt_kg).toLocaleString('sv-SE') + ' kg · ' +
+      Number(p.takt_kg_vecka).toLocaleString('sv-SE') + ' kg/vecka' + (r.golv ? ' · lägsta säkra nivå' : '')) : '';
+    visa('view-app');
+  }
+
+  async function laddaProfil() {
+    visa('view-loading');
+    try {
+      data = await window.KaloriProfil.hamta();
+    } catch (e) {
+      visa('view-login');
+      setMsg('Kunde inte hämta din profil. Kontrollera nätet och försök igen.', 'error');
+      return;
+    }
+    if (!data.profil || data.viktKg == null) window.KaloriProfil.oppna(data.profil, data.viktKg, true);
+    else visaApp();
   }
 
   function render(session) {
     if (session && session.user) {
       $('user-email').textContent = session.user.email || '';
-      visa('view-app');
+      window.KaloriProfil.setUser(session.user.id);
+      if (aktuellAnvandare !== session.user.id) {
+        aktuellAnvandare = session.user.id;
+        laddaProfil();
+      }
     } else {
+      aktuellAnvandare = null;
       visa('view-login');
     }
   }
@@ -117,7 +157,7 @@
     initAuth();
   }
 
-  window.KaloriApp = { visa, get sb() { return sb; } };
+  window.KaloriApp = { visa, idag, get sb() { return sb; } };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();

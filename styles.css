@@ -89,3 +89,32 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 .btn:disabled { opacity: .55; cursor: default; }
 .msg { min-height: 1.5em; margin: 12px 0 0; font-size: .95rem; color: var(--text-2); }
 .msg.error { color: var(--danger); font-weight: 600; }
+
+/* Sidor och formulär */
+.page { width: 100%; max-width: 520px; margin: 0 auto; padding: 20px 16px 32px; display: flex; flex-direction: column; gap: 14px; }
+.form { display: flex; flex-direction: column; gap: 6px; }
+.form label, .form legend { font-size: .9rem; font-weight: 600; margin-top: 10px; }
+.form fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.form legend { padding: 0; }
+.form input[type="text"], .form input[type="date"], .form select {
+  width: 100%; min-height: 48px; padding: 0 14px; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  font: inherit; font-size: 16px;
+}
+.form input:focus, .form select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+.tva { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.segment { display: flex; gap: 6px; margin-top: 6px; }
+.segment input { position: absolute; opacity: 0; pointer-events: none; }
+.segment label {
+  flex: 1; margin: 0; min-height: 44px; display: grid; place-items: center; text-align: center;
+  border-radius: 12px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; font-weight: 600;
+}
+.segment input:checked + label { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.segment input:focus-visible + label { outline: 3px solid var(--accent); outline-offset: 2px; }
+.mal-ruta, .mal-kort { margin-top: 12px; padding: 16px; border-radius: 16px; background: var(--surface-2); display: flex; flex-direction: column; gap: 4px; }
+.mal-kort { background: var(--surface); border: 1px solid var(--border); }
+.mal-siffra { font-size: 2.2rem; font-weight: 700; line-height: 1.1; }
+.mal-siffra .num { font-family: var(--mono); }
+.mal-siffra .enhet { font-size: 1rem; color: var(--text-2); font-weight: 600; }
+.btn.ghost { background: transparent; color: var(--text); border-color: var(--border); font-weight: 600; }
+.form .btn { width: 100%; }
