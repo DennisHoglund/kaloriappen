@@ -63,4 +63,37 @@ test.describe('Beräkning', () => {
     expect(B.flyttaDag('2026-11-01', -1)).toBe('2026-10-31');
     expect(B.flyttaDag('2026-12-31', 1)).toBe('2027-01-01');
   });
+
+  test('MET för träning: styrka, promenad, löpning efter tempo och cykling efter fart', { annotation: { type: 'testfall', description: 'TC-TRA-01' } }, () => {
+    expect(B.met('styrka', 45)).toBe(5.0);
+    expect(B.met('promenad', 60, 5)).toBe(3.5);
+    expect(B.met('lopning', 60, 8)).toBeCloseTo(8.3, 1);     // 8 km/h (7:30 min/km)
+    expect(B.met('lopning', 30, 5)).toBeCloseTo(10.0, 1);    // 10 km/h (6:00 min/km)
+    expect(B.met('lopning', 60, 13)).toBeCloseTo(11.9, 1);   // 13 km/h
+    expect(B.met('lopning', 60, 6)).toBe(6.0);               // lugn jogg under 8 km/h
+    expect(B.met('lopning', 60, 20)).toBe(14.5);             // tak
+    expect(B.met('cykling', 60, 15)).toBe(4.0);
+    expect(B.met('cykling', 60, 18)).toBe(6.8);
+    expect(B.met('cykling', 60, 21)).toBe(8.0);
+    expect(B.met('cykling', 60, 24)).toBe(10.0);
+    expect(B.met('cykling', 60, 30)).toBe(12.0);
+    expect(B.met('okand', 30)).toBeNull();
+  });
+
+  test('förbränd energi = MET × vikt × timmar', { annotation: { type: 'testfall', description: 'TC-TRA-02' } }, () => {
+    expect(B.forbranning({ typ: 'styrka', minuter: 45, viktKg: 92 })).toBe(345);          // 5 × 92 × 0,75
+    expect(B.forbranning({ typ: 'promenad', minuter: 60, km: 5, viktKg: 92 })).toBe(322); // 3,5 × 92 × 1
+    expect(B.forbranning({ typ: 'lopning', minuter: 30, km: 5, viktKg: 92 })).toBe(461);  // ≈ 10,0 × 92 × 0,5
+    expect(B.forbranning({ typ: 'lopning', minuter: 30, viktKg: 92 })).toBeNull();        // löpning kräver sträcka
+    expect(B.forbranning({ typ: 'styrka', minuter: 45, viktKg: null })).toBeNull();
+  });
+
+  test('tempo och fart räknas från tid och sträcka', { annotation: { type: 'testfall', description: 'TC-TRA-03' } }, () => {
+    expect(B.tempo(30, 5.2)).toBe('5:46');
+    expect(B.tempo(25, 5)).toBe('5:00');
+    expect(B.tempo(59.5, 10)).toBe('5:57');
+    expect(B.fart(60, 21.5)).toBe(21.5);
+    expect(B.fart(45, 15)).toBe(20);
+    expect(B.tempo(30, 0)).toBeNull();
+  });
 });

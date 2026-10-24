@@ -5,8 +5,8 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 85 |
-| **Automatiserade** | 81 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 96 |
+| **Automatiserade** | 92 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 4 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
@@ -124,6 +124,22 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-SOK-11](testfall/TC-SOK-11.md) | [kcal räknas från kcal per 100 g och gram](testfall/TC-SOK-11.md) | Hög | 🤖 |
 | [TC-SOK-12](testfall/TC-SOK-12.md) | [Tillbaka stänger utan att spara](testfall/TC-SOK-12.md) | Medel | 🤖 |
 | [TC-SOK-13](testfall/TC-SOK-13.md) | [Livsmedlen kan inte laddas ger begripligt fel](testfall/TC-SOK-13.md) | Låg | 🤖 |
+
+## Träning
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-TRA-01](testfall/TC-TRA-01.md) | [MET för träning](testfall/TC-TRA-01.md) | Hög | 🤖 |
+| [TC-TRA-02](testfall/TC-TRA-02.md) | [Förbränd energi = MET × vikt × timmar](testfall/TC-TRA-02.md) | Hög | 🤖 |
+| [TC-TRA-03](testfall/TC-TRA-03.md) | [Tempo och fart](testfall/TC-TRA-03.md) | Medel | 🤖 |
+| [TC-TRA-04](testfall/TC-TRA-04.md) | [Logga löpning med tempo och förbränning](testfall/TC-TRA-04.md) | Hög | 🤖 |
+| [TC-TRA-05](testfall/TC-TRA-05.md) | [Styrketräning loggas med bara tid](testfall/TC-TRA-05.md) | Hög | 🤖 |
+| [TC-TRA-06](testfall/TC-TRA-06.md) | [Cykling visar fart](testfall/TC-TRA-06.md) | Medel | 🤖 |
+| [TC-TRA-07](testfall/TC-TRA-07.md) | [Träningen visas men ändrar inte kvar att äta](testfall/TC-TRA-07.md) | Hög | 🤖 |
+| [TC-TRA-08](testfall/TC-TRA-08.md) | [Ändra och ta bort ett pass](testfall/TC-TRA-08.md) | Hög | 🤖 |
+| [TC-TRA-09](testfall/TC-TRA-09.md) | [Ogiltiga värden stoppas](testfall/TC-TRA-09.md) | Medel | 🤖 |
+| [TC-TRA-10](testfall/TC-TRA-10.md) | [Träning på en tidigare dag sparas på den dagen](testfall/TC-TRA-10.md) | Medel | 🤖 |
+| [TC-TRA-11](testfall/TC-TRA-11.md) | [Sparfel behåller det man fyllt i](testfall/TC-TRA-11.md) | Låg | 🤖 |
 
 ## Beräkning
 

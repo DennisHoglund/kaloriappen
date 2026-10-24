@@ -27,14 +27,14 @@ test.describe('Bildanalys (Edge Function)', () => {
     ]))) });
     const res = await h(post({ bild: 'QUJD', mime: 'image/jpeg' }));
     expect(res.status).toBe(200);
-    expect(await res.json()).toEqual({ rader: [{ namn: 'Kokt potatis', gram: 152, kcal: 118 }, { namn: 'Köttbullar', gram: 120, kcal: 270 }], modell: 'gemini-flash-latest', tankande: 'low' });
+    expect(await res.json()).toEqual({ rader: [{ namn: 'Kokt potatis', gram: 152, kcal: 118 }, { namn: 'Köttbullar', gram: 120, kcal: 270 }], modell: 'gemini-flash-lite-latest', tankande: 'minimal' });
     const g = anrop.find((a) => a.url.includes('generativelanguage'));
-    expect(g.url).toBe('https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent');
+    expect(g.url).toBe('https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-lite-latest:generateContent');
     expect(g.init.headers['x-goog-api-key']).toBe('hemlig');
     const body = JSON.parse(g.init.body);
     expect(body.contents[0].parts[1]).toEqual({ inline_data: { mime_type: 'image/jpeg', data: 'QUJD' } });
     expect(body.generationConfig.responseMimeType).toBe('application/json');
-    expect(body.generationConfig.thinkingConfig).toEqual({ thinkingLevel: 'low' }); // snabbt svar
+    expect(body.generationConfig.thinkingConfig).toEqual({ thinkingLevel: 'minimal' }); // snabbt svar
     expect(body.generationConfig.temperature).toBeUndefined();                       // standard enligt Google
     expect(body.contents[0].parts[0].text).toContain('svenskt namn');
   });

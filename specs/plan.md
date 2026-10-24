@@ -49,7 +49,7 @@ iPhone (PWA, GitHub Pages)
 | `livsmedel.js` | Laddar `data/livsmedel.json` och söker (diakritik-okänslig) |
 | `foto.js` | Kamera/bildval (`capture="environment"`), nedskalning till 1024 px, anrop till `kalori-analys` via `sb.functions.invoke`, justeringsvy (gram räknar om kcal proportionellt, ändra kcal/namn, ta bort/lägg till rad), miniatyr ≤ 30 kB i `kalori-foton`. Misslyckad uppladdning av miniatyr stoppar inte sparningen |
 | `vikt.js` | Viktlogg och graf |
-| `traning.js` | Träningslogg, historik per vecka |
+| `traning.js` | Logga, ändra och ta bort träning. Förbränning (MET × vikt × tid) räknas vid sparning och lagras. Träningskortet i dagsöversikten ritas av `idag.js` |
 | `sw.js` | Appfiler nätet först, CDN cache först. Höj `kalori-vN` vid ändring |
 | `manifest.webmanifest`, `icons/` | PWA och egen ikon |
 | `data/livsmedel.json` | Genereras av `scripts/hamta-livsmedel.js`: `{ kalla, licens, hamtad, antal, livsmedel: [[nummer, namn, kcal/100 g], …] }`, sorterad på svenska. Redigeras aldrig för hand |
@@ -80,15 +80,15 @@ iPhone (PWA, GitHub Pages)
 - **BMR (Mifflin-St Jeor):** man `10·kg + 6,25·cm − 5·ålder + 5`, kvinna `… − 161`.
 - **Underhåll:** BMR × aktivitetsfaktor (stillasittande 1,2 · lätt 1,375 · måttlig 1,55 · hög 1,725).
 - **Dagsmål:** underhåll − takt × 7 700 / 7 (≈ 7 700 kcal per kg). Takt begränsas till max 1 % av kroppsvikten per vecka (US-03 AC2). Golv 1 500 (man) / 1 200 (kvinna) (D-17). Avrundas till närmaste 10.
-- **Träning:** kcal = MET × kg × timmar. MET: styrka 5,0 · promenad 3,5 · löpning efter tempo (6:00 min/km ≈ 9,8, 5:00 ≈ 11,0, 7:00 ≈ 8,3, interpoleras) · cykling efter km/h (< 16 ≈ 4,0, 16–19 ≈ 6,8, 19–22 ≈ 8,0, > 22 ≈ 10,0). Visas som "≈" (US-12).
+- **Träning:** kcal = MET × kg × timmar, avrundat. MET (Compendium): styrka 5,0 · promenad 3,5 · löpning interpoleras efter fart: 8 km/h 8,3 · 9,7 km/h 9,8 · 11,3 km/h 11,0 · 12,9 km/h 11,8 · 16,1 km/h 14,5 (under 8 km/h 6,0, över 16,1 km/h 14,5) · cykling efter fart: < 16 km/h 4,0 · 16–19 6,8 · 19–22 8,0 · 22–25,5 10,0 · ≥ 25,5 12,0. Visas som "≈" (US-12).
 - **Viktgraf:** glidande medel över 7 dagar (US-10 AC3).
 
 ## 6. Bildanalys (`kalori-analys`)
 
 1. Klienten skalar ner bilden till max 1024 px JPEG och skickar base64 + användarens JWT.
 2. Funktionen kontrollerar själv att anroparen är inloggad (anrop till Supabase Auth `/auth/v1/user` med användarens JWT, så "Verify JWT" i inställningarna kan vara av) och skickar bilden till Gemini med en svensk prompt och **strukturerat JSON-svar** (`responseSchema`): `[{ namn, gram, kcal }]`. Orimliga rader tas bort, högst 10 rader.
-3. Timeout 30 s. Tänkande `thinkingLevel: low` (Gemini 3 tänker annars "medium" och blev för långsam, se test 2026-10-24), temperaturen lämnas på standard. Svar: `200 { rader, modell }` eller fel med `{ fel, meddelande }`: `401 behorighet`, `400 indata`, `413 stor`, `429 kvot`, `502 analys`, `504 tid`, `422 tom`, `500 konfig`. Klienten visar meddelandet och erbjuder manuell sökning (US-04 AC3).
-4. Modell: `gemini-flash-latest` (alias för senaste Flash på gratisnivån). Kan bytas med secret `KALORI_GEMINI_MODELL`, och tänkandet med `KALORI_GEMINI_TANKANDE`, utan kodändring (D-06). Vid fel från Google skickas Googles felmeddelande med som `detalj`.
+3. Timeout 30 s. Tänkande `thinkingLevel: minimal`, temperaturen lämnas på standard. Första testet 2026-10-24 med `gemini-flash-latest` (tänker "medium") tog över 30 s; med Flash-Lite och minimalt tänkande kom svaret på några sekunder. Svar: `200 { rader, modell }` eller fel med `{ fel, meddelande }`: `401 behorighet`, `400 indata`, `413 stor`, `429 kvot`, `502 analys`, `504 tid`, `422 tom`, `500 konfig`. Klienten visar meddelandet och erbjuder manuell sökning (US-04 AC3).
+4. Modell: `gemini-flash-lite-latest` (alias för senaste Flash-Lite på gratisnivån). Kan bytas med secret `KALORI_GEMINI_MODELL`, och tänkandet med `KALORI_GEMINI_TANKANDE`, utan kodändring (D-06). Vid fel från Google skickas Googles felmeddelande med som `detalj`.
 6. Funktionen är en enda fil (`index.ts`) så att den kan klistras in i Supabase-editorn från telefonen. Logiken exporteras och testas i Node (`tests/analys.spec.js`); `Deno.serve` körs bara i Supabase.
 5. Secret: `KALORI_GEMINI_KEY`. Edge Function skapas och deployas i Supabase Dashboard (Edge Functions → Deploy a new function → Via Editor), så det fungerar från telefonen.
 

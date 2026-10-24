@@ -8,9 +8,9 @@
 // utan kodändring.
 // Funktionen kontrollerar själv att anroparen är inloggad, så "Verify JWT" i inställningarna kan vara av.
 
-export const STANDARDMODELL = 'gemini-flash-latest';
+export const STANDARDMODELL = 'gemini-flash-lite-latest'; // snabbast; vanliga Flash tog över 30 s på gratisnivån
 export const MAX_BILD_TECKEN = 2_000_000; // base64, ca 1,5 MB – appen skickar ca 150 kB
-export const STANDARDTANKANDE = 'low'; // snabbt svar räcker för att känna igen mat (Gemini 3 tänker annars "medium")
+export const STANDARDTANKANDE = 'minimal'; // snabbt svar räcker för att känna igen mat
 export const TIDSGRANS_MS = 30_000;
 
 const CORS = {

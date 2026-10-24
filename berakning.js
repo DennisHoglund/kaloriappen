@@ -90,7 +90,56 @@
     return new Date(Date.UTC(a, m - 1, d + dagar)).toISOString().slice(0, 10);
   }
 
-  const api = { AKTIVITET, GOLV, KCAL_PER_KG, alder, bmr, maxTakt, dagsmal, dygnUTC, flyttaDag };
+  // ---------- Träning (US-11, US-12) ----------
+  // MET-värden ur Compendium of Physical Activities. Löpning interpoleras efter fart (km/h).
+  const LOPNING = [[8, 8.3], [9.7, 9.8], [11.3, 11.0], [12.9, 11.8], [16.1, 14.5]];
+
+  function fart(minuter, km) {
+    if (!(minuter > 0) || !(km > 0)) return null;
+    return Math.round(km / (minuter / 60) * 10) / 10;
+  }
+
+  // Tempo som "m:ss" per km
+  function tempo(minuter, km) {
+    if (!(minuter > 0) || !(km > 0)) return null;
+    const s = Math.round(minuter * 60 / km);
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  function met(typ, minuter, km) {
+    if (typ === 'styrka') return 5.0;
+    if (typ === 'promenad') return 3.5;
+    const v = km > 0 && minuter > 0 ? km / (minuter / 60) : null;
+    if (typ === 'lopning') {
+      if (v === null) return null;
+      if (v < LOPNING[0][0]) return 6.0;
+      for (let i = 1; i < LOPNING.length; i++) {
+        const [v1, m1] = LOPNING[i - 1];
+        const [v2, m2] = LOPNING[i];
+        if (v <= v2) return Math.round((m1 + (v - v1) / (v2 - v1) * (m2 - m1)) * 100) / 100;
+      }
+      return LOPNING[LOPNING.length - 1][1];
+    }
+    if (typ === 'cykling') {
+      if (v === null) return null;
+      if (v < 16) return 4.0;
+      if (v < 19) return 6.8;
+      if (v < 22) return 8.0;
+      if (v < 25.5) return 10.0;
+      return 12.0;
+    }
+    return null;
+  }
+
+  // Uppskattad förbränning i kcal = MET × vikt × timmar. Alla typer utom styrka kräver sträcka.
+  function forbranning({ typ, minuter, km, viktKg }) {
+    if (!(minuter > 0) || !(viktKg > 0)) return null;
+    if (typ !== 'styrka' && !(km > 0)) return null;
+    const m = met(typ, minuter, km);
+    return m === null ? null : Math.round(m * viktKg * minuter / 60);
+  }
+
+  const api = { AKTIVITET, GOLV, KCAL_PER_KG, alder, bmr, maxTakt, dagsmal, dygnUTC, flyttaDag, met, forbranning, tempo, fart };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KaloriBerakning = api;
 })(typeof window !== 'undefined' ? window : globalThis);

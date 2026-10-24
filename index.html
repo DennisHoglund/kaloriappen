@@ -201,6 +201,55 @@
     </div>
   </main>
 
+  <main id="view-traning" class="app-view" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="tra-tillbaka" type="button">← Tillbaka</button>
+      <div class="brand" id="tra-rubrik">Logga träning</div>
+      <span class="topbar-plats" aria-hidden="true"></span>
+    </header>
+    <div class="page">
+      <form id="form-traning" class="form" novalidate>
+        <fieldset>
+          <legend>Typ</legend>
+          <div class="segment segment-4">
+            <input type="radio" name="tra-typ" id="tra-typ-styrka" value="styrka"><label for="tra-typ-styrka">Styrka</label>
+            <input type="radio" name="tra-typ" id="tra-typ-lopning" value="lopning"><label for="tra-typ-lopning">Löpning</label>
+            <input type="radio" name="tra-typ" id="tra-typ-promenad" value="promenad"><label for="tra-typ-promenad">Promenad</label>
+            <input type="radio" name="tra-typ" id="tra-typ-cykling" value="cykling"><label for="tra-typ-cykling">Cykling</label>
+          </div>
+        </fieldset>
+        <div class="tva">
+          <div>
+            <label for="tra-minuter">Tid (minuter)</label>
+            <input id="tra-minuter" type="text" inputmode="numeric" autocomplete="off">
+          </div>
+          <div id="tra-km-falt">
+            <label for="tra-km">Sträcka (km)</label>
+            <input id="tra-km" type="text" inputmode="decimal" autocomplete="off">
+          </div>
+        </div>
+        <label for="tra-kommentar">Kommentar (valfritt)</label>
+        <input id="tra-kommentar" type="text" autocomplete="off" maxlength="500" placeholder="t.ex. ben och rygg, intervaller">
+        <section class="mal-ruta" aria-live="polite">
+          <span class="muted small">Förbränning, uppskattad</span>
+          <span class="mal-siffra">≈ <span id="tra-kcal" class="num">–</span> <span class="enhet">kcal</span></span>
+          <span id="tra-info" class="muted small"></span>
+        </section>
+        <p class="muted small">Räknas inte in i dagsmålet – uppskattningar av förbränning blir ofta för höga.</p>
+        <p id="tra-msg" class="msg" role="status" aria-live="polite"></p>
+        <button class="btn primary" type="submit">Spara</button>
+      </form>
+      <button class="btn fara" id="tra-ta-bort" type="button" hidden>Ta bort</button>
+      <div id="tra-bekrafta" class="bekrafta" hidden>
+        <p id="tra-fraga" class="bekrafta-fraga"></p>
+        <div class="tva">
+          <button class="btn ghost" id="tra-nej" type="button">Avbryt</button>
+          <button class="btn fara-fylld" id="tra-ja" type="button">Ta bort</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
   <main id="view-redigera" class="app-view" hidden>
     <header class="topbar">
       <button class="icon-btn" id="red-tillbaka" type="button">← Tillbaka</button>
@@ -266,6 +315,13 @@
 
       <div id="ida-maltider" class="maltider"></div>
 
+      <section class="maltid traning-kort" aria-label="Träning">
+        <header class="maltid-huvud"><h3>Träning</h3><span id="ida-tra-summa" class="num"></span></header>
+        <ul id="ida-traning" class="rader"></ul>
+        <p id="ida-tra-tom" class="muted small tom">Ingen träning loggad</p>
+        <button type="button" class="lagg-till" id="btn-logga-traning">+ Logga träning</button>
+      </section>
+
       <p class="muted small">Inloggad som <span id="user-email"></span></p>
       <p class="muted small" id="version"></p>
       <p class="muted small kalla">Livsmedelsdata: Livsmedelsverkets livsmedelsdatabas (CC BY 4.0)</p>
@@ -281,6 +337,7 @@
   <script src="profil.js"></script>
   <script src="maltid.js"></script>
   <script src="foto.js"></script>
+  <script src="traning.js"></script>
   <script src="redigera.js"></script>
   <script src="idag.js"></script>
   <script src="app.js"></script>

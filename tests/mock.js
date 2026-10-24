@@ -83,7 +83,7 @@ async function mocka(page, data = standardData()) {
   const api = {
     tabeller: data, anrop: [], nere: false, felVidSparning: false,
     // Bildanalysen: { status, body } som Edge Function svarar med
-    analys: { status: 200, body: { rader: [{ namn: 'Köttbullar', gram: 150, kcal: 330 }, { namn: 'Kokt potatis', gram: 200, kcal: 156 }, { namn: 'Lingonsylt', gram: 30, kcal: 48 }], modell: 'gemini-flash-latest' } },
+    analys: { status: 200, body: { rader: [{ namn: 'Köttbullar', gram: 150, kcal: 330 }, { namn: 'Kokt potatis', gram: 200, kcal: 156 }, { namn: 'Lingonsylt', gram: 30, kcal: 48 }], modell: 'gemini-flash-lite-latest' } },
     analysAnrop: [], uppladdade: [], borttagnaFoton: [], uppladdningFel: false
   };
 

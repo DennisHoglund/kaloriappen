@@ -24,6 +24,29 @@
     return t.charAt(0).toUpperCase() + t.slice(1);
   }
 
+  async function hamtaTraning(d) {
+    const t = await sb.from('kalori_traning').select('*').eq('user_id', userId).eq('datum', d).order('id');
+    if (t.error) throw t.error;
+    return t.data;
+  }
+
+  function ritaTraning(pass) {
+    senasteTraning = pass;
+    const T = window.KaloriTraning.NAMN;
+    const summa = pass.reduce((s, p) => s + Number(p.kcal), 0);
+    $('ida-tra-summa').textContent = pass.length ? '≈ ' + fmt(summa) + ' kcal' : '';
+    $('ida-tra-tom').hidden = pass.length > 0;
+    $('ida-traning').innerHTML = pass.map((p) => {
+      const delar = [fmt(p.minuter) + ' min'];
+      if (p.km != null) delar.push(fmt(p.km, 2) + ' km');
+      if (p.typ === 'lopning' || p.typ === 'promenad') { const t = B.tempo(p.minuter, Number(p.km)); if (t) delar.push(t + ' /km'); }
+      if (p.typ === 'cykling') { const f = B.fart(p.minuter, Number(p.km)); if (f) delar.push(fmt(f, 1) + ' km/h'); }
+      return `<li><button type="button" class="rad-knapp tra-knapp" data-id="${esc(p.id)}" aria-label="Ändra ${esc(T[p.typ])}, ${fmt(p.minuter)} minuter">` +
+        `<span class="tra-text"><span class="rad-namn">${esc(T[p.typ])}${p.kommentar ? ' · ' + esc(p.kommentar) : ''}</span>` +
+        `<span class="rad-gram num">${delar.join(' · ')}</span></span><span class="rad-kcal num">${fmt(p.kcal)}</span></button></li>`;
+    }).join('');
+  }
+
   async function hamtaDag(d) {
     const [start, slut] = B.dygnUTC(d);
     const m = await sb.from('kalori_maltid').select('id,tid,typ,kalla,miniatyr').eq('user_id', userId).gte('tid', start).lt('tid', slut).order('tid');
@@ -45,6 +68,7 @@
   }
 
   let senaste = [];
+  let senasteTraning = [];
 
   function rita(maltider) {
     senaste = maltider;
@@ -89,10 +113,10 @@
     $('ida-fel').hidden = true;
     const nr = ++laddning;
     try {
-      const maltider = await hamtaDag(datum);
-      if (nr === laddning) rita(maltider);
+      const [maltider, pass] = await Promise.all([hamtaDag(datum), hamtaTraning(datum)]);
+      if (nr === laddning) { rita(maltider); ritaTraning(pass); }
     } catch (e) {
-      if (nr === laddning) { rita([]); $('ida-fel').hidden = false; }
+      if (nr === laddning) { rita([]); ritaTraning([]); $('ida-fel').hidden = false; }
     }
   }
 
@@ -111,6 +135,12 @@
       }
     });
     $('btn-logga-mat').addEventListener('click', () => opts.loggaMat({ datum }));
+    $('btn-logga-traning').addEventListener('click', () => opts.traning({ datum }));
+    $('ida-traning').addEventListener('click', (e) => {
+      const b = e.target.closest('button.tra-knapp');
+      const p = b && senasteTraning.find((x) => String(x.id) === b.dataset.id);
+      if (p) opts.traning({ pass: p });
+    });
   }
 
   window.KaloriIdag = { setup, visa, setUser(id) { userId = id; datum = null; }, get datum() { return datum; } };

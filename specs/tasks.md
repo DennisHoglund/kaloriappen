@@ -33,8 +33,8 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
-| T-11 | Edge Function `kalori-analys`: JWT-kontroll, Gemini Flash med JSON-svar, timeout och felkoder. Mockad i testerna | US-04 AC4 | Skapar Gemini-nyckel, lägger secret, deployar via editorn | 🔄 |
-| T-12 | Fota/välj bild → nedskalning → analys → justeringsvy (ändra gram, lägg till/ta bort rad) → spara med miniatyr ≤ 30 kB. Fel och 429 leder till manuell sökning | US-04, US-05 | 📱 | 📱 |
+| T-11 | Edge Function `kalori-analys`: JWT-kontroll, Gemini Flash med JSON-svar, timeout och felkoder. Mockad i testerna | US-04 AC4 | Skapar Gemini-nyckel, lägger secret, deployar via editorn | ✅ |
+| T-12 | Fota/välj bild → nedskalning → analys → justeringsvy (ändra gram, lägg till/ta bort rad) → spara med miniatyr ≤ 30 kB. Fel och 429 leder till manuell sökning | US-04, US-05 | 📱 | ✅ |
 
 ## Fas 4 – Vikt
 
@@ -47,8 +47,8 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
-| T-15 | Logga träning: typ, minuter, km (inte för styrka), kommentar. Tempo/hastighet visas. MET-förbränning i `berakning.js` med enhetstester. Ändra/ta bort | US-11, US-12 AC1 | – | ⬜ |
-| T-16 | Träningskort på dagsöversikten ("≈ N kcal", påverkar inte kvar). Veckohistorik med tid per typ och total sträcka, bläddra bakåt | US-12 AC2–3, US-13 | 📱 | ⬜ |
+| T-15 | Logga träning: typ, minuter, km (inte för styrka), kommentar. Tempo/hastighet visas. MET-förbränning i `berakning.js` med enhetstester. Ändra/ta bort | US-11, US-12 AC1 | – | 📱 |
+| T-16 | ~~Träningskort på dagsöversikten ("≈ N kcal", påverkar inte kvar)~~ (klart i T-15). Veckohistorik med tid per typ och total sträcka, bläddra bakåt | US-12 AC2–3, US-13 | 📱 | ⬜ |
 
 ## Fas 6 – Avslut
 
