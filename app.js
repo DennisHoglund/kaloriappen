@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const VERSION = 'T-07';
+  const VERSION = 'T-08';
   const $ = (id) => document.getElementById(id);
   const THEME_KEY = 'kalori-theme';
 
@@ -99,6 +99,8 @@
 
     window.KaloriProfil.setup(sb, { klar: laddaProfil, avbryt: visaApp });
     $('btn-profil').addEventListener('click', () => window.KaloriProfil.oppna(data.profil, data.viktKg, false));
+    window.KaloriMaltid.setup(sb, { klar: visaApp, avbryt: visaApp });
+    $('btn-logga-mat').addEventListener('click', () => window.KaloriMaltid.oppna());
 
     sb.auth.onAuthStateChange((_event, session) => render(session));
     sb.auth.getSession().then(({ data }) => render(data.session)).catch(() => render(null));
@@ -136,10 +138,20 @@
     else visaApp();
   }
 
+  let toastTimer = null;
+  function toast(text) {
+    const el = $('toast');
+    el.textContent = text;
+    el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.hidden = true; }, 3500);
+  }
+
   function render(session) {
     if (session && session.user) {
       $('user-email').textContent = session.user.email || '';
       window.KaloriProfil.setUser(session.user.id);
+      window.KaloriMaltid.setUser(session.user.id);
       if (aktuellAnvandare !== session.user.id) {
         aktuellAnvandare = session.user.id;
         laddaProfil();
@@ -157,7 +169,7 @@
     initAuth();
   }
 
-  window.KaloriApp = { visa, idag, get sb() { return sb; } };
+  window.KaloriApp = { visa, idag, toast, get sb() { return sb; } };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();

@@ -118,3 +118,32 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 .mal-siffra .enhet { font-size: 1rem; color: var(--text-2); font-weight: 600; }
 .btn.ghost { background: transparent; color: var(--text); border-color: var(--border); font-weight: 600; }
 .form .btn { width: 100%; }
+
+/* Sök och logga mat */
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.topbar-plats { width: 44px; }
+.sokfalt {
+  width: 100%; min-height: 52px; padding: 0 16px; border-radius: 14px;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-size: 17px;
+}
+.sokfalt:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent); }
+.lista-rubrik { font-size: .95rem; margin: 16px 0 8px; color: var(--text-2); }
+.lista-rubrik:empty { display: none; }
+.traffar { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.traff {
+  width: 100%; min-height: 56px; padding: 10px 14px; border-radius: 14px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font: inherit; text-align: left; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+.traff:active { background: var(--surface-2); }
+.traff-namn { font-weight: 600; }
+.traff-kcal { color: var(--text-2); font-size: .85rem; white-space: nowrap; font-family: var(--mono); }
+.val-namn { margin: 16px 0 0; font-size: 1.3rem; }
+.segment-4 { flex-wrap: wrap; }
+.segment-4 label { flex: 1 1 40%; }
+.kalla { margin-top: 8px; }
+.toast {
+  position: fixed; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 50;
+  max-width: 480px; margin: 0 auto; padding: 14px 16px; border-radius: 14px;
+  background: var(--text); color: var(--bg); font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}

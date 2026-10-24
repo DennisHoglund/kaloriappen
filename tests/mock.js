@@ -50,6 +50,10 @@ function filtrera(rader, params) {
   let ut = rader.slice();
   for (const [k, v] of params) {
     if (['select', 'order', 'limit', 'offset', 'on_conflict', 'columns'].includes(k)) continue;
+    if (v === 'not.is.null') { ut = ut.filter((r) => r[k] != null); continue; }
+    if (v === 'is.null') { ut = ut.filter((r) => r[k] == null); continue; }
+    const lista = v.match(/^in\.\((.*)\)$/);
+    if (lista) { const tillatna = new Set(lista[1].split(',').map((x) => x.replace(/^"|"$/g, ''))); ut = ut.filter((r) => tillatna.has(String(r[k]))); continue; }
     const m = v.match(/^(eq|gte|lte|gt|lt|neq)\.(.*)$/);
     if (!m) continue;
     const [, op, val] = m;
@@ -83,6 +87,11 @@ async function mocka(page, data = standardData()) {
     if (!hit) return route.abort();
     return route.fulfill({ path: path.join(ROOT, hit[1]), contentType: hit[2] });
   });
+
+  // Liten fast livsmedelsfil så att testerna inte påverkas när Livsmedelsverkets data uppdateras
+  await page.route(/\/data\/livsmedel\.json$/, (route) => api.livsmedelNere
+    ? route.abort('internetdisconnected')
+    : route.fulfill({ path: path.join(__dirname, 'data', 'livsmedel-fixtur.json'), contentType: 'application/json' }));
 
   // Typsnitt och annat okänt externt stoppas så att inget läcker ut till nätet
   await page.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/, (route) => route.abort());

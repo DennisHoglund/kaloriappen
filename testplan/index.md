@@ -5,8 +5,8 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 34 |
-| **Automatiserade** | 32 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 47 |
+| **Automatiserade** | 45 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 2 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
@@ -48,6 +48,24 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-PRO-07](testfall/TC-PRO-07.md) | [För hög takt sänks till 1 % av vikten med förklaring](testfall/TC-PRO-07.md) | Hög | 🤖 |
 | [TC-PRO-08](testfall/TC-PRO-08.md) | [Ogiltiga värden stoppas innan något sparas](testfall/TC-PRO-08.md) | Medel | 🤖 |
 | [TC-PRO-09](testfall/TC-PRO-09.md) | [Sparfel behåller det man fyllt i](testfall/TC-PRO-09.md) | Medel | 🤖 |
+
+## Logga mat
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-SOK-01](testfall/TC-SOK-01.md) | [Sökningen kräver minst 2 tecken](testfall/TC-SOK-01.md) | Hög | 🤖 |
+| [TC-SOK-02](testfall/TC-SOK-02.md) | [Sökningen bryr sig inte om versaler och accenter](testfall/TC-SOK-02.md) | Hög | 🤖 |
+| [TC-SOK-03](testfall/TC-SOK-03.md) | [Välj livsmedel och ange gram räknar ut kcal](testfall/TC-SOK-03.md) | Hög | 🤖 |
+| [TC-SOK-04](testfall/TC-SOK-04.md) | [Spara loggar måltiden](testfall/TC-SOK-04.md) | Hög | 🤖 |
+| [TC-SOK-05](testfall/TC-SOK-05.md) | [Måltid föreslås efter tid på dagen](testfall/TC-SOK-05.md) | Medel | 🤖 |
+| [TC-SOK-06](testfall/TC-SOK-06.md) | [Senaste livsmedel visas för snabbval](testfall/TC-SOK-06.md) | Hög | 🤖 |
+| [TC-SOK-07](testfall/TC-SOK-07.md) | [Ogiltig mängd stoppas](testfall/TC-SOK-07.md) | Medel | 🤖 |
+| [TC-SOK-08](testfall/TC-SOK-08.md) | [Sparfel behåller valet](testfall/TC-SOK-08.md) | Medel | 🤖 |
+| [TC-SOK-09](testfall/TC-SOK-09.md) | [Källan visas där livsmedel visas](testfall/TC-SOK-09.md) | Medel | 🤖 |
+| [TC-SOK-10](testfall/TC-SOK-10.md) | [Träffar i början av namnet kommer först](testfall/TC-SOK-10.md) | Medel | 🤖 |
+| [TC-SOK-11](testfall/TC-SOK-11.md) | [kcal räknas från kcal per 100 g och gram](testfall/TC-SOK-11.md) | Hög | 🤖 |
+| [TC-SOK-12](testfall/TC-SOK-12.md) | [Tillbaka stänger utan att spara](testfall/TC-SOK-12.md) | Medel | 🤖 |
+| [TC-SOK-13](testfall/TC-SOK-13.md) | [Livsmedlen kan inte laddas ger begripligt fel](testfall/TC-SOK-13.md) | Låg | 🤖 |
 
 ## Beräkning
 

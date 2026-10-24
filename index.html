@@ -110,6 +110,50 @@
     </div>
   </main>
 
+  <main id="view-sok" class="app-view" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="sok-stang" type="button">← Tillbaka</button>
+      <div class="brand">Logga mat</div>
+      <span class="topbar-plats" aria-hidden="true"></span>
+    </header>
+    <div class="page">
+      <div id="sok-lista">
+        <label for="sok-falt" class="visually-hidden">Sök livsmedel</label>
+        <input id="sok-falt" class="sokfalt" type="search" placeholder="Sök livsmedel, t.ex. havregryn" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+        <p id="sok-tips" class="muted small">Skriv minst 2 tecken.</p>
+        <p id="sok-fel" class="msg error" hidden>Kunde inte ladda livsmedlen. Kontrollera nätet och försök igen.</p>
+        <h2 id="sok-rubrik" class="lista-rubrik"></h2>
+        <ul id="sok-traffar" class="traffar"></ul>
+      </div>
+
+      <div id="sok-val" hidden>
+        <button class="icon-btn" id="val-tillbaka" type="button">← Sök igen</button>
+        <form id="form-val" class="form" novalidate>
+          <h2 id="val-namn" class="val-namn"></h2>
+          <p id="val-kcal100" class="muted small"></p>
+          <label for="sok-gram">Mängd (gram)</label>
+          <input id="sok-gram" type="text" inputmode="decimal" autocomplete="off">
+          <fieldset>
+            <legend>Måltid</legend>
+            <div class="segment segment-4">
+              <input type="radio" name="val-typ" id="val-typ-frukost" value="frukost"><label for="val-typ-frukost">Frukost</label>
+              <input type="radio" name="val-typ" id="val-typ-lunch" value="lunch"><label for="val-typ-lunch">Lunch</label>
+              <input type="radio" name="val-typ" id="val-typ-middag" value="middag"><label for="val-typ-middag">Middag</label>
+              <input type="radio" name="val-typ" id="val-typ-mellanmal" value="mellanmal"><label for="val-typ-mellanmal">Mellanmål</label>
+            </div>
+          </fieldset>
+          <section class="mal-ruta" aria-live="polite">
+            <span class="muted small">Det här blir</span>
+            <span class="mal-siffra"><span id="val-kcal" class="num">–</span> <span class="enhet">kcal</span></span>
+          </section>
+          <p id="val-msg" class="msg" role="status" aria-live="polite"></p>
+          <button class="btn primary" type="submit">Spara</button>
+        </form>
+      </div>
+      <p class="muted small kalla">Livsmedelsdata: Livsmedelsverkets livsmedelsdatabas (CC BY 4.0)</p>
+    </div>
+  </main>
+
   <main id="view-app" class="app-view" hidden>
     <header class="topbar">
       <div class="brand"><img src="icons/icon.svg" alt="" width="32" height="32"> Kaloriappen</div>
@@ -127,16 +171,20 @@
         <p id="app-mal-info" class="muted small"></p>
         <button class="btn ghost" id="btn-profil" type="button">Ändra profil</button>
       </section>
-      <p class="muted small">Inloggad som <span id="user-email"></span>. Sök och dagsöversikt kommer i nästa steg.</p>
+      <button class="btn primary" id="btn-logga-mat" type="button">Logga mat</button>
+      <p class="muted small">Inloggad som <span id="user-email"></span>. Dagsöversikten kommer i nästa steg.</p>
       <p class="muted small" id="version"></p>
-      <p class="muted small kalla">Livsmedelsdata: Livsmedelsverkets livsmedelsdatabas (CC BY 4.0)</p>
     </div>
   </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.75.0/dist/umd/supabase.js"></script>
   <script src="config.js"></script>
   <script src="berakning.js"></script>
+  <script src="livsmedel.js"></script>
   <script src="profil.js"></script>
+  <script src="maltid.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

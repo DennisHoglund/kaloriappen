@@ -1,0 +1,73 @@
+{
+"kalla": "Livsmedelsverkets livsmedelsdatabas",
+"licens": "CC BY 4.0",
+"hamtad": "2026-10-24",
+"antal": 13,
+"livsmedel": [
+[
+553,
+"Banan",
+95
+],
+[
+702,
+"Havregryn fullkorn",
+375
+],
+[
+677,
+"Havregrynsgröt fullkorn",
+66
+],
+[
+6089,
+"Kvarg drickf. olika smaker",
+42
+],
+[
+1170,
+"Kyckling bröstfilé färsk stekt u. skinn",
+116
+],
+[
+3594,
+"Kyckling bröstfilé kokt u. skinn",
+156
+],
+[
+1285,
+"Lax gravad",
+166
+],
+[
+123,
+"Mjölk fett 3% berikad",
+60
+],
+[
+96,
+"Ost hårdost fett 28%",
+358
+],
+[
+838,
+"Ris à la Malta m. grädde fett 40%",
+132
+],
+[
+29,
+"Smör fett 80%",
+766
+],
+[
+2205,
+"Ägg kokt",
+136
+],
+[
+588,
+"Äpple m. skal",
+48
+]
+]
+}
