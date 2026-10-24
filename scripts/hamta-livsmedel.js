@@ -74,6 +74,7 @@ async function main() {
   const data = bygg(lista, kcal, new Date().toISOString().slice(0, 10));
   if (data.antal < MINST) throw new Error('Bara ' + data.antal + ' livsmedel med kcal – filen skrivs inte över');
   const fil = path.join(__dirname, '..', 'data', 'livsmedel.json');
+  fs.mkdirSync(path.dirname(fil), { recursive: true });
   fs.writeFileSync(fil, JSON.stringify(data) + '\n');
   console.log('::notice::Skrev ' + data.antal + ' livsmedel till data/livsmedel.json (' + Math.round(fs.statSync(fil).size / 1024) + ' kB)');
 }
