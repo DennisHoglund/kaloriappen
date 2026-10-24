@@ -1,0 +1,51 @@
+name: Uppdatera livsmedel
+
+# Hämtar Livsmedelsverkets livsmedelsdatabas till data/livsmedel.json en gång i veckan.
+# Om något ändrats committas filen och test + publicering startas.
+on:
+  schedule:
+    - cron: '17 3 * * 1'   # måndagar 05:17 svensk sommartid
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: livsmedel
+  cancel-in-progress: false
+
+jobs:
+  uppdatera:
+    name: Hämta och spara livsmedel
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Hämta från Livsmedelsverket
+        run: node scripts/hamta-livsmedel.js
+
+      - name: Spara om något ändrats
+        id: spara
+        run: |
+          if git diff --quiet -- data/livsmedel.json && git ls-files --error-unmatch data/livsmedel.json >/dev/null 2>&1; then
+            echo "Inga ändringar i livsmedelsdatan."
+            echo "andrat=nej" >> "$GITHUB_OUTPUT"
+          else
+            git add data/livsmedel.json
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "Livsmedelsdata uppdaterad från Livsmedelsverket"
+            git push
+            echo "andrat=ja" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Starta test och publicering
+        if: steps.spara.outputs.andrat == 'ja'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run tester.yml --ref main
