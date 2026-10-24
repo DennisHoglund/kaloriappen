@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const BAS = 'https://dataportal.livsmedelsverket.se/livsmedel/api/v1';
-const SIDA = 500;
+const SIDA = 100;
 const SAMTIDIGA = 8;
 const MINST = 2000; // färre än så betyder att något gick fel – skriv inte över filen
 
@@ -55,24 +55,29 @@ async function main() {
   console.log('Livsmedel i listan: ' + lista.length);
 
   const kcal = new Map();
+  const misslyckade = [];
   let nasta = 0;
   async function arbetare() {
     while (nasta < lista.length) {
       const l = lista[nasta++];
-      const n = await hamtaJson(`${BAS}/livsmedel/${l.nummer}/naringsvarden?sprak=1`);
-      const k = kcalPer100g(n);
-      if (k !== null) kcal.set(l.nummer, k);
+      try {
+        const k = kcalPer100g(await hamtaJson(`${BAS}/livsmedel/${l.nummer}/naringsvarden?sprak=1`));
+        if (k !== null) kcal.set(l.nummer, k);
+      } catch (e) {
+        misslyckade.push(l.nummer + ' (' + e.message.split(': ').pop() + ')');
+      }
     }
   }
   await Promise.all(Array.from({ length: SAMTIDIGA }, arbetare));
+  if (misslyckade.length) console.log('::warning::' + misslyckade.length + ' livsmedel kunde inte hämtas, t.ex. ' + misslyckade.slice(0, 5).join(', '));
 
   const data = bygg(lista, kcal, new Date().toISOString().slice(0, 10));
   if (data.antal < MINST) throw new Error('Bara ' + data.antal + ' livsmedel med kcal – filen skrivs inte över');
   const fil = path.join(__dirname, '..', 'data', 'livsmedel.json');
   fs.writeFileSync(fil, JSON.stringify(data) + '\n');
-  console.log('Skrev ' + data.antal + ' livsmedel till data/livsmedel.json (' + Math.round(fs.statSync(fil).size / 1024) + ' kB)');
+  console.log('::notice::Skrev ' + data.antal + ' livsmedel till data/livsmedel.json (' + Math.round(fs.statSync(fil).size / 1024) + ' kB)');
 }
 
-if (require.main === module) main().catch((e) => { console.error(e.message); process.exit(1); });
+if (require.main === module) main().catch((e) => { console.log('::error::' + e.message); process.exit(1); });
 
 module.exports = { kcalPer100g, bygg };
