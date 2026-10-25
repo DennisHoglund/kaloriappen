@@ -40,15 +40,15 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
-| T-13 | Logga vikt (en per dag, ny ersätter). Aktuell vikt och dagsmål uppdateras | US-09 | – | 📱 |
-| T-14 | Viktgraf i SVG: vikt, 7-dagars medel, linje för målvikt, period 30/90/allt. Kort på dagsöversikten | US-10 | 📱 | 📱 |
+| T-13 | Logga vikt (en per dag, ny ersätter). Aktuell vikt och dagsmål uppdateras | US-09 | – | ✅ |
+| T-14 | Viktgraf i SVG: vikt, 7-dagars medel, linje för målvikt, period 30/90/allt. Kort på dagsöversikten | US-10 | 📱 | ✅ |
 
 ## Fas 5 – Träning
 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
-| T-15 | Logga träning: typ, minuter, km (inte för styrka), kommentar. Tempo/hastighet visas. MET-förbränning i `berakning.js` med enhetstester. Ändra/ta bort | US-11, US-12 AC1 | – | 📱 |
-| T-16 | ~~Träningskort på dagsöversikten ("≈ N kcal", påverkar inte kvar)~~ (klart i T-15). Veckohistorik med tid per typ och total sträcka, bläddra bakåt | US-12 AC2–3, US-13 | 📱 | 📱 |
+| T-15 | Logga träning: typ, minuter, km (inte för styrka), kommentar. Tempo/hastighet visas. MET-förbränning i `berakning.js` med enhetstester. Ändra/ta bort | US-11, US-12 AC1 | – | ✅ |
+| T-16 | ~~Träningskort på dagsöversikten ("≈ N kcal", påverkar inte kvar)~~ (klart i T-15). Veckohistorik med tid per typ och total sträcka, bläddra bakåt | US-12 AC2–3, US-13 | 📱 | ✅ |
 
 ## Fas 6 – Avslut
 

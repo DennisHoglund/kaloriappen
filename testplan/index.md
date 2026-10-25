@@ -20,6 +20,7 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-ANA-07](testfall/TC-ANA-07.md) | 2026-10-24 | ✅ | Efter byte till Flash-Lite + minimalt tänkande |
 | [TC-FOT-13](testfall/TC-FOT-13.md) | 2026-10-24 | ✅ | Banan fotad. Första försöket tog > 30 s med vanliga Flash |
 | [TC-INL-08](testfall/TC-INL-08.md) | 2026-10-24 | ✅ | Inloggning med riktigt konto fungerar (T-04) |
+| Träning, vikt och veckovy på iPhone (T-13–T-16) | 2026-10-25 | ✅ | Löpning 120 min / 20 km loggad, vikt och graf, veckovy |
 
 **Typ:** 🤖 automatiserad · 🖐️ manuell  **Prioritet:** Hög = måste fungera, Medel = viktig, Låg = bekvämlighet
 
