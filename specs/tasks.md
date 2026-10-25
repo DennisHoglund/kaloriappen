@@ -60,7 +60,7 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 
 | ID | Task | Stories | Dennis gör | Status |
 |---|---|---|---|---|
-| T-18 | Gång på löpband: tid, hastighet, lutning, sträcka räknas. Schemat (ny typ + kolumn `lutning_procent`), ACSM-förbränning, formulär, dagsöversikt och veckovy | US-11 AC1, AC5, US-12 AC1, D-23 | Kör `schema.sql` igen 📱 | 📱 |
+| T-18 | Gång på löpband: tid, hastighet, lutning, sträcka räknas. Schemat (ny typ + kolumn `lutning_procent`), ACSM-förbränning, formulär, dagsöversikt och veckovy | US-11 AC1, AC5, US-12 AC1, D-23 | Kör `schema.sql` igen 📱 | ✅ |
 
 ## Spårbarhet
 
