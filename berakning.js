@@ -180,7 +180,22 @@
     return { nummer, start, slut: flyttaDag(start, 6) };
   }
 
-  const api = { vecka, AKTIVITET, GOLV, KCAL_PER_KG, alder, bmr, maxTakt, dagsmal, dygnUTC, flyttaDag, met, forbranning, tempo, fart, strackaFran, dagarMellan, glidandeMedel };
+  // ---------- Dagens status (US-14, D-24) ----------
+  function dagStatus(atit, mal, golv, harMat) {
+    if (!harMat) return 'inget';
+    if (!(mal > 0)) return null;
+    if (atit < golv) return 'for-lite';
+    if (atit > mal * 1.05) return 'over';
+    if (atit >= mal * 0.9) return 'i-mal';
+    return 'under';
+  }
+
+  // Datum (ÅÅÅÅ-MM-DD) i svensk tid för en tidpunkt
+  function datumFor(iso) {
+    return new Intl.DateTimeFormat('sv-SE', { timeZone: 'Europe/Stockholm', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date(iso));
+  }
+
+  const api = { vecka, dagStatus, datumFor, AKTIVITET, GOLV, KCAL_PER_KG, alder, bmr, maxTakt, dagsmal, dygnUTC, flyttaDag, met, forbranning, tempo, fart, strackaFran, dagarMellan, glidandeMedel };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.KaloriBerakning = api;
 })(typeof window !== 'undefined' ? window : globalThis);

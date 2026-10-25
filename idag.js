@@ -8,11 +8,14 @@
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
   const TYPER = [['frukost', 'Frukost'], ['lunch', 'Lunch'], ['middag', 'Middag'], ['mellanmal', 'Mellanmål']];
+  const STATUS = { 'i-mal': ['✓', 'I mål'], under: ['↓', 'Under målet'], 'for-lite': ['!', 'För lite'], over: ['↑', 'Över målet'], inget: ['–', 'Inget loggat'] };
+  const STATUSKLASSER = Object.keys(STATUS).map((k) => 'status-' + k);
 
   let sb = null;
   let userId = null;
   let datum = null;
   let mal = null;
+  let golv = null;
   let laddning = 0;
 
   function datumText(d) {
@@ -61,6 +64,68 @@
     $('ida-vikt-info').textContent = delar.join(' · ');
   }
 
+  // Status för en avslutad dag (US-14). Idag visas ingen status.
+  function ritaStatus(atit, harMat, pass) {
+    const idag = window.KaloriApp.idag();
+    const s = datum < idag ? B.dagStatus(atit, mal, golv, harMat) : null;
+    $('ida-idag-info').hidden = datum !== idag;
+    $('ida-status').hidden = !s;
+    $('ida-stapel').classList.remove(...STATUSKLASSER);
+    $('ida-status').classList.remove(...STATUSKLASSER);
+    $('ida-not').hidden = s !== 'for-lite';
+    if (!s) return;
+    $('ida-status').classList.add('status-' + s);
+    if (s !== 'inget') $('ida-stapel').classList.add('status-' + s);
+    $('ida-status-ikon').textContent = STATUS[s][0];
+    $('ida-status-namn').textContent = STATUS[s][1];
+    $('ida-status-tal').textContent = s === 'inget' ? '' : fmt(atit) + ' av ' + fmt(mal) + ' kcal';
+    if (s === 'for-lite') {
+      $('ida-not-text').textContent = 'Under ' + fmt(golv) + ' kcal är för lite för att gå ner i vikt på ett hållbart sätt – kroppen tar då av musklerna och återhämtningen blir sämre.';
+      const min = pass.reduce((t, p) => t + p.minuter, 0);
+      $('ida-not-traning').hidden = !min;
+      $('ida-not-traning').textContent = min ? 'Du tränade ' + fmt(min) + ' minuter den här dagen. Ät gärna lite mer dagar med träning.' : '';
+    }
+  }
+
+  // Veckans dagar som prickar med status, antal i mål och snitt (US-15)
+  async function ritaVecka() {
+    const v = B.vecka(datum);
+    const idag = window.KaloriApp.idag();
+    const start = B.dygnUTC(v.start)[0];
+    const slut = B.dygnUTC(v.slut)[1];
+    const m = await sb.from('kalori_maltid').select('id,tid').eq('user_id', userId).gte('tid', start).lt('tid', slut);
+    if (m.error) throw m.error;
+    const summa = new Map();
+    if (m.data.length) {
+      const r = await sb.from('kalori_maltid_rad').select('maltid_id,kcal').in('maltid_id', m.data.map((x) => x.id));
+      if (r.error) throw r.error;
+      const dag = new Map(m.data.map((x) => [x.id, B.datumFor(x.tid)]));
+      r.data.forEach((x) => { const d = dag.get(x.maltid_id); summa.set(d, (summa.get(d) || 0) + Number(x.kcal)); });
+    }
+    const BOKSTAV = ['M', 'T', 'O', 'T', 'F', 'L', 'S'];
+    const NAMN = ['Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag', 'Söndag'];
+    let iMal = 0, avslutade = 0, totalt = 0;
+    $('ida-prickar').innerHTML = BOKSTAV.map((b, n) => {
+      const d = B.flyttaDag(v.start, n);
+      const kcal = summa.get(d) || 0;
+      let klass, ikon = '', text;
+      if (d > idag) { klass = 'kommande'; text = 'kommer'; }
+      else if (d === idag) { klass = 'idag'; text = 'idag, pågår'; }
+      else {
+        const s = B.dagStatus(kcal, mal, golv, summa.has(d)) || 'inget';
+        klass = 'status-' + s; ikon = STATUS[s][0]; text = STATUS[s][1].toLowerCase() + (s === 'inget' ? '' : ', ' + fmt(kcal) + ' kcal');
+        if (s !== 'inget') { avslutade++; totalt += kcal; if (s === 'i-mal' || s === 'under') iMal++; }
+      }
+      return `<button type="button" class="prick-knapp ${klass}${d === datum ? ' vald' : ''}" data-datum="${d}" ${d > idag ? 'disabled' : ''} aria-label="${NAMN[n]} ${Number(d.slice(8))}/${Number(d.slice(5, 7))}: ${text}">` +
+        `<span class="prick-cirkel" aria-hidden="true">${ikon}</span><span class="prick-dag" aria-hidden="true">${b}</span></button>`;
+    }).join('');
+    $('ida-vecka-rubrik').textContent = 'Vecka ' + v.nummer;
+    $('ida-vecka-imal').textContent = avslutade ? 'i mål ' + iMal + ' av ' + avslutade + (avslutade === 1 ? ' dag' : ' dagar') : '';
+    $('ida-vecka-snitt').innerHTML = avslutade
+      ? 'Snitt <span class="num">' + fmt(totalt / avslutade) + '</span> kcal/dag <span class="muted">· mål ' + fmt(mal) + '</span>'
+      : '<span class="muted">Statusen fylls i när dagarna är slut.</span>';
+  }
+
   async function hamtaDag(d) {
     const [start, slut] = B.dygnUTC(d);
     const m = await sb.from('kalori_maltid').select('id,tid,typ,kalla,miniatyr').eq('user_id', userId).gte('tid', start).lt('tid', slut).order('tid');
@@ -98,6 +163,7 @@
     $('ida-stapel').setAttribute('aria-label', mal ? fmt(atit) + ' av ' + fmt(mal) + ' kcal, ' + andel + ' procent' : fmt(atit) + ' kcal');
     $('ida-stapel').classList.toggle('over', kvar !== null && kvar < 0);
 
+    const avslutadMedMat = datum < window.KaloriApp.idag() && maltider.some((m) => m.rader.length);
     $('ida-maltider').innerHTML = TYPER.map(([typ, namn]) => {
       const dessa = maltider.filter((m) => m.typ === typ);
       const rader = dessa.flatMap((m) => m.rader.map((r) => ({ ...r, kalla: m.kalla })));
@@ -106,19 +172,22 @@
       const lista = rader.map((r) =>
         `<li><button type="button" class="rad-knapp" data-id="${esc(r.id)}" aria-label="Ändra ${esc(r.namn)}, ${fmt(r.gram)} gram, ${fmt(r.kcal)} kcal">` +
         `<span class="rad-namn">${esc(r.namn)}</span><span class="rad-gram num">${fmt(r.gram)} g</span><span class="rad-kcal num">${fmt(r.kcal)}</span></button></li>`).join('');
-      return `<section class="maltid" data-typ="${typ}" aria-label="${namn}">
+      const saknas = !rader.length && avslutadMedMat && typ !== 'mellanmal';
+      return `<section class="maltid${saknas ? ' saknas' : ''}" data-typ="${typ}" aria-label="${namn}">
         <header class="maltid-huvud"><h3>${namn}</h3><span class="num">${rader.length ? fmt(summa) + ' kcal' : ''}</span></header>
         ${bilder ? `<div class="maltid-bilder">${bilder}</div>` : ''}
-        ${rader.length ? `<ul class="rader">${lista}</ul>` : `<p class="muted small tom">Inte loggat</p>`}
+        ${rader.length ? `<ul class="rader">${lista}</ul>` : `<p class="muted small tom">${saknas ? 'Inte loggat – glömde du logga?' : 'Inte loggat'}</p>`}
         <button type="button" class="lagg-till" data-typ="${typ}">+ Lägg till ${namn.toLowerCase()}</button>
       </section>`;
     }).join('');
+    return atit;
   }
 
   async function visa(opts = {}) {
     if (opts.datum) datum = opts.datum;
     if (!datum) datum = window.KaloriApp.idag();
     if ('mal' in opts) mal = opts.mal;
+    if ('golv' in opts) golv = opts.golv;
     const idag = window.KaloriApp.idag();
     if (datum > idag) datum = idag;
     $('ida-datum').textContent = datumText(datum);
@@ -128,10 +197,14 @@
     const nr = ++laddning;
     window.KaloriVikt.sammanfattning().then((v) => { if (nr === laddning) ritaVikt(v); }).catch(() => ritaVikt(null));
     try {
-      const [maltider, pass] = await Promise.all([hamtaDag(datum), hamtaTraning(datum)]);
-      if (nr === laddning) { rita(maltider); ritaTraning(pass); }
+      const [maltider, pass] = await Promise.all([hamtaDag(datum), hamtaTraning(datum), ritaVecka()]);
+      if (nr === laddning) {
+        const atit = rita(maltider);
+        ritaTraning(pass);
+        ritaStatus(atit, maltider.some((m) => m.rader.length), pass);
+      }
     } catch (e) {
-      if (nr === laddning) { rita([]); ritaTraning([]); $('ida-fel').hidden = false; }
+      if (nr === laddning) { rita([]); ritaTraning([]); ritaStatus(0, false, []); $('ida-status').hidden = true; $('ida-not').hidden = true; $('ida-fel').hidden = false; }
     }
   }
 
@@ -153,6 +226,10 @@
     $('btn-logga-traning').addEventListener('click', () => opts.traning({ datum }));
     $('btn-vikt').addEventListener('click', () => opts.vikt({ datum }));
     $('btn-vecka').addEventListener('click', () => opts.vecka({ datum }));
+    $('ida-prickar').addEventListener('click', (e) => {
+      const b = e.target.closest('button.prick-knapp');
+      if (b && !b.disabled) visa({ datum: b.dataset.datum });
+    });
     $('ida-traning').addEventListener('click', (e) => {
       const b = e.target.closest('button.tra-knapp');
       const p = b && senasteTraning.find((x) => String(x.id) === b.dataset.id);

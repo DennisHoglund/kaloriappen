@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '1.1';
+  const VERSION = '1.2';
   const $ = (id) => document.getElementById(id);
   const THEME_KEY = 'kalori-theme';
 
@@ -135,7 +135,8 @@
 
   function visaApp() {
     visa('view-app');
-    window.KaloriIdag.visa({ mal: dagsmalNu() });
+    const golv = data.profil ? window.KaloriBerakning.GOLV[data.profil.kon] : null;
+    window.KaloriIdag.visa({ mal: dagsmalNu(), golv });
   }
 
   async function laddaProfil() {

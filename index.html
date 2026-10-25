@@ -361,6 +361,15 @@
         <button class="icon-btn" id="ida-nasta" type="button" aria-label="Nästa dag">›</button>
       </nav>
       <button class="lank" id="ida-tillbaka-idag" type="button" hidden>Tillbaka till idag</button>
+      <div id="ida-status" class="status-marke" role="status" hidden>
+        <span id="ida-status-ikon" class="status-ikon" aria-hidden="true"></span>
+        <span id="ida-status-namn" class="status-namn"></span>
+        <span id="ida-status-tal" class="status-tal"></span>
+      </div>
+      <section id="ida-not" class="not-ruta" hidden>
+        <p id="ida-not-text"></p>
+        <p id="ida-not-traning" class="muted" hidden></p>
+      </section>
 
       <div class="rutor">
         <div class="ruta"><span class="ruta-etikett">Ätit</span><span id="ida-atit" class="ruta-tal num">–</span></div>
@@ -368,7 +377,14 @@
         <div class="ruta" id="ida-kvar-ruta"><span class="ruta-etikett" id="ida-kvar-etikett">Kvar</span><span id="ida-kvar" class="ruta-tal num accent">–</span></div>
       </div>
       <div id="ida-stapel" class="stapel" role="img" aria-label=""><div id="ida-stapel-fyllning" class="stapel-fyllning"></div></div>
+      <p id="ida-idag-info" class="muted small">Dagens status visas när dagen är slut. Under dagen gäller Kvar.</p>
       <p id="ida-fel" class="msg error" hidden>Kunde inte hämta dagens måltider. Kontrollera nätet.</p>
+
+      <section id="ida-vecka" class="maltid vecka-kort" aria-label="Veckan">
+        <header class="maltid-huvud"><h3 id="ida-vecka-rubrik">Vecka</h3><span id="ida-vecka-imal" class="muted small"></span></header>
+        <div id="ida-prickar" class="prickar"></div>
+        <p id="ida-vecka-snitt" class="small vecka-snitt"></p>
+      </section>
 
       <div class="tva knapprad">
         <label class="btn primary foto-knapp" id="btn-fota">

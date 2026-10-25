@@ -13,7 +13,7 @@ träning och vikt mot ett beräknat dagligt kalorimål.
 |---|---|
 | Inloggning | E-post + lösenord, samma konto som Svampkartan och Jaktvind |
 | Profil | Födelsedatum, kön, längd, vikt, aktivitet, målvikt och takt → dagsmål (Mifflin-St Jeor, golv 1 500/1 200 kcal, högst 1 %/vecka) |
-| Dagsöversikt | Ätit / mål / kvar, måltider per typ, bläddra mellan dagar |
+| Dagsöversikt | Ätit / mål / kvar, måltider per typ, bläddra mellan dagar. Status för avslutade dagar (i mål, under, för lite, över) och veckans prickar med snitt |
 | Logga mat | Sök bland 2 606 livsmedel, gram → kcal, föreslagen måltid, senaste livsmedel |
 | Fota maten | Bilden analyseras av Gemini Flash-Lite via Edge Function, justera och spara med miniatyr |
 | Ändra | Ändra mängd eller ta bort, med bekräftelse |
@@ -26,10 +26,10 @@ Allt börjar i `specs/`. Ändringar görs först i specen, sedan i koden.
 
 | Fil | Innehåll |
 |---|---|
-| `specs/stories.md` | User stories US-01–13 med acceptanskriterier och beslut D-01–23 |
+| `specs/stories.md` | User stories US-01–15 med acceptanskriterier och beslut D-01–24 |
 | `specs/plan.md` | Principer, arkitektur, datamodell, beräkningar, bildanalys, tester |
-| `specs/tasks.md` | Tasks T-01–18 med status och spårbarhet |
-| `testplan/` | 113 testfall som docs-as-code, kopplade till krav och Playwright-tester |
+| `specs/tasks.md` | Tasks T-01–19 med status och spårbarhet |
+| `testplan/` | 124 testfall som docs-as-code, kopplade till krav och Playwright-tester |
 | `CLAUDE.md` | Regler för AI-assistenter (`AGENTS.md` pekar hit) |
 
 ## Kom igång

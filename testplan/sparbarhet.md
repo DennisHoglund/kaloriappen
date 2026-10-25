@@ -5,8 +5,8 @@ Genereras av `tests/sparbarhet.js` (`npm run testplan`). Redigera inte för hand
 
 | | |
 |---|---|
-| **Acceptanskriterier** | 39 |
-| **Med testfall** | 39 |
+| **Acceptanskriterier** | 47 |
+| **Med testfall** | 47 |
 | **Utan testfall** | 0 |
 
 
@@ -113,6 +113,24 @@ Genereras av `tests/sparbarhet.js` (`npm run testplan`). Redigera inte för hand
 |---|---|---|
 | AC1 | Given träningsvyn, Then visas veckans pass med total tid per typ och total sträcka. | [TC-TRA-13](testfall/TC-TRA-13.md) 🤖 |
 | AC2 | Given historiken, Then kan jag bläddra bakåt vecka för vecka. | [TC-TRA-14](testfall/TC-TRA-14.md) 🤖 |
+
+## US-14 Dagens status
+
+| AC | Kriterium | Testfall |
+|---|---|---|
+| AC1 | Given en avslutad dag med loggad mat, Then visas ett statusmärke med ätit av mål: I mål, Under målet, För lite eller Över målet enligt D-24. | [TC-STA-01](testfall/TC-STA-01.md) 🤖, [TC-STA-04](testfall/TC-STA-04.md) 🤖, [TC-STA-05](testfall/TC-STA-05.md) 🤖 |
+| AC2 | Given en avslutad dag utan loggad mat, Then visas Inget loggat (inte Under målet). | [TC-STA-01](testfall/TC-STA-01.md) 🤖, [TC-STA-07](testfall/TC-STA-07.md) 🤖 |
+| AC3 | Given idag, Then visas ingen status – Kvar gäller tills dagen är slut. | [TC-STA-03](testfall/TC-STA-03.md) 🤖 |
+| AC4 | Given status För lite, Then visas en vänlig förklaring, och om dagen hade träning nämns den. | [TC-STA-06](testfall/TC-STA-06.md) 🤖 |
+| AC5 | Given en avslutad dag med loggad mat där frukost, lunch eller middag saknas, Then visas "Inte loggat – glömde du logga?" för den måltiden. | [TC-STA-08](testfall/TC-STA-08.md) 🤖 |
+
+## US-15 Veckan i dagsöversikten
+
+| AC | Kriterium | Testfall |
+|---|---|---|
+| AC1 | Given dagsöversikten, Then visas veckans dagar (måndag–söndag) som prickar med symbol för status, idag som en tom ring och kommande dagar tomma. | [TC-VEC-01](testfall/TC-VEC-01.md) 🤖 |
+| AC2 | Given veckan, Then visas hur många avslutade dagar med loggad mat som var i mål och snittet i kcal/dag mot dagsmålet. | [TC-STA-02](testfall/TC-STA-02.md) 🤖, [TC-VEC-02](testfall/TC-VEC-02.md) 🤖 |
+| AC3 | Given en prick för en dag, When jag trycker på den, Then visas den dagen. | [TC-VEC-03](testfall/TC-VEC-03.md) 🤖 |
 
 ## Testfall som gäller hela storyn
 

@@ -10,6 +10,7 @@
   --on-accent: #FFFFFF;
   --track: #DCE2F5;
   --danger: #B3261E;
+  --ok: #5CC8A0; --ok-2: #A8E8D0; --varn: #F2C14E; --pa-status: #0E1430;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   color-scheme: light;
 }
@@ -246,3 +247,35 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 .vec-tid { font-size: 1.05rem; }
 .vec-typ { display: flex; justify-content: space-between; gap: 8px; padding: 10px 14px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); }
 .vec-typ .num { font-family: var(--mono); font-size: .85rem; color: var(--text-2); text-align: right; }
+
+/* Dagens status och veckan (US-14, US-15) */
+.status-marke {
+  align-self: center; display: flex; align-items: center; gap: 10px; padding: 6px 16px 6px 6px;
+  border-radius: 999px; border: 1px solid var(--status, var(--border)); background: color-mix(in srgb, var(--status, var(--surface)) 16%, transparent);
+}
+.status-ikon { width: 30px; height: 30px; border-radius: 15px; display: grid; place-items: center; font-weight: 700; background: var(--status); color: var(--pa-status); }
+.status-namn { font-weight: 700; }
+.status-tal { font-size: .9rem; color: var(--text-2); }
+.status-i-mal { --status: var(--ok); }
+.status-under { --status: var(--ok-2); }
+.status-for-lite, .status-over { --status: var(--varn); }
+.status-inget { --status: transparent; border-style: dashed; border-color: var(--text-2); }
+.status-inget .status-ikon { border: 2px dashed var(--text-2); color: var(--text-2); box-sizing: border-box; }
+.stapel.status-i-mal .stapel-fyllning { background: var(--ok); }
+.stapel.status-under .stapel-fyllning { background: var(--ok-2); }
+.stapel.status-for-lite .stapel-fyllning, .stapel.status-over .stapel-fyllning { background: var(--varn); }
+.not-ruta { padding: 14px; border-radius: 16px; background: var(--surface); border: 1px solid var(--varn); }
+.not-ruta p { margin: 0; font-size: .95rem; line-height: 1.45; }
+.not-ruta p + p { margin-top: 6px; }
+.vecka-kort .maltid-huvud { align-items: center; }
+.prickar { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; margin-top: 12px; }
+.prick-knapp { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0; min-height: 60px; background: none; border: 0; color: var(--text-2); font: inherit; font-size: .8rem; cursor: pointer; }
+.prick-knapp:disabled { cursor: default; }
+.prick-knapp.vald .prick-dag { color: var(--text); font-weight: 700; }
+.prick-cirkel { width: 36px; height: 36px; border-radius: 18px; display: grid; place-items: center; font-weight: 700; box-sizing: border-box; background: var(--status, transparent); color: var(--pa-status); }
+.prick-knapp.status-inget .prick-cirkel { border: 2px dashed var(--text-2); color: var(--text-2); }
+.prick-knapp.idag .prick-cirkel { border: 2px solid var(--accent); }
+.prick-knapp.kommande .prick-cirkel { border: 1px solid var(--border); }
+.vecka-snitt { margin: 10px 0 0; }
+.vecka-snitt .num { font-family: var(--mono); font-weight: 600; }
+.maltid.saknas { border-style: dashed; }

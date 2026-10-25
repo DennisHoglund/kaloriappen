@@ -136,4 +136,24 @@ test.describe('Beräkning', () => {
     expect(B.strackaFran(45, 5.5)).toBe(4.13);
     expect(B.strackaFran(30, 0)).toBeNull();
   });
+
+  test('dagens status: i mål, under, för lite, över och inget loggat', { annotation: { type: 'testfall', description: 'TC-STA-01' } }, () => {
+    const S = (atit, harMat = true) => B.dagStatus(atit, 1970, 1500, harMat);
+    expect(S(1850)).toBe('i-mal');      // 94 %
+    expect(S(1773)).toBe('i-mal');      // precis 90 %
+    expect(S(2068)).toBe('i-mal');      // precis 105 %
+    expect(S(2069)).toBe('over');
+    expect(S(1700)).toBe('under');      // 86 %, över golvet
+    expect(S(1500)).toBe('under');      // precis golvet räknas inte som för lite
+    expect(S(1499)).toBe('for-lite');
+    expect(S(0, false)).toBe('inget');
+    expect(B.dagStatus(1000, 1200, 1200, true)).toBe('for-lite'); // kvinna med mål på golvet
+    expect(B.dagStatus(1500, null, 1500, true)).toBeNull();        // inget mål
+  });
+
+  test('datum i svensk tid för en tidpunkt', { annotation: { type: 'testfall', description: 'TC-STA-02' } }, () => {
+    expect(B.datumFor('2026-10-23T21:30:00Z')).toBe('2026-10-23'); // 23:30 fredag
+    expect(B.datumFor('2026-10-23T22:30:00Z')).toBe('2026-10-24'); // 00:30 lördag
+    expect(B.datumFor('2026-10-25T23:30:00Z')).toBe('2026-10-26'); // vintertid: 00:30 måndag
+  });
 });

@@ -1,6 +1,6 @@
 # Kaloriappen – User stories
 
-Status: **v1.3** (2026-10-25) – tillägg: gång på löpband (D-23, US-11 AC5).
+Status: **v1.4** (2026-10-25) – tillägg: dagens status och veckan (US-14, US-15, D-24).
 
 ## Beslut
 
@@ -29,6 +29,7 @@ Status: **v1.3** (2026-10-25) – tillägg: gång på löpband (D-23, US-11 AC5)
 | D-21 | Bläddrar man till en tidigare dag och loggar mat sparas måltiden den dagen kl 12 svensk tid. Logga ut ligger i profilen |
 | D-22 | Bildanalys med Gemini Flash-Lite och minimalt tänkande (vanliga Flash var för långsam på gratisnivån). Träning byggs före vikt (T-15/T-16 före T-13/T-14) |
 | D-23 | Ny träningstyp **Gång på löpband** (`lopband`): tid, hastighet (1–10 km/h) och lutning (0–15 %). Sträckan räknas ut (hastighet × tid). Förbränning med ACSM:s gångekvation, som tar hänsyn till både fart och lutning |
+| D-24 | Dagens status för **avslutade dagar** (före idag): **I mål** 90–105 % av dagsmålet, **Under målet** under 90 % men minst golvet, **För lite** under golvet (1 500/1 200), **Över målet** över 105 %, **Inget loggat** om ingen mat loggats. I mål och Under målet räknas som "i mål" i veckan. Idag visas ingen status. Status räknas mot nuvarande dagsmål (historiska mål sparas inte). Över målet och För lite visas i gult, inte rött |
 
 ## Stories
 
@@ -109,6 +110,20 @@ Som användare vill jag se ungefär hur mycket jag förbränt så att jag först
 Som användare vill jag se min träning över tid så att jag ser om jag håller i det.
 - **AC1** Given träningsvyn, Then visas veckans pass med total tid per typ och total sträcka.
 - **AC2** Given historiken, Then kan jag bläddra bakåt vecka för vecka.
+
+### US-14 Dagens status
+Som användare vill jag se hur det gick en avslutad dag så att jag får återkoppling utan att räkna själv.
+- **AC1** Given en avslutad dag med loggad mat, Then visas ett statusmärke med ätit av mål: I mål, Under målet, För lite eller Över målet enligt D-24.
+- **AC2** Given en avslutad dag utan loggad mat, Then visas Inget loggat (inte Under målet).
+- **AC3** Given idag, Then visas ingen status – Kvar gäller tills dagen är slut.
+- **AC4** Given status För lite, Then visas en vänlig förklaring, och om dagen hade träning nämns den.
+- **AC5** Given en avslutad dag med loggad mat där frukost, lunch eller middag saknas, Then visas "Inte loggat – glömde du logga?" för den måltiden.
+
+### US-15 Veckan i dagsöversikten
+Som användare vill jag se veckans dagar på en gång så att jag ser helheten och inte bara enskilda dagar.
+- **AC1** Given dagsöversikten, Then visas veckans dagar (måndag–söndag) som prickar med symbol för status, idag som en tom ring och kommande dagar tomma.
+- **AC2** Given veckan, Then visas hur många avslutade dagar med loggad mat som var i mål och snittet i kcal/dag mot dagsmålet.
+- **AC3** Given en prick för en dag, When jag trycker på den, Then visas den dagen.
 
 ## Öppna frågor (❓)
 

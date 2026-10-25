@@ -5,12 +5,12 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 113 |
-| **Automatiserade** | 109 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 124 |
+| **Automatiserade** | 120 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 4 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
-| **Spårbarhet** | [sparbarhet.md](sparbarhet.md) – alla 39 acceptanskriterier har testfall |
+| **Spårbarhet** | [sparbarhet.md](sparbarhet.md) – alla 47 acceptanskriterier har testfall |
 
 ## Manuella körningar
 
@@ -104,6 +104,27 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-IDA-08](testfall/TC-IDA-08.md) | [Lägg till från en måltid förväljer måltiden](testfall/TC-IDA-08.md) | Medel | 🤖 |
 | [TC-IDA-09](testfall/TC-IDA-09.md) | [Loggning på en tidigare dag sparas på den dagen](testfall/TC-IDA-09.md) | Medel | 🤖 |
 | [TC-IDA-10](testfall/TC-IDA-10.md) | [Fel vid hämtning ger begripligt meddelande](testfall/TC-IDA-10.md) | Låg | 🤖 |
+
+## Dagens status
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-STA-01](testfall/TC-STA-01.md) | [Dagens status: gränserna](testfall/TC-STA-01.md) | Hög | 🤖 |
+| [TC-STA-02](testfall/TC-STA-02.md) | [Datum i svensk tid för en tidpunkt](testfall/TC-STA-02.md) | Medel | 🤖 |
+| [TC-STA-03](testfall/TC-STA-03.md) | [Idag visas ingen status](testfall/TC-STA-03.md) | Hög | 🤖 |
+| [TC-STA-04](testfall/TC-STA-04.md) | [Avslutad dag i mål får grönt märke](testfall/TC-STA-04.md) | Hög | 🤖 |
+| [TC-STA-05](testfall/TC-STA-05.md) | [Under målet och över målet](testfall/TC-STA-05.md) | Hög | 🤖 |
+| [TC-STA-06](testfall/TC-STA-06.md) | [För lite visar vänlig förklaring](testfall/TC-STA-06.md) | Hög | 🤖 |
+| [TC-STA-07](testfall/TC-STA-07.md) | [Avslutad dag utan mat visar Inget loggat](testfall/TC-STA-07.md) | Medel | 🤖 |
+| [TC-STA-08](testfall/TC-STA-08.md) | [Saknade måltider: glömde du logga?](testfall/TC-STA-08.md) | Medel | 🤖 |
+
+## Veckan
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-VEC-01](testfall/TC-VEC-01.md) | [Veckans prickar](testfall/TC-VEC-01.md) | Hög | 🤖 |
+| [TC-VEC-02](testfall/TC-VEC-02.md) | [Dagar i mål och snitt mot målet](testfall/TC-VEC-02.md) | Hög | 🤖 |
+| [TC-VEC-03](testfall/TC-VEC-03.md) | [Tryck på en prick visar dagen](testfall/TC-VEC-03.md) | Medel | 🤖 |
 
 ## Ändra och ta bort
 

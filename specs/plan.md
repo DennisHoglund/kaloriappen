@@ -43,7 +43,7 @@ iPhone (PWA, GitHub Pages)
 | `app.js` | Tema, inloggning, session, navigering, registrering av service worker |
 | `berakning.js` | BMR, dagsmål med golv, MET-förbränning, tempo/hastighet, glidande medel. Laddas både i webbläsaren (`window.KaloriBerakning`) och i Node, så att enhetstesterna körs utan webbläsare |
 | `profil.js` | Profilformulär och onboarding |
-| `idag.js` | Dagsöversikt, bläddra mellan dagar |
+| `idag.js` | Dagsöversikt, bläddra mellan dagar, dagens status för avslutade dagar (D-24), veckans prickar med snitt |
 | `maltid.js` | Sök-och-logga-vyn: spara måltid med rad, föreslagen måltid, Senaste |
 | `redigera.js` | Ändra mängd (kcal i samma proportion) och ta bort rad med bekräftelse i appen. Sista raden tar bort måltiden |
 | `livsmedel.js` | Laddar `data/livsmedel.json` och söker (diakritik-okänslig) |
@@ -82,6 +82,7 @@ iPhone (PWA, GitHub Pages)
 - **Underhåll:** BMR × aktivitetsfaktor (stillasittande 1,2 · lätt 1,375 · måttlig 1,55 · hög 1,725).
 - **Dagsmål:** underhåll − takt × 7 700 / 7 (≈ 7 700 kcal per kg). Takt begränsas till max 1 % av kroppsvikten per vecka (US-03 AC2). Golv 1 500 (man) / 1 200 (kvinna) (D-17). Avrundas till närmaste 10.
 - **Träning:** kcal = MET × kg × timmar, avrundat. MET (Compendium): styrka 5,0 · promenad 3,5 · löpning interpoleras efter fart: 8 km/h 8,3 · 9,7 km/h 9,8 · 11,3 km/h 11,0 · 12,9 km/h 11,8 · 16,1 km/h 14,5 (under 8 km/h 6,0, över 16,1 km/h 14,5) · cykling efter fart: < 16 km/h 4,0 · 16–19 6,8 · 19–22 8,0 · 22–25,5 10,0 · ≥ 25,5 12,0. Visas som "≈" (US-12).
+- **Dagens status (D-24):** `dagStatus(ätit, mål, golv, harMat)` → `inget` / `for-lite` (< golv) / `over` (> 105 %) / `i-mal` (≥ 90 %) / `under`. Dagens datum för en måltid räknas i svensk tid (`datumFor`). Veckans snitt = summa ätit / antal avslutade dagar med mat.
 - **Gång på löpband (D-23):** ACSM:s gångekvation: VO₂ (ml/kg/min) = 3,5 + 0,1·S + 1,8·S·G, där S = hastighet i m/min och G = lutning som andel. MET = VO₂ / 3,5. Exempel 5 km/h: 0 % ≈ 3,4 MET, 10 % ≈ 7,7 MET. Sträcka = hastighet × tid.
 - **Viktgraf:** glidande medel över 7 dagar (US-10 AC3).
 
