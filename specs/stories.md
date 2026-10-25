@@ -1,6 +1,6 @@
 # Kaloriappen – User stories
 
-Status: **v1.2** (2026-10-24) – alla stories implementerade och testade. 38 acceptanskriterier, alla med testfall (se `testplan/sparbarhet.md`).
+Status: **v1.3** (2026-10-25) – tillägg: gång på löpband (D-23, US-11 AC5).
 
 ## Beslut
 
@@ -28,6 +28,7 @@ Status: **v1.2** (2026-10-24) – alla stories implementerade och testade. 38 ac
 | D-20 | Sökningen ignorerar versaler och accenter (å/ä/ö hittas med a/o). Föreslagen måltid efter klockan: frukost före 10, lunch 10–14, mellanmål 14–17, middag 17–21, annars mellanmål |
 | D-21 | Bläddrar man till en tidigare dag och loggar mat sparas måltiden den dagen kl 12 svensk tid. Logga ut ligger i profilen |
 | D-22 | Bildanalys med Gemini Flash-Lite och minimalt tänkande (vanliga Flash var för långsam på gratisnivån). Träning byggs före vikt (T-15/T-16 före T-13/T-14) |
+| D-23 | Ny träningstyp **Gång på löpband** (`lopband`): tid, hastighet (1–10 km/h) och lutning (0–15 %). Sträckan räknas ut (hastighet × tid). Förbränning med ACSM:s gångekvation, som tar hänsyn till både fart och lutning |
 
 ## Stories
 
@@ -92,14 +93,15 @@ Som användare vill jag se en graf över min vikt så att jag ser trenden mot m�
 
 ### US-11 Logga träning
 Som användare vill jag logga vad jag tränat och hur länge så att jag ser min aktivitet bredvid kosten.
-- **AC1** Given träningsvyn, When jag väljer typ, Then kan jag välja styrketräning, löpning, promenad eller cykling.
+- **AC1** Given träningsvyn, When jag väljer typ, Then kan jag välja styrketräning, löpning, promenad, cykling eller gång på löpband.
 - **AC2** Given styrketräning, When jag loggar, Then anger jag tid i minuter och valfri kommentar.
 - **AC3** Given löpning, promenad eller cykling, When jag loggar, Then anger jag tid i minuter och sträcka i km, och tempo (min/km) eller hastighet (km/h för cykling) räknas ut och visas.
 - **AC4** Given en loggad träning, Then kan jag ändra eller ta bort den.
+- **AC5** Given gång på löpband, When jag loggar, Then anger jag tid, hastighet (km/h) och lutning (%), och sträckan räknas ut och visas.
 
 ### US-12 Uppskattad förbränning
 Som användare vill jag se ungefär hur mycket jag förbränt så att jag förstår vad träningen ger.
-- **AC1** Given en loggad träning, Then uppskattas kcal med MET-värde × min vikt (kg) × tid (h), där MET beror på typ och, för löpning och cykling, på tempo.
+- **AC1** Given en loggad träning, Then uppskattas kcal med MET-värde × min vikt (kg) × tid (h), där MET beror på typ och, för löpning och cykling, på tempo. För gång på löpband räknas MET från hastighet och lutning.
 - **AC2** Given dagsöversikten, Then visas dagens träning och brända kcal separat, märkt som uppskattning.
 - **AC3** Given brända kcal, Then ändras **inte** dagsmålet eller "kvar att äta" (D-13).
 

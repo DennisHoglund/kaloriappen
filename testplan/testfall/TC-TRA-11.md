@@ -8,7 +8,7 @@
 | **Prioritet** | Låg |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md D-09](../../specs/stories.md) |
-| **Playwright** | [`tests/traning.spec.js`](../../tests/traning.spec.js#L114) – *sparfel behåller det man fyllt i* |
+| **Playwright** | [`tests/traning.spec.js`](../../tests/traning.spec.js#L116) – *sparfel behåller det man fyllt i* |
 
 ## Förutsättningar
 

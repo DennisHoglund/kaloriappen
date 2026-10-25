@@ -59,13 +59,24 @@ create table if not exists public.kalori_traning (
   id         uuid primary key default gen_random_uuid(),
   user_id    uuid not null default auth.uid() references auth.users(id) on delete cascade,
   datum      date not null,
-  typ        text not null check (typ in ('styrka', 'lopning', 'promenad', 'cykling')),
+  typ        text not null,                                -- regel nedan: styrka, lopning, promenad, cykling, lopband
   minuter    smallint not null check (minuter between 1 and 1440),
   km         numeric(5,2) check (km > 0 and km <= 500),
+  lutning_procent numeric(3,1) check (lutning_procent between 0 and 15),  -- bara gång på löpband (D-23)
   kommentar  text check (length(kommentar) <= 500),
   kcal       numeric(6,1) not null check (kcal >= 0 and kcal <= 10000),
   check ((typ = 'styrka') = (km is null))                 -- styrka har aldrig sträcka, övriga har alltid
 );
+
+-- Tillägg som kan köras på en befintlig databas (gång på löpband, D-23, 2026-10-25).
+-- Regeln för tillåtna typer byts ut, och lutning får bara anges för löpband.
+alter table public.kalori_traning add column if not exists lutning_procent numeric(3,1) check (lutning_procent between 0 and 15);
+alter table public.kalori_traning drop constraint if exists kalori_traning_typ_check;
+alter table public.kalori_traning add constraint kalori_traning_typ_check
+  check (typ in ('styrka', 'lopning', 'promenad', 'cykling', 'lopband'));
+alter table public.kalori_traning drop constraint if exists kalori_traning_lutning_typ_check;
+alter table public.kalori_traning add constraint kalori_traning_lutning_typ_check
+  check (lutning_procent is null or typ = 'lopband');
 
 -- ---------------------------------------------------------------------------
 -- Index för de vanligaste frågorna (dag för dag, vecka för vecka)

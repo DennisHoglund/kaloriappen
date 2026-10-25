@@ -36,10 +36,21 @@ do $$ begin
   raise notice 'OK: A ser sina egna rader';
 end $$;
 
+-- Gång på löpband (D-23): lutning bara för löpband, 0–15 %
+insert into kalori_traning (datum, typ, minuter, km, lutning_procent, kcal) values ('2026-10-24', 'lopband', 45, 4.13, 8, 510);
+do $$ begin
+  if (select count(*) from kalori_traning where typ = 'lopband' and lutning_procent = 8) <> 1 then raise exception 'FEL: löpband med lutning ska gå att spara'; end if;
+  raise notice 'OK: gång på löpband med lutning sparas';
+end $$;
+delete from kalori_traning where typ = 'lopband';
+
 -- Regler i tabellerna
 select pg_temp.forvanta_fel($$insert into kalori_traning (datum, typ, minuter, km, kcal) values ('2026-10-24', 'styrka', 30, 2, 100)$$, 'styrka med sträcka');
 select pg_temp.forvanta_fel($$insert into kalori_traning (datum, typ, minuter, kcal) values ('2026-10-24', 'promenad', 30, 100)$$, 'promenad utan sträcka');
 select pg_temp.forvanta_fel($$update kalori_profil set takt_kg_vecka = 1.0$$, 'takt 1 kg/vecka');
+select pg_temp.forvanta_fel($$insert into kalori_traning (datum, typ, minuter, km, lutning_procent, kcal) values ('2026-10-24', 'lopning', 30, 5, 5, 300)$$, 'lutning på annat än löpband');
+select pg_temp.forvanta_fel($$insert into kalori_traning (datum, typ, minuter, km, lutning_procent, kcal) values ('2026-10-24', 'lopband', 30, 3, 20, 300)$$, 'lutning 20 %');
+select pg_temp.forvanta_fel($$insert into kalori_traning (datum, typ, minuter, km, kcal) values ('2026-10-24', 'lopband', 30, null, 300)$$, 'löpband utan sträcka');
 select pg_temp.forvanta_fel($$insert into kalori_vikt (datum, vikt_kg) values ('2026-10-25', 12)$$, 'vikt 12 kg');
 select pg_temp.forvanta_fel($$insert into kalori_maltid (typ, kalla) values ('brunch', 'manuell')$$, 'okänd måltidstyp');
 select pg_temp.forvanta_fel($$insert into kalori_maltid (typ, kalla, user_id) values ('lunch', 'manuell', 'bbbbbbbb-0000-0000-0000-000000000002')$$, 'måltid i någon annans namn');

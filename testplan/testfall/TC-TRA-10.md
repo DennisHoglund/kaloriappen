@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-11, D-21](../../specs/stories.md) |
-| **Playwright** | [`tests/traning.spec.js`](../../tests/traning.spec.js#L103) – *träning på en tidigare dag sparas på den dagen* |
+| **Playwright** | [`tests/traning.spec.js`](../../tests/traning.spec.js#L105) – *träning på en tidigare dag sparas på den dagen* |
 
 ## Förutsättningar
 

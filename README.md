@@ -17,7 +17,7 @@ träning och vikt mot ett beräknat dagligt kalorimål.
 | Logga mat | Sök bland 2 606 livsmedel, gram → kcal, föreslagen måltid, senaste livsmedel |
 | Fota maten | Bilden analyseras av Gemini Flash-Lite via Edge Function, justera och spara med miniatyr |
 | Ändra | Ändra mängd eller ta bort, med bekräftelse |
-| Träning | Styrka, löpning, promenad, cykling. Tempo/fart och uppskattad förbränning (påverkar inte dagsmålet). Veckohistorik |
+| Träning | Styrka, löpning, promenad, cykling och gång på löpband (hastighet + lutning). Tempo/fart och uppskattad förbränning (påverkar inte dagsmålet). Veckohistorik |
 | Vikt | Logga per dag, graf med 7-dagars medel och målvikt |
 
 ## Spec-driven
@@ -26,10 +26,10 @@ Allt börjar i `specs/`. Ändringar görs först i specen, sedan i koden.
 
 | Fil | Innehåll |
 |---|---|
-| `specs/stories.md` | User stories US-01–13 med acceptanskriterier och beslut D-01–22 |
+| `specs/stories.md` | User stories US-01–13 med acceptanskriterier och beslut D-01–23 |
 | `specs/plan.md` | Principer, arkitektur, datamodell, beräkningar, bildanalys, tester |
-| `specs/tasks.md` | Tasks T-01–17 med status och spårbarhet |
-| `testplan/` | 110 testfall som docs-as-code, kopplade till krav och Playwright-tester |
+| `specs/tasks.md` | Tasks T-01–18 med status och spårbarhet |
+| `testplan/` | 113 testfall som docs-as-code, kopplade till krav och Playwright-tester |
 | `CLAUDE.md` | Regler för AI-assistenter (`AGENTS.md` pekar hit) |
 
 ## Kom igång

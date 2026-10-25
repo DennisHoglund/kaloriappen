@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-11](../../specs/stories.md) |
-| **Playwright** | [`tests/traning.spec.js`](../../tests/traning.spec.js#L89) – *ogiltiga värden stoppas* |
+| **Playwright** | [`tests/traning.spec.js`](../../tests/traning.spec.js#L91) – *ogiltiga värden stoppas* |
 
 ## Förutsättningar
 

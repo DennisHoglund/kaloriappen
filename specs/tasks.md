@@ -56,6 +56,12 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 |---|---|---|---|---|
 | T-17 | Täckningskontroll: varje AC har testfall. `testplan/index.md`, README och specs uppdaterade. Manuella testfall för kamera och riktig backend | Alla | 📱 Kör manuella testfall | ✅ |
 
+## Tillägg efter 1.0
+
+| ID | Task | Stories | Dennis gör | Status |
+|---|---|---|---|---|
+| T-18 | Gång på löpband: tid, hastighet, lutning, sträcka räknas. Schemat (ny typ + kolumn `lutning_procent`), ACSM-förbränning, formulär, dagsöversikt och veckovy | US-11 AC1, AC5, US-12 AC1, D-23 | Kör `schema.sql` igen 📱 | 📱 |
+
 ## Spårbarhet
 
 | Story | Tasks |
@@ -70,6 +76,6 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 | US-08 | T-10 |
 | US-09 | T-06, T-13 |
 | US-10 | T-14 |
-| US-11 | T-15 |
+| US-11 | T-15, T-18 |
 | US-12 | T-15, T-16 |
 | US-13 | T-16 |

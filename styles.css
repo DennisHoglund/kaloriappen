@@ -140,6 +140,7 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 .val-namn { margin: 16px 0 0; font-size: 1.3rem; }
 .segment-4 { flex-wrap: wrap; }
 .segment-4 label { flex: 1 1 40%; }
+#tra-typ-lopband + label { flex-basis: 100%; }
 .kalla { margin-top: 8px; }
 .toast {
   position: fixed; left: 16px; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom)); z-index: 50;

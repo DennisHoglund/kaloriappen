@@ -7,7 +7,7 @@
   const B = window.KaloriBerakning;
   const fmt = (x, d = 0) => Number(x).toLocaleString('sv-SE', { maximumFractionDigits: d });
 
-  const NAMN = { styrka: 'Styrketräning', lopning: 'Löpning', promenad: 'Promenad', cykling: 'Cykling' };
+  const NAMN = { styrka: 'Styrketräning', lopning: 'Löpning', promenad: 'Promenad', cykling: 'Cykling', lopband: 'Gång på löpband' };
 
   let sb = null;
   let userId = null;
@@ -24,17 +24,32 @@
   function lasFormular() {
     const typEl = document.querySelector('input[name="tra-typ"]:checked');
     const typ = typEl ? typEl.value : null;
-    return { typ, minuter: tal('tra-minuter'), km: typ === 'styrka' ? null : tal('tra-km'), kommentar: $('tra-kommentar').value.trim() };
+    const minuter = tal('tra-minuter');
+    const p = { typ, minuter, km: null, lutning: null, hastighet: null, kommentar: $('tra-kommentar').value.trim() };
+    if (typ === 'lopband') {
+      // Löpband: hastighet och lutning anges, sträckan räknas ut (D-23)
+      p.hastighet = tal('tra-hastighet');
+      const l = $('tra-lutning').value.trim();
+      p.lutning = l === '' ? 0 : tal('tra-lutning');
+      // Exakt sträcka i beräkningen (förbränningen ska bygga på hastigheten du angav), avrundas vid visning och sparning
+      p.km = minuter > 0 && p.hastighet > 0 ? p.hastighet * minuter / 60 : null;
+    } else if (typ !== 'styrka') {
+      p.km = tal('tra-km');
+    }
+    return p;
   }
 
   function uppdatera() {
     const p = lasFormular();
-    $('tra-km-falt').hidden = p.typ === 'styrka';
+    $('tra-km-falt').hidden = p.typ === 'styrka' || p.typ === 'lopband';
+    $('tra-hastighet-falt').hidden = p.typ !== 'lopband';
+    $('tra-lutning-falt').hidden = p.typ !== 'lopband';
     const kcal = p.typ ? B.forbranning({ ...p, viktKg: viktKg() }) : null;
     $('tra-kcal').textContent = kcal === null ? '–' : fmt(kcal);
     let info = '';
     if (p.typ === 'lopning' || p.typ === 'promenad') { const t = B.tempo(p.minuter, p.km); if (t) info = 'Tempo ' + t + ' min/km'; }
     if (p.typ === 'cykling') { const f = B.fart(p.minuter, p.km); if (f) info = 'Fart ' + fmt(f, 1) + ' km/h'; }
+    if (p.typ === 'lopband' && p.km) info = 'Sträcka ' + fmt(p.km, 2) + ' km';
     $('tra-info').textContent = info;
   }
 
@@ -49,7 +64,10 @@
     $('tra-rubrik').textContent = pass ? 'Ändra träning' : 'Logga träning';
     document.querySelectorAll('input[name="tra-typ"]').forEach((r) => { r.checked = !!pass && r.value === pass.typ; });
     $('tra-minuter').value = pass ? pass.minuter : '';
-    $('tra-km').value = pass && pass.km != null ? fmt(pass.km, 2) : '';
+    $('tra-km').value = pass && pass.km != null && pass.typ !== 'lopband' ? fmt(pass.km, 2) : '';
+    const h = pass && pass.typ === 'lopband' ? B.fart(pass.minuter, Number(pass.km)) : null;
+    $('tra-hastighet').value = h ? fmt(h, 1) : '';
+    $('tra-lutning').value = pass && pass.lutning_procent != null ? fmt(pass.lutning_procent, 1) : '';
     $('tra-kommentar').value = pass && pass.kommentar ? pass.kommentar : '';
     $('tra-ta-bort').hidden = !pass;
     $('tra-bekrafta').hidden = true;
@@ -63,12 +81,16 @@
     const p = lasFormular();
     if (!p.typ) { setMsg('Välj typ av träning.', 'error'); return; }
     if (!(p.minuter >= 1 && p.minuter <= 1440 && Number.isInteger(p.minuter))) { setMsg('Ange tiden i hela minuter (1–1 440).', 'error'); return; }
-    if (p.typ !== 'styrka' && !(p.km > 0 && p.km <= 500)) { setMsg('Ange sträckan i km (t.ex. 5,2).', 'error'); return; }
+    if (p.typ === 'lopband') {
+      if (!(p.hastighet >= 1 && p.hastighet <= 10)) { setMsg('Ange hastigheten i km/h (1–10).', 'error'); return; }
+      if (!(p.lutning >= 0 && p.lutning <= 15)) { setMsg('Lutningen ska vara mellan 0 och 15 %.', 'error'); return; }
+    } else if (p.typ !== 'styrka' && !(p.km > 0 && p.km <= 500)) { setMsg('Ange sträckan i km (t.ex. 5,2).', 'error'); return; }
     if (p.kommentar.length > 500) { setMsg('Kommentaren får vara högst 500 tecken.', 'error'); return; }
     const kcal = B.forbranning({ ...p, viktKg: viktKg() });
     if (kcal === null) { setMsg('Kunde inte räkna förbränningen – kontrollera vikten i profilen.', 'error'); return; }
 
-    const rad = { user_id: userId, datum, typ: p.typ, minuter: p.minuter, km: p.typ === 'styrka' ? null : Math.round(p.km * 100) / 100, kommentar: p.kommentar || null, kcal };
+    const rad = { user_id: userId, datum, typ: p.typ, minuter: p.minuter, km: p.typ === 'styrka' ? null : Math.round(p.km * 100) / 100,
+      lutning_procent: p.typ === 'lopband' ? Math.round(p.lutning * 10) / 10 : null, kommentar: p.kommentar || null, kcal };
     const knapp = $('form-traning').querySelector('button[type="submit"]');
     knapp.disabled = true;
     setMsg('Sparar…');

@@ -272,6 +272,7 @@
             <input type="radio" name="tra-typ" id="tra-typ-lopning" value="lopning"><label for="tra-typ-lopning">Löpning</label>
             <input type="radio" name="tra-typ" id="tra-typ-promenad" value="promenad"><label for="tra-typ-promenad">Promenad</label>
             <input type="radio" name="tra-typ" id="tra-typ-cykling" value="cykling"><label for="tra-typ-cykling">Cykling</label>
+            <input type="radio" name="tra-typ" id="tra-typ-lopband" value="lopband"><label for="tra-typ-lopband">Gång på löpband</label>
           </div>
         </fieldset>
         <div class="tva">
@@ -283,6 +284,14 @@
             <label for="tra-km">Sträcka (km)</label>
             <input id="tra-km" type="text" inputmode="decimal" autocomplete="off">
           </div>
+          <div id="tra-hastighet-falt" hidden>
+            <label for="tra-hastighet">Hastighet (km/h)</label>
+            <input id="tra-hastighet" type="text" inputmode="decimal" autocomplete="off">
+          </div>
+        </div>
+        <div id="tra-lutning-falt" hidden>
+          <label for="tra-lutning">Lutning (%)</label>
+          <input id="tra-lutning" type="text" inputmode="decimal" autocomplete="off" placeholder="0">
         </div>
         <label for="tra-kommentar">Kommentar (valfritt)</label>
         <input id="tra-kommentar" type="text" autocomplete="off" maxlength="500" placeholder="t.ex. ben och rygg, intervaller">

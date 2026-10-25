@@ -38,6 +38,11 @@
     $('ida-tra-tom').hidden = pass.length > 0;
     $('ida-traning').innerHTML = pass.map((p) => {
       const delar = [fmt(p.minuter) + ' min'];
+      if (p.typ === 'lopband') {
+        const h = B.fart(p.minuter, Number(p.km));
+        if (h) delar.push(fmt(h, 1) + ' km/h');
+        delar.push(fmt(p.lutning_procent || 0, 1) + ' % lutning');
+      }
       if (p.km != null) delar.push(fmt(p.km, 2) + ' km');
       if (p.typ === 'lopning' || p.typ === 'promenad') { const t = B.tempo(p.minuter, Number(p.km)); if (t) delar.push(t + ' /km'); }
       if (p.typ === 'cykling') { const f = B.fart(p.minuter, Number(p.km)); if (f) delar.push(fmt(f, 1) + ' km/h'); }

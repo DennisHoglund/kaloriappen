@@ -5,12 +5,12 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 110 |
-| **Automatiserade** | 106 (körs på iPhone/WebKit och Android/Chromium) |
+| **Testfall** | 113 |
+| **Automatiserade** | 109 (körs på iPhone/WebKit och Android/Chromium) |
 | **Manuella** | 4 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
-| **Spårbarhet** | [sparbarhet.md](sparbarhet.md) – alla 38 acceptanskriterier har testfall |
+| **Spårbarhet** | [sparbarhet.md](sparbarhet.md) – alla 39 acceptanskriterier har testfall |
 
 ## Manuella körningar
 
@@ -170,6 +170,9 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-TRA-13](testfall/TC-TRA-13.md) | [Veckans pass med total tid, sträcka och tid per typ](testfall/TC-TRA-13.md) | Hög | 🤖 |
 | [TC-TRA-14](testfall/TC-TRA-14.md) | [Bläddra bakåt vecka för vecka](testfall/TC-TRA-14.md) | Hög | 🤖 |
 | [TC-TRA-15](testfall/TC-TRA-15.md) | [Tillbaka går till dagsöversikten](testfall/TC-TRA-15.md) | Låg | 🤖 |
+| [TC-TRA-16](testfall/TC-TRA-16.md) | [Gång på löpband: MET från hastighet och lutning](testfall/TC-TRA-16.md) | Hög | 🤖 |
+| [TC-TRA-17](testfall/TC-TRA-17.md) | [Gång på löpband med hastighet och lutning](testfall/TC-TRA-17.md) | Hög | 🤖 |
+| [TC-TRA-18](testfall/TC-TRA-18.md) | [Löpband: ogiltig hastighet eller lutning stoppas](testfall/TC-TRA-18.md) | Medel | 🤖 |
 
 ## Beräkning
 

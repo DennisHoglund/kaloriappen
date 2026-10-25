@@ -5,8 +5,8 @@ Genereras av `tests/sparbarhet.js` (`npm run testplan`). Redigera inte för hand
 
 | | |
 |---|---|
-| **Acceptanskriterier** | 38 |
-| **Med testfall** | 38 |
+| **Acceptanskriterier** | 39 |
+| **Med testfall** | 39 |
 | **Utan testfall** | 0 |
 
 
@@ -93,16 +93,17 @@ Genereras av `tests/sparbarhet.js` (`npm run testplan`). Redigera inte för hand
 
 | AC | Kriterium | Testfall |
 |---|---|---|
-| AC1 | Given träningsvyn, When jag väljer typ, Then kan jag välja styrketräning, löpning, promenad eller cykling. | [TC-TRA-04](testfall/TC-TRA-04.md) 🤖 |
+| AC1 | Given träningsvyn, When jag väljer typ, Then kan jag välja styrketräning, löpning, promenad, cykling eller gång på löpband. | [TC-TRA-04](testfall/TC-TRA-04.md) 🤖, [TC-TRA-17](testfall/TC-TRA-17.md) 🤖 |
 | AC2 | Given styrketräning, When jag loggar, Then anger jag tid i minuter och valfri kommentar. | [TC-TRA-05](testfall/TC-TRA-05.md) 🤖 |
 | AC3 | Given löpning, promenad eller cykling, When jag loggar, Then anger jag tid i minuter och sträcka i km, och tempo (min/km) eller hastighet (km/h för cykling) räknas ut och visas. | [TC-TRA-03](testfall/TC-TRA-03.md) 🤖, [TC-TRA-04](testfall/TC-TRA-04.md) 🤖, [TC-TRA-06](testfall/TC-TRA-06.md) 🤖 |
 | AC4 | Given en loggad träning, Then kan jag ändra eller ta bort den. | [TC-TRA-08](testfall/TC-TRA-08.md) 🤖 |
+| AC5 | Given gång på löpband, When jag loggar, Then anger jag tid, hastighet (km/h) och lutning (%), och sträckan räknas ut och visas. | [TC-TRA-17](testfall/TC-TRA-17.md) 🤖, [TC-TRA-18](testfall/TC-TRA-18.md) 🤖 |
 
 ## US-12 Uppskattad förbränning
 
 | AC | Kriterium | Testfall |
 |---|---|---|
-| AC1 | Given en loggad träning, Then uppskattas kcal med MET-värde × min vikt (kg) × tid (h), där MET beror på typ och, för löpning och cykling, på tempo. | [TC-TRA-01](testfall/TC-TRA-01.md) 🤖, [TC-TRA-02](testfall/TC-TRA-02.md) 🤖, [TC-TRA-04](testfall/TC-TRA-04.md) 🤖 |
+| AC1 | Given en loggad träning, Then uppskattas kcal med MET-värde × min vikt (kg) × tid (h), där MET beror på typ och, för löpning och cykling, på tempo. För gång på löpband räknas MET från hastighet och lutning. | [TC-TRA-01](testfall/TC-TRA-01.md) 🤖, [TC-TRA-02](testfall/TC-TRA-02.md) 🤖, [TC-TRA-04](testfall/TC-TRA-04.md) 🤖, [TC-TRA-16](testfall/TC-TRA-16.md) 🤖 |
 | AC2 | Given dagsöversikten, Then visas dagens träning och brända kcal separat, märkt som uppskattning. | [TC-TRA-07](testfall/TC-TRA-07.md) 🤖 |
 | AC3 | Given brända kcal, Then ändras **inte** dagsmålet eller "kvar att äta" (D-13). | [TC-TRA-07](testfall/TC-TRA-07.md) 🤖 |
 

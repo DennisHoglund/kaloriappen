@@ -69,7 +69,7 @@ iPhone (PWA, GitHub Pages)
 | `kalori_vikt` | `user_id`, `datum date`, `vikt_kg numeric(5,1)` | `(user_id, datum)`. Ny mätning samma dag ersätter (US-09 AC1) |
 | `kalori_maltid` | `id uuid`, `user_id`, `tid timestamptz`, `typ text (frukost/lunch/middag/mellanmal)`, `kalla text (foto/manuell)`, `miniatyr text null` | `id` |
 | `kalori_maltid_rad` | `id uuid`, `maltid_id → kalori_maltid on delete cascade`, `user_id`, `namn text`, `livsmedel_nr int null`, `gram numeric`, `kcal numeric` | `id` |
-| `kalori_traning` | `id uuid`, `user_id`, `datum date`, `typ text (styrka/lopning/promenad/cykling)`, `minuter int`, `km numeric null`, `kommentar text null`, `kcal numeric` | `id` |
+| `kalori_traning` | `id uuid`, `user_id`, `datum date`, `typ text (styrka/lopning/promenad/cykling/lopband)`, `minuter int`, `km numeric null`, `lutning_procent numeric(3,1) null` (bara löpband, 0–15), `kommentar text null`, `kcal numeric` | `id` |
 
 - Aktuell vikt = senaste raden i `kalori_vikt`. Profilen lagrar ingen vikt, så det finns bara en sanning (US-09 AC2).
 - RLS på alla tabeller: `(select auth.uid()) = user_id`. `revoke all from anon`, uttryckliga `grant` till `authenticated`.
@@ -82,6 +82,7 @@ iPhone (PWA, GitHub Pages)
 - **Underhåll:** BMR × aktivitetsfaktor (stillasittande 1,2 · lätt 1,375 · måttlig 1,55 · hög 1,725).
 - **Dagsmål:** underhåll − takt × 7 700 / 7 (≈ 7 700 kcal per kg). Takt begränsas till max 1 % av kroppsvikten per vecka (US-03 AC2). Golv 1 500 (man) / 1 200 (kvinna) (D-17). Avrundas till närmaste 10.
 - **Träning:** kcal = MET × kg × timmar, avrundat. MET (Compendium): styrka 5,0 · promenad 3,5 · löpning interpoleras efter fart: 8 km/h 8,3 · 9,7 km/h 9,8 · 11,3 km/h 11,0 · 12,9 km/h 11,8 · 16,1 km/h 14,5 (under 8 km/h 6,0, över 16,1 km/h 14,5) · cykling efter fart: < 16 km/h 4,0 · 16–19 6,8 · 19–22 8,0 · 22–25,5 10,0 · ≥ 25,5 12,0. Visas som "≈" (US-12).
+- **Gång på löpband (D-23):** ACSM:s gångekvation: VO₂ (ml/kg/min) = 3,5 + 0,1·S + 1,8·S·G, där S = hastighet i m/min och G = lutning som andel. MET = VO₂ / 3,5. Exempel 5 km/h: 0 % ≈ 3,4 MET, 10 % ≈ 7,7 MET. Sträcka = hastighet × tid.
 - **Viktgraf:** glidande medel över 7 dagar (US-10 AC3).
 
 ## 6. Bildanalys (`kalori-analys`)

@@ -6,7 +6,7 @@
   const B = window.KaloriBerakning;
   const fmt = (x, d = 0) => Number(x).toLocaleString('sv-SE', { maximumFractionDigits: d });
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  const ORDNING = ['styrka', 'lopning', 'promenad', 'cykling'];
+  const ORDNING = ['styrka', 'lopning', 'promenad', 'cykling', 'lopband'];
 
   let sb = null;
   let userId = null;

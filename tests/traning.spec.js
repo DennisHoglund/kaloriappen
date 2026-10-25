@@ -122,4 +122,43 @@ test.describe('Träning', () => {
     await expect(page.locator('#tra-msg')).toHaveText('Kunde inte spara. Kontrollera nätet och försök igen.');
     await expect(page.getByLabel('Tid (minuter)')).toHaveValue('45');
   });
+
+  test('gång på löpband med hastighet och lutning räknar sträcka och förbränning', { annotation: { type: 'testfall', description: 'TC-TRA-17' } }, async ({ appen: page, api }) => {
+    await oppnaTraning(page);
+    await valjTyp(page, 'Gång på löpband');
+    await expect(page.locator('#tra-km-falt')).toBeHidden();
+    await expect(page.getByLabel('Hastighet (km/h)')).toBeVisible();
+    await page.getByLabel('Tid (minuter)').fill('45');
+    await page.getByLabel('Hastighet (km/h)').fill('5,5');
+    await page.getByLabel('Lutning (%)').fill('8');
+    await expect(page.locator('#tra-info')).toHaveText('Sträcka 4,13 km');
+    await expect(page.locator('#tra-kcal')).toHaveText('510');
+    await page.getByLabel('Lutning (%)').fill('0');
+    await expect(page.locator('#tra-kcal')).toHaveText('250'); // plant: 3,62 MET × 92 × 0,75 – betydligt mindre
+    await page.getByLabel('Lutning (%)').fill('8');
+    await bild(page, 'Gång på löpband');
+    await page.getByRole('button', { name: 'Spara' }).click();
+    await expect(page.locator('#view-app')).toBeVisible();
+    expect(api.tabeller.kalori_traning[0]).toMatchObject({ typ: 'lopband', minuter: 45, km: 4.13, lutning_procent: 8, kcal: 510 });
+    await expect(page.locator('#ida-traning .rad-namn')).toHaveText(['Gång på löpband']);
+    await expect(page.locator('#ida-traning .rad-gram')).toHaveText('45 min · 5,5 km/h · 8 % lutning · 4,13 km');
+    // Ändra: hastighet och lutning fylls i igen
+    await page.getByRole('button', { name: /Ändra Gång på löpband/ }).click();
+    await expect(page.getByLabel('Hastighet (km/h)')).toHaveValue('5,5');
+    await expect(page.getByLabel('Lutning (%)')).toHaveValue('8');
+  });
+
+  test('löpband: ogiltig hastighet eller lutning stoppas', { annotation: { type: 'testfall', description: 'TC-TRA-18' } }, async ({ appen: page, api }) => {
+    await oppnaTraning(page);
+    await valjTyp(page, 'Gång på löpband');
+    await page.getByLabel('Tid (minuter)').fill('30');
+    await page.getByLabel('Hastighet (km/h)').fill('12');
+    await page.getByRole('button', { name: 'Spara' }).click();
+    await expect(page.locator('#tra-msg')).toHaveText('Ange hastigheten i km/h (1–10).');
+    await page.getByLabel('Hastighet (km/h)').fill('5');
+    await page.getByLabel('Lutning (%)').fill('20');
+    await page.getByRole('button', { name: 'Spara' }).click();
+    await expect(page.locator('#tra-msg')).toHaveText('Lutningen ska vara mellan 0 och 15 %.');
+    expect(api.tabeller.kalori_traning).toHaveLength(0);
+  });
 });

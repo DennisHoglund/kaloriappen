@@ -124,4 +124,16 @@ test.describe('Beräkning', () => {
     expect(B.vecka('2027-01-01')).toEqual({ nummer: 53, start: '2026-12-28', slut: '2027-01-03' }); // 2026 har vecka 53
     expect(B.vecka('2025-12-31')).toEqual({ nummer: 1, start: '2025-12-29', slut: '2026-01-04' });
   });
+
+  test('gång på löpband: MET från hastighet och lutning (ACSM)', { annotation: { type: 'testfall', description: 'TC-TRA-16' } }, () => {
+    // VO2 = 3,5 + 0,1·S + 1,8·S·G (S i m/min, G som andel), MET = VO2 / 3,5
+    expect(B.met('lopband', 60, 5, 0)).toBeCloseTo(3.38, 2);    // 5 km/h plant
+    expect(B.met('lopband', 60, 5, 10)).toBeCloseTo(7.67, 2);   // 5 km/h, 10 %
+    expect(B.met('lopband', 60, 6, 12)).toBeCloseTo(10.03, 2);  // 6 km/h, 12 %
+    expect(B.met('lopband', 60, 5)).toBeCloseTo(3.38, 2);       // utan lutning = plant
+    expect(B.forbranning({ typ: 'lopband', minuter: 45, km: 4.125, lutning: 8, viktKg: 92 })).toBe(510); // 5,5 km/h, 8 %
+    expect(B.forbranning({ typ: 'lopband', minuter: 45, km: 4.125, lutning: 0, viktKg: 92 })).toBeLessThan(300);
+    expect(B.strackaFran(45, 5.5)).toBe(4.13);
+    expect(B.strackaFran(30, 0)).toBeNull();
+  });
 });
