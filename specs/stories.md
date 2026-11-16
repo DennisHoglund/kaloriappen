@@ -1,6 +1,6 @@
 # Kaloriappen – User stories
 
-Status: **v1.4** (2026-10-25) – tillägg: dagens status och veckan (US-14, US-15, D-24).
+Status: **v1.5** (2026-11-16) – tillägg: recept från ingredienser och receptbok (US-16–US-20, D-25–D-27).
 
 ## Beslut
 
@@ -30,6 +30,9 @@ Status: **v1.4** (2026-10-25) – tillägg: dagens status och veckan (US-14, US-
 | D-22 | Bildanalys med Gemini Flash-Lite och minimalt tänkande (vanliga Flash var för långsam på gratisnivån). Träning byggs före vikt (T-15/T-16 före T-13/T-14) |
 | D-23 | Ny träningstyp **Gång på löpband** (`lopband`): tid, hastighet (1–10 km/h) och lutning (0–15 %). Sträckan räknas ut (hastighet × tid). Förbränning med ACSM:s gångekvation, som tar hänsyn till både fart och lutning |
 | D-24 | Dagens status för **avslutade dagar** (före idag): **I mål** 90–105 % av dagsmålet, **Under målet** under 90 % men minst golvet, **För lite** under golvet (1 500/1 200), **Över målet** över 105 %, **Inget loggat** om ingen mat loggats. I mål och Under målet räknas som "i mål" i veckan. Idag visas ingen status. Status räknas mot nuvarande dagsmål (historiska mål sparas inte). Över målet och För lite visas i gult, inte rött |
+| D-25 | Recept skapas av Gemini Flash-Lite i en ny Edge Function `kalori-recept` med tre uppgifter: ingredienser från bilder, förslag på rätter och recept. Basvaror (salt, peppar, olja, smör, mjöl) antas finnas hemma. Svenska namn och svenska mått (g, dl, msk, tsk, st) |
+| D-26 | Receptboken: ett recept sparas när man trycker Spara eller sätter betyg efter att ha loggat en portion. Ett betyg (1–5) per recept, går att ändra. Allt i ett sparat recept går att ändra. Egna recept utan AI byggs inte nu. Var och en har sin egen receptbok (RLS) |
+| D-27 | Sökningen i receptboken görs i telefonen på alla användarens recept, med samma normalisering som livsmedelssökningen (versaler och accenter spelar ingen roll, alla ord måste finnas) |
 
 ## Stories
 
@@ -124,6 +127,40 @@ Som användare vill jag se veckans dagar på en gång så att jag ser helheten o
 - **AC1** Given dagsöversikten, Then visas veckans dagar (måndag–söndag) som prickar med symbol för status, idag som en tom ring och kommande dagar tomma.
 - **AC2** Given veckan, Then visas hur många avslutade dagar med loggad mat som var i mål och snittet i kcal/dag mot dagsmålet.
 - **AC3** Given en prick för en dag, When jag trycker på den, Then visas den dagen.
+
+### US-16 Ingredienser från foto
+Som användare vill jag fota det jag har hemma så att appen vet vilka ingredienser jag kan laga mat av.
+- **AC1** Given Laga mat, When jag fotar en eller flera bilder, Then visas de ingredienser som hittades och var och en går att ta bort.
+- **AC2** Given listan, When jag skriver in en ingrediens, Then läggs den till.
+- **AC3** Given att analysen misslyckas, Then visas ett tydligt meddelande och jag kan skriva in ingredienserna själv.
+
+### US-17 Förslag på rätter
+Som användare vill jag få förslag på rätter av mina ingredienser så att jag vet vad jag kan laga.
+- **AC1** Given minst en ingrediens, When jag ber om förslag, Then visas 3–4 rätter med namn, beskrivning, kcal per portion, tid, portioner och vad som saknas.
+- **AC2** Given förslagen, Then visas om kcal per portion ryms i dagens Kvar (Passar Kvar eller Över Kvar).
+- **AC3** Given förslagen, When jag ber om andra förslag, Then visas nya rätter som inte redan visats.
+- **AC4** Given sparade recept som innehåller någon av ingredienserna, Then visas de först under Från din receptbok, flest matchande ingredienser och bäst betyg först.
+
+### US-18 Recept och logga en portion
+Som användare vill jag få ett recept på rätten jag valt och kunna logga det jag äter.
+- **AC1** Given en rätt, When jag väljer den, Then visas ett recept med ingredienser och mängder, steg för steg, kcal per portion och tid.
+- **AC2** Given ett recept, When jag ändrar antal portioner, Then räknas mängderna om och kcal per portion är oförändrad.
+- **AC3** Given ett recept, When jag trycker Logga en portion, Then loggas en måltid med receptets namn och kcal per portion, med föreslagen måltid efter klockan.
+
+### US-19 Receptbok
+Som användare vill jag spara, betygsätta och ändra recept så att jag hittar mina favoriter igen.
+- **AC1** Given ett recept, When jag trycker Spara i receptboken, Then sparas det i min receptbok.
+- **AC2** Given att jag loggat en portion, Then frågar appen Hur blev det? med 1–5 stjärnor och anteckning. Spara betyg sparar receptet med betyget, Hoppa över sparar inget betyg.
+- **AC3** Given ett sparat recept, When jag loggar en portion, Then ökar Lagad antal gånger och Senast lagad blir dagens datum.
+- **AC4** Given ett sparat recept, When jag ändrar namn, beskrivning, portioner, kcal per portion, tid, ingredienser, steg, betyg eller anteckning och sparar, Then sparas ändringarna.
+- **AC5** Given ett sparat recept, When jag tar bort det och bekräftar, Then försvinner det ur receptboken.
+- **AC6** Given två användare, Then ser var och en bara sina egna recept.
+
+### US-20 Sök i receptboken
+Som användare vill jag söka och filtrera i receptboken så att jag snabbt hittar rätt recept.
+- **AC1** Given receptboken, When jag skriver i sökfältet, Then visas recept där alla ord finns i namn, ingredienser eller anteckning, oavsett versaler och accenter.
+- **AC2** Given receptboken, When jag väljer Alla, ★3+, ★4+ eller ★5, Then visas bara recept med minst det betyget.
+- **AC3** Given receptboken, When jag väljer sortering, Then sorteras recepten på bäst betyg, senast lagad, flest gånger lagad eller lägst kcal.
 
 ## Öppna frågor (❓)
 

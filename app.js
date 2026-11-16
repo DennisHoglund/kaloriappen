@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '1.2';
+  const VERSION = '1.3';
   const $ = (id) => document.getElementById(id);
   const THEME_KEY = 'kalori-theme';
 
@@ -106,6 +106,10 @@
     // Ny vikt ändrar dagsmålet, så profil och vikt hämtas om (US-09 AC2)
     window.KaloriVecka.setup(sb, { avbryt: visaApp });
     window.KaloriVikt.setup(sb, { klar: laddaProfil, avbryt: visaApp, malvikt: () => data.profil ? Number(data.profil.malvikt_kg) : null });
+    window.KaloriReceptbok.setup(sb, { klar: visaApp, avbryt: visaApp, laga: () => window.KaloriLaga.oppna() });
+    window.KaloriLaga.setup(sb, { avbryt: visaApp });
+    $('btn-laga').addEventListener('click', () => window.KaloriLaga.oppna());
+    $('btn-receptbok').addEventListener('click', () => window.KaloriReceptbok.oppnaBok());
     window.KaloriIdag.setup(sb, {
       loggaMat: (o) => window.KaloriMaltid.oppna(o),
       redigera: (r) => window.KaloriRedigera.oppna(r),
@@ -171,6 +175,7 @@
       window.KaloriTraning.setUser(session.user.id);
       window.KaloriVikt.setUser(session.user.id);
       window.KaloriVecka.setUser(session.user.id);
+      window.KaloriReceptbok.setUser(session.user.id);
       if (aktuellAnvandare !== session.user.id) {
         aktuellAnvandare = session.user.id;
         laddaProfil();

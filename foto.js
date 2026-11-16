@@ -235,5 +235,5 @@
     $('fot-manuellt').addEventListener('click', () => window.KaloriMaltid.oppna({ typ: forvaltTyp, datum }));
   }
 
-  window.KaloriFoto = { setup, setUser(id) { userId = id; } };
+  window.KaloriFoto = { setup, setUser(id) { userId = id; }, lasBild, rita, felText };
 })();

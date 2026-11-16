@@ -20,7 +20,7 @@
 |---|---|---|
 | 1 | Öppna **SQL Editor** → **New query**, klistra in hela `supabase/schema.sql` och tryck **Run** | "Success. No rows returned" |
 | 2 | Tryck **Run** en gång till | Samma resultat, inga fel (filen går att köra om) |
-| 3 | Öppna **Table Editor** | Tabellerna `kalori_profil`, `kalori_vikt`, `kalori_maltid`, `kalori_maltid_rad` och `kalori_traning` finns, alla märkta **RLS enabled** |
+| 3 | Öppna **Table Editor** | Tabellerna `kalori_profil`, `kalori_vikt`, `kalori_maltid`, `kalori_maltid_rad`, `kalori_traning` och `kalori_recept` finns, alla märkta **RLS enabled** |
 | 4 | Kontrollera de andra apparnas tabeller | `logg`, `platser` och `svamp_fynd` finns kvar och är orörda |
 | 5 | Öppna **Storage** | Bucketen `kalori-foton` finns och är **Private** |
 

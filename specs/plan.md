@@ -48,6 +48,9 @@ iPhone (PWA, GitHub Pages)
 | `redigera.js` | Ändra mängd (kcal i samma proportion) och ta bort rad med bekräftelse i appen. Sista raden tar bort måltiden |
 | `livsmedel.js` | Laddar `data/livsmedel.json` och söker (diakritik-okänslig) |
 | `foto.js` | Kamera/bildval (`capture="environment"`), nedskalning till 1024 px, anrop till `kalori-analys` via `sb.functions.invoke`, justeringsvy (gram räknar om kcal proportionellt, ändra kcal/namn, ta bort/lägg till rad), miniatyr ≤ 30 kB i `kalori-foton`. Misslyckad uppladdning av miniatyr stoppar inte sparningen |
+| `recept.js` | Rena funktioner för recept: skala mängder, sök, filter, sortering, matchning (testas i Node) |
+| `laga.js` | Laga mat: ingredienser från foto, matchning mot receptboken, förslag |
+| `receptbok.js` | Receptvyn (portioner, logga en portion, spara), Hur blev det? på översikten, receptboken (sök, filter, sortering), ändra och ta bort |
 | `vecka.js` | Träning per ISO-vecka: antal pass, total tid och sträcka, ≈ kcal, per typ och alla pass. Bläddra bakåt |
 | `vikt.js` | Logga vikt (upsert per dag, ny vikt hämtar om profilen så att dagsmålet räknas om), SVG-graf med mätningar, 7-dagars medel och målvikt, period 30/90/allt, senaste mätningar, viktkort i dagsöversikten |
 | `traning.js` | Logga, ändra och ta bort träning. Förbränning (MET × vikt × tid) räknas vid sparning och lagras. Träningskortet i dagsöversikten ritas av `idag.js` |
@@ -67,8 +70,9 @@ iPhone (PWA, GitHub Pages)
 |---|---|---|
 | `kalori_profil` | `user_id`, `fodelsedatum date`, `kon text (man/kvinna)`, `langd_cm int`, `aktivitet text (stillasittande/latt/mattlig/hog)`, `malvikt_kg numeric`, `takt_kg_vecka numeric (0.25/0.5/0.75)`, `uppdaterad timestamptz` | `user_id` |
 | `kalori_vikt` | `user_id`, `datum date`, `vikt_kg numeric(5,1)` | `(user_id, datum)`. Ny mätning samma dag ersätter (US-09 AC1) |
-| `kalori_maltid` | `id uuid`, `user_id`, `tid timestamptz`, `typ text (frukost/lunch/middag/mellanmal)`, `kalla text (foto/manuell)`, `miniatyr text null` | `id` |
+| `kalori_maltid` | `id uuid`, `user_id`, `tid timestamptz`, `typ text (frukost/lunch/middag/mellanmal)`, `kalla text (foto/manuell/recept)`, `miniatyr text null` | `id` |
 | `kalori_maltid_rad` | `id uuid`, `maltid_id → kalori_maltid on delete cascade`, `user_id`, `namn text`, `livsmedel_nr int null`, `gram numeric`, `kcal numeric` | `id` |
+| `kalori_recept` | `id uuid`, `user_id`, `namn`, `beskrivning`, `portioner 1–20`, `kcal_portion`, `tid_min`, `ingredienser jsonb [{namn, mangd, enhet}]`, `steg jsonb [text]`, `betyg 1–5 null`, `anteckning`, `antal_lagad`, `senast_lagad date`, `skapad`, `uppdaterad` | `id` |
 | `kalori_traning` | `id uuid`, `user_id`, `datum date`, `typ text (styrka/lopning/promenad/cykling/lopband)`, `minuter int`, `km numeric null`, `lutning_procent numeric(3,1) null` (bara löpband, 0–15), `kommentar text null`, `kcal numeric` | `id` |
 
 - Aktuell vikt = senaste raden i `kalori_vikt`. Profilen lagrar ingen vikt, så det finns bara en sanning (US-09 AC2).
@@ -94,6 +98,22 @@ iPhone (PWA, GitHub Pages)
 4. Modell: `gemini-flash-lite-latest` (alias för senaste Flash-Lite på gratisnivån). Kan bytas med secret `KALORI_GEMINI_MODELL`, och tänkandet med `KALORI_GEMINI_TANKANDE`, utan kodändring (D-06). Vid fel från Google skickas Googles felmeddelande med som `detalj`.
 6. Funktionen är en enda fil (`index.ts`) så att den kan klistras in i Supabase-editorn från telefonen. Logiken exporteras och testas i Node (`tests/analys.spec.js`); `Deno.serve` körs bara i Supabase.
 5. Secret: `KALORI_GEMINI_KEY`. Edge Function skapas och deployas i Supabase Dashboard (Edge Functions → Deploy a new function → Via Editor), så det fungerar från telefonen.
+
+## 6b. Recept (`kalori-recept`, D-25)
+
+En Edge Function med tre uppgifter, alla med strukturerat JSON-svar från Gemini Flash-Lite (samma nyckel och modellinställningar som `kalori-analys`):
+
+| Uppgift | Indata | Svar |
+|---|---|---|
+| `ingredienser` | `bilder: [base64, …]` (1–4 bilder, ≤ 1024 px) | `{ ingredienser: [namn, …] }` |
+| `forslag` | `ingredienser`, `kvarKcal` (valfritt), `undvik` (redan visade rätter) | `{ forslag: [{ namn, beskrivning, kcalPortion, tidMin, portioner, saknas: [] }] }` |
+| `recept` | `ratt: { namn, beskrivning, portioner }`, `ingredienser` | `{ recept: { namn, beskrivning, portioner, kcalPortion, tidMin, ingredienser: [{ namn, mangd, enhet }], steg: [] } }` |
+
+Samma inloggningskontroll, tidsgräns och felkoder som `kalori-analys`. Funktionen är en fil som kan klistras in i Supabase-editorn; logiken testas i Node (`tests/recept-funktion.spec.js`).
+
+**Data:** tabellen `kalori_recept` (namn, beskrivning, portioner, kcal_portion, tid_min, ingredienser jsonb, steg jsonb, betyg 1–5, anteckning, antal_lagad, senast_lagad). En portion loggas som `kalori_maltid` med `kalla = 'recept'` och en rad med receptets namn.
+
+**Logik i telefonen (`recept.js`, rena funktioner):** skala mängder efter portioner, sökning (D-27), filter på betyg, sortering, matchning av receptboken mot valda ingredienser.
 
 ## 7. Tester
 

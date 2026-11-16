@@ -38,7 +38,7 @@ function standardData() {
   return {
     kalori_profil: [{ user_id: ANVANDARE.id, fodelsedatum: '1980-05-01', kon: 'man', langd_cm: 182, aktivitet: 'latt', malvikt_kg: 85, takt_kg_vecka: 0.5, uppdaterad: '2026-10-20T08:00:00Z' }],
     kalori_vikt: [{ user_id: ANVANDARE.id, datum: '2026-10-20', vikt_kg: 92 }],
-    kalori_maltid: [], kalori_maltid_rad: [], kalori_traning: []
+    kalori_maltid: [], kalori_maltid_rad: [], kalori_traning: [], kalori_recept: []
   };
 }
 
@@ -84,7 +84,22 @@ async function mocka(page, data = standardData()) {
     tabeller: data, anrop: [], nere: false, felVidSparning: false,
     // Bildanalysen: { status, body } som Edge Function svarar med
     analys: { status: 200, body: { rader: [{ namn: 'Köttbullar', gram: 150, kcal: 330 }, { namn: 'Kokt potatis', gram: 200, kcal: 156 }, { namn: 'Lingonsylt', gram: 30, kcal: 48 }], modell: 'gemini-flash-lite-latest' } },
-    analysAnrop: [], uppladdade: [], borttagnaFoton: [], uppladdningFel: false
+    analysAnrop: [], uppladdade: [], borttagnaFoton: [], uppladdningFel: false,
+    // Receptfunktionen: ett svar { status, body } per uppgift
+    recept: {
+      ingredienser: { status: 200, body: { ingredienser: ['Kycklingfilé', 'Röd paprika', 'Gul lök'] } },
+      forslag: { status: 200, body: { forslag: [
+        { namn: 'Kyckling- och paprikawok', beskrivning: 'Snabb wok med vitlök och soja.', kcalPortion: 560, tidMin: 20, portioner: 2, saknas: [] },
+        { namn: 'Kycklinggryta med paprika', beskrivning: 'Krämig gryta.', kcalPortion: 520, tidMin: 35, portioner: 4, saknas: ['Matlagningsgrädde'] },
+        { namn: 'Kycklingbiryani', beskrivning: 'Kryddig risrätt.', kcalPortion: 2100, tidMin: 50, portioner: 3, saknas: [] }
+      ] } },
+      recept: { status: 200, body: { recept: {
+        namn: 'Kyckling- och paprikawok', beskrivning: 'Snabb wok med vitlök och soja.', portioner: 2, kcalPortion: 560, tidMin: 20,
+        ingredienser: [{ namn: 'Kycklingfilé', mangd: 300, enhet: 'g' }, { namn: 'Röd paprika', mangd: 1, enhet: 'st' }, { namn: 'Jasminris', mangd: 1.5, enhet: 'dl' }, { namn: 'Salt', mangd: null, enhet: '' }],
+        steg: ['Koka riset.', 'Strimla kyckling och paprika.', 'Woka allt på hög värme.']
+      } } }
+    },
+    receptAnrop: []
   };
 
   await page.route(/cdn\.jsdelivr\.net/, (route) => {
@@ -124,6 +139,15 @@ async function mocka(page, data = standardData()) {
     if (p === '/functions/v1/kalori-analys' && m === 'POST') {
       api.analysAnrop.push({ body: req.postDataJSON(), auth: req.headers()['authorization'] });
       return json(route, api.analys.status, api.analys.body);
+    }
+
+    // ---- Edge Function: recept ----
+    if (p === '/functions/v1/kalori-recept' && m === 'POST') {
+      const body = req.postDataJSON();
+      api.receptAnrop.push({ body, auth: req.headers()['authorization'] });
+      const svar = api.recept[body.uppgift] || { status: 400, body: { fel: 'indata', meddelande: 'Okänd uppgift.' } };
+      const ut = typeof svar === 'function' ? svar(body) : svar;
+      return json(route, ut.status, ut.body);
     }
 
     // ---- Foton ----

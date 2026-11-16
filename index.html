@@ -344,6 +344,173 @@
     </div>
   </main>
 
+  <main id="view-laga" class="app-view" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="lag-tillbaka" type="button">← Tillbaka</button>
+      <div class="brand" id="lag-rubrik">Laga mat</div>
+      <span class="topbar-plats" aria-hidden="true"></span>
+    </header>
+    <div class="page">
+      <div id="lag-ing">
+        <label class="btn primary foto-knapp" id="lag-fota">
+          <input id="lag-foto-input" class="visually-hidden" type="file" accept="image/*" multiple>
+          <span id="lag-fota-text">Fota ingredienser</span>
+        </label>
+        <div id="lag-laddar" class="fot-laddar" role="status" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <p class="muted" id="lag-laddar-text">Letar ingredienser …</p>
+        </div>
+        <h2 class="lista-rubrik" id="lag-ing-rubrik">Ingredienser</h2>
+        <ul id="lag-chips" class="chips" aria-label="Ingredienser"></ul>
+        <form id="form-lag-ny" class="ny-ingrediens" novalidate>
+          <label for="lag-ny" class="visually-hidden">Lägg till ingrediens</label>
+          <input id="lag-ny" class="sokfalt" type="text" placeholder="Lägg till, t.ex. vitlök" autocomplete="off" enterkeyhint="done">
+          <button class="icon-btn" type="submit">+ Lägg till</button>
+        </form>
+        <p class="muted small">Basvaror räknas som hemma: salt, peppar, olja, smör, mjöl.</p>
+        <section id="lag-bok" class="recept-matchning" hidden>
+          <header class="maltid-huvud"><h2 class="lista-rubrik">Från din receptbok</h2><span id="lag-bok-antal" class="muted small"></span></header>
+          <ul id="lag-bok-lista" class="recept-lista"></ul>
+        </section>
+        <p id="lag-kvar" class="muted small"></p>
+        <p id="lag-msg" class="msg" role="status" aria-live="polite"></p>
+        <button class="btn primary bred" id="lag-foresla" type="button">Föreslå rätter</button>
+      </div>
+      <div id="lag-forslag" hidden>
+        <p id="lag-forslag-intro" class="muted small"></p>
+        <ul id="lag-forslag-lista" class="recept-lista"></ul>
+        <p id="lag-forslag-msg" class="msg" role="status" aria-live="polite"></p>
+        <button class="btn ghost bred" id="lag-andra" type="button">Ge mig andra förslag</button>
+      </div>
+    </div>
+  </main>
+
+  <main id="view-recept" class="app-view" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="rec-tillbaka" type="button">← Tillbaka</button>
+      <div class="brand">Recept</div>
+      <button class="icon-btn" id="rec-spara" type="button">Spara</button>
+      <button class="icon-btn" id="rec-andra" type="button" hidden>Ändra</button>
+    </header>
+    <div class="page">
+      <div id="rec-laddar" class="fot-laddar" role="status" hidden>
+        <div class="spinner" aria-hidden="true"></div>
+        <p class="muted">Skriver receptet …</p>
+      </div>
+      <div id="rec-fel" hidden>
+        <p id="rec-feltext" class="msg error"></p>
+        <button class="btn primary bred" id="rec-forsok" type="button">Försök igen</button>
+      </div>
+      <article id="rec-innehall" hidden>
+        <h1 id="rec-namn" class="recept-namn"></h1>
+        <p id="rec-beskrivning" class="muted"></p>
+        <p id="rec-betyg" class="stjarnor-rad"></p>
+        <p id="rec-anteckning" class="anteckning" hidden></p>
+        <div class="rutor">
+          <div class="ruta"><span class="ruta-etikett">Per portion</span><span class="ruta-tal num"><span id="rec-kcal">–</span> <small>kcal</small></span></div>
+          <div class="ruta"><span class="ruta-etikett">Tid</span><span class="ruta-tal num"><span id="rec-tid">–</span> <small>min</small></span></div>
+          <div class="ruta"><span class="ruta-etikett">Portioner</span>
+            <span class="stegare">
+              <button type="button" id="rec-farre" aria-label="Färre portioner">−</button>
+              <span id="rec-portioner" class="num" aria-live="polite">2</span>
+              <button type="button" id="rec-fler" aria-label="Fler portioner">+</button>
+            </span>
+          </div>
+        </div>
+        <h2 class="lista-rubrik">Ingredienser</h2>
+        <ul id="rec-ingredienser" class="ing-lista"></ul>
+        <h2 class="lista-rubrik">Gör så här</h2>
+        <ol id="rec-steg" class="steg-lista"></ol>
+        <p id="rec-lagad" class="muted small"></p>
+        <p id="rec-msg" class="msg" role="status" aria-live="polite"></p>
+        <button class="btn primary bred" id="rec-logga" type="button">Logga en portion</button>
+      </article>
+    </div>
+  </main>
+
+  <main id="view-recept-andra" class="app-view" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="rea-tillbaka" type="button">← Tillbaka</button>
+      <div class="brand">Ändra recept</div>
+      <span class="topbar-plats" aria-hidden="true"></span>
+    </header>
+    <div class="page">
+      <form id="form-recept" class="form" novalidate>
+        <label for="rea-namn">Namn</label>
+        <input id="rea-namn" type="text" autocomplete="off" maxlength="200">
+        <label for="rea-beskrivning">Beskrivning</label>
+        <input id="rea-beskrivning" type="text" autocomplete="off" maxlength="1000">
+        <div class="tre">
+          <div><label for="rea-portioner">Portioner</label><input id="rea-portioner" type="text" inputmode="numeric" autocomplete="off"></div>
+          <div><label for="rea-kcal">kcal/portion</label><input id="rea-kcal" type="text" inputmode="numeric" autocomplete="off"></div>
+          <div><label for="rea-tid">Tid (min)</label><input id="rea-tid" type="text" inputmode="numeric" autocomplete="off"></div>
+        </div>
+        <fieldset>
+          <legend>Betyg</legend>
+          <div class="segment segment-betyg">
+            <input type="radio" name="rea-betyg" id="rea-betyg-0" value="0"><label for="rea-betyg-0">Inget</label>
+            <input type="radio" name="rea-betyg" id="rea-betyg-1" value="1"><label for="rea-betyg-1" aria-label="1 stjärna">1★</label>
+            <input type="radio" name="rea-betyg" id="rea-betyg-2" value="2"><label for="rea-betyg-2" aria-label="2 stjärnor">2★</label>
+            <input type="radio" name="rea-betyg" id="rea-betyg-3" value="3"><label for="rea-betyg-3" aria-label="3 stjärnor">3★</label>
+            <input type="radio" name="rea-betyg" id="rea-betyg-4" value="4"><label for="rea-betyg-4" aria-label="4 stjärnor">4★</label>
+            <input type="radio" name="rea-betyg" id="rea-betyg-5" value="5"><label for="rea-betyg-5" aria-label="5 stjärnor">5★</label>
+          </div>
+        </fieldset>
+        <label for="rea-anteckning">Anteckning</label>
+        <input id="rea-anteckning" type="text" autocomplete="off" maxlength="1000" placeholder="t.ex. mer vitlök nästa gång">
+        <h2 class="lista-rubrik">Ingredienser</h2>
+        <ul id="rea-ingredienser" class="rea-lista"></ul>
+        <button class="lank" id="rea-ny-ing" type="button">+ Lägg till ingrediens</button>
+        <h2 class="lista-rubrik">Steg</h2>
+        <ol id="rea-steg" class="rea-lista"></ol>
+        <button class="lank" id="rea-nytt-steg" type="button">+ Lägg till steg</button>
+        <p id="rea-msg" class="msg" role="status" aria-live="polite"></p>
+        <button class="btn primary" type="submit">Spara</button>
+      </form>
+      <button class="btn fara" id="rea-ta-bort" type="button">Ta bort receptet</button>
+      <div id="rea-bekrafta" class="bekrafta" hidden>
+        <p id="rea-fraga" class="bekrafta-fraga"></p>
+        <div class="tva">
+          <button class="btn ghost" id="rea-nej" type="button">Avbryt</button>
+          <button class="btn fara-fylld" id="rea-ja" type="button">Ta bort</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <main id="view-receptbok" class="app-view" hidden>
+    <header class="topbar">
+      <button class="icon-btn" id="bok-tillbaka" type="button">← Tillbaka</button>
+      <div class="brand">Receptbok</div>
+      <button class="icon-btn" id="bok-laga" type="button">+ Laga mat</button>
+    </header>
+    <div class="page">
+      <label for="bok-sok" class="visually-hidden">Sök recept</label>
+      <input id="bok-sok" class="sokfalt" type="search" placeholder="Sök recept eller ingrediens" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+      <div class="segment" role="radiogroup" aria-label="Betyg">
+        <input type="radio" name="bok-betyg" id="bok-betyg-0" value="0" checked><label for="bok-betyg-0">Alla</label>
+        <input type="radio" name="bok-betyg" id="bok-betyg-3" value="3"><label for="bok-betyg-3">★3+</label>
+        <input type="radio" name="bok-betyg" id="bok-betyg-4" value="4"><label for="bok-betyg-4">★4+</label>
+        <input type="radio" name="bok-betyg" id="bok-betyg-5" value="5"><label for="bok-betyg-5">★5</label>
+      </div>
+      <div class="bok-rad">
+        <span id="bok-antal" class="muted small"></span>
+        <label class="sortera"><span class="muted small">Sortera:</span>
+          <select id="bok-sortera">
+            <option value="betyg">Bäst betyg</option>
+            <option value="senast">Senast lagad</option>
+            <option value="flest">Flest gånger</option>
+            <option value="kcal">Lägst kcal</option>
+          </select>
+        </label>
+      </div>
+      <p id="bok-fel" class="msg error" hidden>Kunde inte hämta receptboken. Kontrollera nätet.</p>
+      <p id="bok-tom" class="muted" hidden></p>
+      <ul id="bok-lista" class="recept-lista"></ul>
+      <p class="muted small">Sökningen letar i namn, ingredienser och anteckningar. Versaler och å, ä, ö spelar ingen roll.</p>
+    </div>
+  </main>
+
   <main id="view-app" class="app-view" hidden>
     <header class="topbar">
       <div class="brand"><img src="icons/icon.svg" alt="" width="32" height="32"> Kaloriappen</div>
@@ -361,6 +528,25 @@
         <button class="icon-btn" id="ida-nasta" type="button" aria-label="Nästa dag">›</button>
       </nav>
       <button class="lank" id="ida-tillbaka-idag" type="button" hidden>Tillbaka till idag</button>
+      <section id="ida-betyg" class="betyg-panel" aria-label="Hur blev det?" hidden>
+        <p id="ida-betyg-loggad" class="small"></p>
+        <h2>Hur blev det?</h2>
+        <div class="stjarnval" role="radiogroup" aria-label="Betyg">
+          <button type="button" class="stjarna" data-betyg="1" role="radio" aria-checked="false" aria-label="1 stjärna">★</button>
+          <button type="button" class="stjarna" data-betyg="2" role="radio" aria-checked="false" aria-label="2 stjärnor">★</button>
+          <button type="button" class="stjarna" data-betyg="3" role="radio" aria-checked="false" aria-label="3 stjärnor">★</button>
+          <button type="button" class="stjarna" data-betyg="4" role="radio" aria-checked="false" aria-label="4 stjärnor">★</button>
+          <button type="button" class="stjarna" data-betyg="5" role="radio" aria-checked="false" aria-label="5 stjärnor">★</button>
+        </div>
+        <label for="ida-betyg-anteckning" class="small">Anteckning (valfritt)</label>
+        <input id="ida-betyg-anteckning" class="sokfalt" type="text" maxlength="1000" autocomplete="off" placeholder="t.ex. mer vitlök nästa gång">
+        <p id="ida-betyg-msg" class="msg" role="status" aria-live="polite"></p>
+        <div class="tva">
+          <button class="btn ghost" id="ida-betyg-hoppa" type="button">Hoppa över</button>
+          <button class="btn primary" id="ida-betyg-spara" type="button">Spara betyg</button>
+        </div>
+        <p class="muted small">Receptet sparas i receptboken med betyget. Betyget går att ändra senare.</p>
+      </section>
       <div id="ida-status" class="status-marke" role="status" hidden>
         <span id="ida-status-ikon" class="status-ikon" aria-hidden="true"></span>
         <span id="ida-status-namn" class="status-namn"></span>
@@ -395,6 +581,15 @@
       </div>
 
       <div id="ida-maltider" class="maltider"></div>
+
+      <section class="maltid recept-kort" aria-label="Recept">
+        <header class="maltid-huvud"><h3>Recept</h3></header>
+        <p class="muted small tom">Fota det du har hemma och få förslag på rätter.</p>
+        <div class="kort-knappar">
+          <button type="button" class="lagg-till" id="btn-laga">+ Laga mat</button>
+          <button type="button" class="lagg-till" id="btn-receptbok">Receptbok →</button>
+        </div>
+      </section>
 
       <section class="maltid traning-kort" aria-label="Träning">
         <header class="maltid-huvud"><h3>Träning</h3><span id="ida-tra-summa" class="num"></span></header>
@@ -431,6 +626,9 @@
   <script src="vikt.js"></script>
   <script src="vecka.js"></script>
   <script src="redigera.js"></script>
+  <script src="recept.js"></script>
+  <script src="receptbok.js"></script>
+  <script src="laga.js"></script>
   <script src="idag.js"></script>
   <script src="app.js"></script>
 </body>

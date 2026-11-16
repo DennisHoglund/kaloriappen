@@ -37,7 +37,7 @@ create table if not exists public.kalori_maltid (
   user_id   uuid not null default auth.uid() references auth.users(id) on delete cascade,
   tid       timestamptz not null default now(),
   typ       text not null check (typ in ('frukost', 'lunch', 'middag', 'mellanmal')),
-  kalla     text not null check (kalla in ('foto', 'manuell')),
+  kalla     text not null,                                -- regel nedan: foto, manuell, recept
   miniatyr  text,                                         -- sökväg i bucketen kalori-foton
   unique (id, user_id)                                    -- så att rader bara kan höra till egna måltider
 );
@@ -79,12 +79,38 @@ alter table public.kalori_traning add constraint kalori_traning_lutning_typ_chec
   check (lutning_procent is null or typ = 'lopband');
 
 -- ---------------------------------------------------------------------------
+-- Receptbok (US-16–US-20, D-26). Ingredienser [{namn, mangd, enhet}] och steg [text] som JSON-listor.
+create table if not exists public.kalori_recept (
+  id            uuid primary key default gen_random_uuid(),
+  user_id       uuid not null default auth.uid() references auth.users(id) on delete cascade,
+  namn          text not null check (length(namn) between 1 and 200),
+  beskrivning   text check (length(beskrivning) <= 1000),
+  portioner     smallint not null check (portioner between 1 and 20),
+  kcal_portion  smallint not null check (kcal_portion between 0 and 5000),
+  tid_min       smallint check (tid_min between 1 and 1440),
+  ingredienser  jsonb not null default '[]' check (jsonb_typeof(ingredienser) = 'array'),
+  steg          jsonb not null default '[]' check (jsonb_typeof(steg) = 'array'),
+  betyg         smallint check (betyg between 1 and 5),
+  anteckning    text check (length(anteckning) <= 1000),
+  antal_lagad   integer not null default 0 check (antal_lagad >= 0),
+  senast_lagad  date,
+  skapad        timestamptz not null default now(),
+  uppdaterad    timestamptz not null default now()
+);
+
+-- Tillägg som kan köras på en befintlig databas (recept, D-25, 2026-11-16): måltider kan komma från recept.
+alter table public.kalori_maltid drop constraint if exists kalori_maltid_kalla_check;
+alter table public.kalori_maltid add constraint kalori_maltid_kalla_check
+  check (kalla in ('foto', 'manuell', 'recept'));
+
+-- ---------------------------------------------------------------------------
 -- Index för de vanligaste frågorna (dag för dag, vecka för vecka)
 create index if not exists kalori_vikt_user_datum    on public.kalori_vikt (user_id, datum desc);
 create index if not exists kalori_maltid_user_tid    on public.kalori_maltid (user_id, tid desc);
 create index if not exists kalori_maltid_rad_maltid  on public.kalori_maltid_rad (maltid_id);
 create index if not exists kalori_maltid_rad_senaste on public.kalori_maltid_rad (user_id, livsmedel_nr) where livsmedel_nr is not null;
 create index if not exists kalori_traning_user_datum on public.kalori_traning (user_id, datum desc);
+create index if not exists kalori_recept_user        on public.kalori_recept (user_id);
 
 -- ---------------------------------------------------------------------------
 -- Rättigheter: samma regler för alla kalori_-tabeller
@@ -92,7 +118,7 @@ do $$
 declare
   t text;
 begin
-  foreach t in array array['kalori_profil', 'kalori_vikt', 'kalori_maltid', 'kalori_maltid_rad', 'kalori_traning'] loop
+  foreach t in array array['kalori_profil', 'kalori_vikt', 'kalori_maltid', 'kalori_maltid_rad', 'kalori_traning', 'kalori_recept'] loop
     execute format('alter table public.%I enable row level security', t);
 
     execute format('drop policy if exists %I on public.%I', t || '_select', t);

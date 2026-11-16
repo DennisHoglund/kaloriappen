@@ -5,8 +5,8 @@ Genereras av `tests/sparbarhet.js` (`npm run testplan`). Redigera inte för hand
 
 | | |
 |---|---|
-| **Acceptanskriterier** | 47 |
-| **Med testfall** | 47 |
+| **Acceptanskriterier** | 66 |
+| **Med testfall** | 66 |
 | **Utan testfall** | 0 |
 
 
@@ -132,10 +132,55 @@ Genereras av `tests/sparbarhet.js` (`npm run testplan`). Redigera inte för hand
 | AC2 | Given veckan, Then visas hur många avslutade dagar med loggad mat som var i mål och snittet i kcal/dag mot dagsmålet. | [TC-STA-02](testfall/TC-STA-02.md) 🤖, [TC-VEC-02](testfall/TC-VEC-02.md) 🤖 |
 | AC3 | Given en prick för en dag, When jag trycker på den, Then visas den dagen. | [TC-VEC-03](testfall/TC-VEC-03.md) 🤖 |
 
+## US-16 Ingredienser från foto
+
+| AC | Kriterium | Testfall |
+|---|---|---|
+| AC1 | Given Laga mat, When jag fotar en eller flera bilder, Then visas de ingredienser som hittades och var och en går att ta bort. | [TC-LAG-01](testfall/TC-LAG-01.md) 🤖, [TC-LAG-13](testfall/TC-LAG-13.md) 🖐️, [TC-REF-01](testfall/TC-REF-01.md) 🤖 |
+| AC2 | Given listan, When jag skriver in en ingrediens, Then läggs den till. | [TC-LAG-02](testfall/TC-LAG-02.md) 🤖 |
+| AC3 | Given att analysen misslyckas, Then visas ett tydligt meddelande och jag kan skriva in ingredienserna själv. | [TC-LAG-03](testfall/TC-LAG-03.md) 🤖 |
+
+## US-17 Förslag på rätter
+
+| AC | Kriterium | Testfall |
+|---|---|---|
+| AC1 | Given minst en ingrediens, When jag ber om förslag, Then visas 3–4 rätter med namn, beskrivning, kcal per portion, tid, portioner och vad som saknas. | [TC-LAG-04](testfall/TC-LAG-04.md) 🤖, [TC-LAG-13](testfall/TC-LAG-13.md) 🖐️, [TC-REF-02](testfall/TC-REF-02.md) 🤖 |
+| AC2 | Given förslagen, Then visas om kcal per portion ryms i dagens Kvar (Passar Kvar eller Över Kvar). | [TC-LAG-04](testfall/TC-LAG-04.md) 🤖, [TC-REC-05](testfall/TC-REC-05.md) 🤖, [TC-REF-02](testfall/TC-REF-02.md) 🤖 |
+| AC3 | Given förslagen, When jag ber om andra förslag, Then visas nya rätter som inte redan visats. | [TC-LAG-05](testfall/TC-LAG-05.md) 🤖, [TC-REF-02](testfall/TC-REF-02.md) 🤖 |
+| AC4 | Given sparade recept som innehåller någon av ingredienserna, Then visas de först under Från din receptbok, flest matchande ingredienser och bäst betyg först. | [TC-LAG-06](testfall/TC-LAG-06.md) 🤖, [TC-REC-04](testfall/TC-REC-04.md) 🤖 |
+
+## US-18 Recept och logga en portion
+
+| AC | Kriterium | Testfall |
+|---|---|---|
+| AC1 | Given en rätt, When jag väljer den, Then visas ett recept med ingredienser och mängder, steg för steg, kcal per portion och tid. | [TC-LAG-07](testfall/TC-LAG-07.md) 🤖, [TC-LAG-08](testfall/TC-LAG-08.md) 🤖, [TC-LAG-13](testfall/TC-LAG-13.md) 🖐️, [TC-REF-03](testfall/TC-REF-03.md) 🤖 |
+| AC2 | Given ett recept, When jag ändrar antal portioner, Then räknas mängderna om och kcal per portion är oförändrad. | [TC-LAG-07](testfall/TC-LAG-07.md) 🤖, [TC-REC-01](testfall/TC-REC-01.md) 🤖 |
+| AC3 | Given ett recept, When jag trycker Logga en portion, Then loggas en måltid med receptets namn och kcal per portion, med föreslagen måltid efter klockan. | [TC-LAG-10](testfall/TC-LAG-10.md) 🤖, [TC-LAG-12](testfall/TC-LAG-12.md) 🤖, [TC-REC-05](testfall/TC-REC-05.md) 🤖 |
+
+## US-19 Receptbok
+
+| AC | Kriterium | Testfall |
+|---|---|---|
+| AC1 | Given ett recept, When jag trycker Spara i receptboken, Then sparas det i min receptbok. | [TC-LAG-09](testfall/TC-LAG-09.md) 🤖 |
+| AC2 | Given att jag loggat en portion, Then frågar appen Hur blev det? med 1–5 stjärnor och anteckning. Spara betyg sparar receptet med betyget, Hoppa över sparar inget betyg. | [TC-BOK-06](testfall/TC-BOK-06.md) 🤖, [TC-LAG-10](testfall/TC-LAG-10.md) 🤖, [TC-LAG-11](testfall/TC-LAG-11.md) 🤖 |
+| AC3 | Given ett sparat recept, When jag loggar en portion, Then ökar Lagad antal gånger och Senast lagad blir dagens datum. | [TC-BOK-06](testfall/TC-BOK-06.md) 🤖 |
+| AC4 | Given ett sparat recept, When jag ändrar namn, beskrivning, portioner, kcal per portion, tid, ingredienser, steg, betyg eller anteckning och sparar, Then sparas ändringarna. | [TC-BOK-07](testfall/TC-BOK-07.md) 🤖, [TC-BOK-08](testfall/TC-BOK-08.md) 🤖 |
+| AC5 | Given ett sparat recept, When jag tar bort det och bekräftar, Then försvinner det ur receptboken. | [TC-BOK-09](testfall/TC-BOK-09.md) 🤖 |
+| AC6 | Given två användare, Then ser var och en bara sina egna recept. | [TC-DB-02](testfall/TC-DB-02.md) 🖐️ |
+
+## US-20 Sök i receptboken
+
+| AC | Kriterium | Testfall |
+|---|---|---|
+| AC1 | Given receptboken, When jag skriver i sökfältet, Then visas recept där alla ord finns i namn, ingredienser eller anteckning, oavsett versaler och accenter. | [TC-BOK-01](testfall/TC-BOK-01.md) 🤖, [TC-BOK-02](testfall/TC-BOK-02.md) 🤖, [TC-REC-02](testfall/TC-REC-02.md) 🤖 |
+| AC2 | Given receptboken, When jag väljer Alla, ★3+, ★4+ eller ★5, Then visas bara recept med minst det betyget. | [TC-BOK-03](testfall/TC-BOK-03.md) 🤖, [TC-REC-03](testfall/TC-REC-03.md) 🤖 |
+| AC3 | Given receptboken, When jag väljer sortering, Then sorteras recepten på bäst betyg, senast lagad, flest gånger lagad eller lägst kcal. | [TC-BOK-04](testfall/TC-BOK-04.md) 🤖, [TC-REC-03](testfall/TC-REC-03.md) 🤖 |
+
 ## Testfall som gäller hela storyn
 
 - US-04: [TC-ANA-05](testfall/TC-ANA-05.md) 🤖, [TC-FOT-02](testfall/TC-FOT-02.md) 🤖, [TC-FOT-05](testfall/TC-FOT-05.md) 🤖, [TC-FOT-13](testfall/TC-FOT-13.md) 🖐️
 - US-03: [TC-BER-01](testfall/TC-BER-01.md) 🤖, [TC-BER-02](testfall/TC-BER-02.md) 🤖, [TC-BER-03](testfall/TC-BER-03.md) 🤖, [TC-BER-04](testfall/TC-BER-04.md) 🤖, [TC-BER-05](testfall/TC-BER-05.md) 🤖, [TC-BER-06](testfall/TC-BER-06.md) 🤖
+- US-20: [TC-BOK-05](testfall/TC-BOK-05.md) 🤖
 - US-08: [TC-FOT-09](testfall/TC-FOT-09.md) 🤖, [TC-RED-07](testfall/TC-RED-07.md) 🤖, [TC-RED-08](testfall/TC-RED-08.md) 🤖
 - US-05: [TC-FOT-11](testfall/TC-FOT-11.md) 🤖, [TC-FOT-13](testfall/TC-FOT-13.md) 🖐️
 - US-07: [TC-IDA-09](testfall/TC-IDA-09.md) 🤖

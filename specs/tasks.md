@@ -62,6 +62,11 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 |---|---|---|---|---|
 | T-18 | Gång på löpband: tid, hastighet, lutning, sträcka räknas. Schemat (ny typ + kolumn `lutning_procent`), ACSM-förbränning, formulär, dagsöversikt och veckovy | US-11 AC1, AC5, US-12 AC1, D-23 | Kör `schema.sql` igen 📱 | ✅ |
 | T-19 | Dagens status för avslutade dagar (märke, förklaring vid för lite, saknade måltider) och veckoprickar med snitt i dagsöversikten. Design: kanvasen "Förslag · dagens status och veckoprickar" | US-14, US-15, D-24 | 📱 | 📱 |
+| T-20 | `kalori_recept` i schemat, `kalla = 'recept'` för måltider. Schematester | US-19 AC6, D-26 | Kör `schema.sql` igen | ✅ |
+| T-21 | Edge Function `kalori-recept`: ingredienser, förslag, recept. Tester med låtsas-Gemini | US-16, US-17, US-18, D-25 | Driftsätt funktionen | ✅ |
+| T-22 | `recept.js`: skala, sök, filter, sortering, matchning. Enhetstester först | US-17 AC4, US-18 AC2, US-20, D-27 | – | ✅ |
+| T-23 | Laga mat: fota ingredienser, förslag, recept, logga en portion, Hur blev det? | US-16, US-17, US-18, US-19 AC1–3 | 📱 | ✅ |
+| T-24 | Receptbok: lista, sök, filter, sortering, visa, ändra allt, ta bort | US-19 AC4–5, US-20 | 📱 | ✅ |
 
 ## Spårbarhet
 
@@ -82,3 +87,8 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 | US-13 | T-16 |
 | US-14 | T-19 |
 | US-15 | T-19 |
+| US-16 | T-21, T-23 |
+| US-17 | T-21, T-22, T-23 |
+| US-18 | T-21, T-22, T-23 |
+| US-19 | T-20, T-23, T-24 |
+| US-20 | T-22, T-24 |

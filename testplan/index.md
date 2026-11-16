@@ -5,12 +5,12 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 124 |
-| **Automatiserade** | 120 (körs på iPhone/WebKit och Android/Chromium) |
-| **Manuella** | 4 (kräver riktig iPhone eller riktig Supabase) |
+| **Testfall** | 157 |
+| **Automatiserade** | 151 (körs på iPhone/WebKit och Android/Chromium) |
+| **Manuella** | 6 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
-| **Spårbarhet** | [sparbarhet.md](sparbarhet.md) – alla 47 acceptanskriterier har testfall |
+| **Spårbarhet** | [sparbarhet.md](sparbarhet.md) – alla 66 acceptanskriterier har testfall |
 
 ## Manuella körningar
 
@@ -222,10 +222,63 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-TEM-02](testfall/TC-TEM-02.md) | [Mörkt läge följer telefonens inställning](testfall/TC-TEM-02.md) | Medel | 🤖 |
 | [TC-TEM-03](testfall/TC-TEM-03.md) | [Ljust läge har Blåbär-färgerna](testfall/TC-TEM-03.md) | Medel | 🤖 |
 
+## Recept (Edge Function)
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-REF-01](testfall/TC-REF-01.md) | [Ingredienser hittas på en eller flera bilder](testfall/TC-REF-01.md) | Hög | 🤖 |
+| [TC-REF-02](testfall/TC-REF-02.md) | [Förslag på rätter utifrån ingredienser, Kvar och redan visade rätter](testfall/TC-REF-02.md) | Hög | 🤖 |
+| [TC-REF-03](testfall/TC-REF-03.md) | [Recept med mängder och steg för vald rätt](testfall/TC-REF-03.md) | Hög | 🤖 |
+| [TC-REF-04](testfall/TC-REF-04.md) | [Ogiltiga svar från modellen rensas](testfall/TC-REF-04.md) | Medel | 🤖 |
+| [TC-REF-05](testfall/TC-REF-05.md) | [Inloggning, felaktiga anrop, kvot och tidsgräns](testfall/TC-REF-05.md) | Hög | 🤖 |
+
+## Recept – beräkningar
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-REC-01](testfall/TC-REC-01.md) | [Mängder räknas om efter antal portioner och avrundas rimligt](testfall/TC-REC-01.md) | Hög | 🤖 |
+| [TC-REC-02](testfall/TC-REC-02.md) | [Sök på namn, ingredienser och anteckning oavsett versaler och accenter](testfall/TC-REC-02.md) | Hög | 🤖 |
+| [TC-REC-03](testfall/TC-REC-03.md) | [Filter på betyg och sortering](testfall/TC-REC-03.md) | Hög | 🤖 |
+| [TC-REC-04](testfall/TC-REC-04.md) | [Receptboken matchas mot valda ingredienser](testfall/TC-REC-04.md) | Hög | 🤖 |
+| [TC-REC-05](testfall/TC-REC-05.md) | [Passar Kvar och stjärnor](testfall/TC-REC-05.md) | Medel | 🤖 |
+
+## Laga mat
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-LAG-01](testfall/TC-LAG-01.md) | [Ingredienser hittas på flera foton och går att ta bort](testfall/TC-LAG-01.md) | Hög | 🤖 |
+| [TC-LAG-02](testfall/TC-LAG-02.md) | [Ingredienser kan skrivas in för hand](testfall/TC-LAG-02.md) | Hög | 🤖 |
+| [TC-LAG-03](testfall/TC-LAG-03.md) | [Misslyckad analys visar ett meddelande och man kan skriva in själv](testfall/TC-LAG-03.md) | Hög | 🤖 |
+| [TC-LAG-04](testfall/TC-LAG-04.md) | [Förslag visar kcal, tid, portioner, vad som saknas och om det passar Kvar](testfall/TC-LAG-04.md) | Hög | 🤖 |
+| [TC-LAG-05](testfall/TC-LAG-05.md) | [Ge mig andra förslag ger nya rätter](testfall/TC-LAG-05.md) | Medel | 🤖 |
+| [TC-LAG-06](testfall/TC-LAG-06.md) | [Recept ur receptboken som passar ingredienserna visas först](testfall/TC-LAG-06.md) | Hög | 🤖 |
+| [TC-LAG-07](testfall/TC-LAG-07.md) | [Valt förslag blir ett recept och portionerna räknar om mängderna](testfall/TC-LAG-07.md) | Hög | 🤖 |
+| [TC-LAG-08](testfall/TC-LAG-08.md) | [Misslyckat recept kan försökas igen](testfall/TC-LAG-08.md) | Medel | 🤖 |
+| [TC-LAG-09](testfall/TC-LAG-09.md) | [Spara i receptboken sparar receptet](testfall/TC-LAG-09.md) | Hög | 🤖 |
+| [TC-LAG-10](testfall/TC-LAG-10.md) | [Logga en portion och sätt betyg sparar receptet i receptboken](testfall/TC-LAG-10.md) | Hög | 🤖 |
+| [TC-LAG-11](testfall/TC-LAG-11.md) | [Hoppa över sparar inget](testfall/TC-LAG-11.md) | Medel | 🤖 |
+| [TC-LAG-12](testfall/TC-LAG-12.md) | [Fel vid loggning visar meddelande och inget sparas](testfall/TC-LAG-12.md) | Medel | 🤖 |
+| [TC-LAG-13](testfall/TC-LAG-13.md) | [Laga mat med riktiga foton på iPhone](testfall/TC-LAG-13.md) | Hög | 🖐️ |
+
+## Receptbok
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-BOK-01](testfall/TC-BOK-01.md) | [Receptboken visar stjärnor, kcal, tid, antal gånger och anteckning](testfall/TC-BOK-01.md) | Hög | 🤖 |
+| [TC-BOK-02](testfall/TC-BOK-02.md) | [Fritextsök i namn, ingredienser och anteckning](testfall/TC-BOK-02.md) | Hög | 🤖 |
+| [TC-BOK-03](testfall/TC-BOK-03.md) | [Filter på stjärnor](testfall/TC-BOK-03.md) | Hög | 🤖 |
+| [TC-BOK-04](testfall/TC-BOK-04.md) | [Sortering på betyg, senast lagad, flest gånger och lägst kcal](testfall/TC-BOK-04.md) | Medel | 🤖 |
+| [TC-BOK-05](testfall/TC-BOK-05.md) | [Tom receptbok och fel vid hämtning](testfall/TC-BOK-05.md) | Låg | 🤖 |
+| [TC-BOK-06](testfall/TC-BOK-06.md) | [Sparat recept loggas igen: antal gånger och senast lagad uppdateras](testfall/TC-BOK-06.md) | Hög | 🤖 |
+| [TC-BOK-07](testfall/TC-BOK-07.md) | [Allt i ett sparat recept går att ändra](testfall/TC-BOK-07.md) | Hög | 🤖 |
+| [TC-BOK-08](testfall/TC-BOK-08.md) | [Ogiltiga värden när man ändrar stoppas](testfall/TC-BOK-08.md) | Medel | 🤖 |
+| [TC-BOK-09](testfall/TC-BOK-09.md) | [Ta bort ett recept efter bekräftelse](testfall/TC-BOK-09.md) | Hög | 🤖 |
+
 ## Databas
 
-Rättigheter och regler i `supabase/schema.sql` testas automatiskt i CI av `tests/schema.sh` (17 kontroller mot en tom Postgres).
+Rättigheter och regler i `supabase/schema.sql` testas automatiskt i CI av `tests/schema.sh` (30 kontroller mot en tom Postgres).
 
 | ID | Testfall | Prio | Typ |
 |---|---|---|---|
 | [TC-DB-01](testfall/TC-DB-01.md) | [Databasschemat körs i Supabase](testfall/TC-DB-01.md) | Hög | 🖐️ |
+| [TC-DB-02](testfall/TC-DB-02.md) | [Receptboken i databasen](testfall/TC-DB-02.md) | Hög | 🖐️ |

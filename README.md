@@ -19,6 +19,8 @@ träning och vikt mot ett beräknat dagligt kalorimål.
 | Ändra | Ändra mängd eller ta bort, med bekräftelse |
 | Träning | Styrka, löpning, promenad, cykling och gång på löpband (hastighet + lutning). Tempo/fart och uppskattad förbränning (påverkar inte dagsmålet). Veckohistorik |
 | Vikt | Logga per dag, graf med 7-dagars medel och målvikt |
+| Laga mat | Fota ingredienser → förslag på rätter (passar Kvar?) → recept med portioner → logga en portion och betygsätt |
+| Receptbok | Sparade recept med 1–5 stjärnor, fritextsök i namn, ingredienser och anteckningar, filter på stjärnor, sortering. Allt går att ändra |
 
 ## Spec-driven
 
@@ -26,10 +28,10 @@ Allt börjar i `specs/`. Ändringar görs först i specen, sedan i koden.
 
 | Fil | Innehåll |
 |---|---|
-| `specs/stories.md` | User stories US-01–15 med acceptanskriterier och beslut D-01–24 |
+| `specs/stories.md` | User stories US-01–20 med acceptanskriterier och beslut D-01–27 |
 | `specs/plan.md` | Principer, arkitektur, datamodell, beräkningar, bildanalys, tester |
-| `specs/tasks.md` | Tasks T-01–19 med status och spårbarhet |
-| `testplan/` | 124 testfall som docs-as-code, kopplade till krav och Playwright-tester |
+| `specs/tasks.md` | Tasks T-01–24 med status och spårbarhet |
+| `testplan/` | 157 testfall som docs-as-code, kopplade till krav och Playwright-tester |
 | `CLAUDE.md` | Regler för AI-assistenter (`AGENTS.md` pekar hit) |
 
 ## Kom igång
@@ -51,6 +53,7 @@ Lokalt räcker `npx playwright test --project="Android (Chromium)"`. Rapporten h
 | Livsmedel | `data/livsmedel.json` | Arbetsflödet **Uppdatera livsmedel** varje måndag och vid behov |
 | Databas | Supabase (Jaktvinds projekt, delat) | Kör `supabase/schema.sql` i SQL Editor. Tabellprefix `kalori_`, bucket `kalori-foton` |
 | Bildanalys | Supabase Edge Function `kalori-analys` | Klistra in `supabase/functions/kalori-analys/index.ts` i editorn. Secret `KALORI_GEMINI_KEY` (Google AI Studio). Valfritt `KALORI_GEMINI_MODELL`, `KALORI_GEMINI_TANKANDE` |
+| Recept | Supabase Edge Function `kalori-recept` | Klistra in `supabase/functions/kalori-recept/index.ts`, stäng av Verify JWT. Samma secrets som `kalori-analys` |
 
 ## Källor
 

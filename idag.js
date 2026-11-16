@@ -147,6 +147,7 @@
   }
 
   let senaste = [];
+  let kvarIdag = null; // Kvar för idag, till receptförslagen (US-17 AC2)
   let senasteTraning = [];
 
   function rita(maltider) {
@@ -155,6 +156,7 @@
     $('ida-atit').textContent = fmt(atit);
     $('ida-mal').textContent = mal ? fmt(mal) : '–';
     const kvar = mal ? mal - atit : null;
+    kvarIdag = datum === window.KaloriApp.idag() ? kvar : null;
     $('ida-kvar').textContent = kvar === null ? '–' : fmt(Math.abs(kvar));
     $('ida-kvar-etikett').textContent = kvar !== null && kvar < 0 ? 'Över' : 'Kvar';
     $('ida-kvar-ruta').classList.toggle('over', kvar !== null && kvar < 0);
@@ -237,5 +239,5 @@
     });
   }
 
-  window.KaloriIdag = { setup, visa, setUser(id) { userId = id; datum = null; }, get datum() { return datum; } };
+  window.KaloriIdag = { setup, visa, setUser(id) { userId = id; datum = null; }, get datum() { return datum; }, get kvarIdag() { return kvarIdag; } };
 })();

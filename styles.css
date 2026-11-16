@@ -279,3 +279,62 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 .vecka-snitt { margin: 10px 0 0; }
 .vecka-snitt .num { font-family: var(--mono); font-weight: 600; }
 .maltid.saknas { border-style: dashed; }
+
+/* Recept (US-16–US-20) */
+.bred { width: 100%; }
+.foto-knapp.inaktiv { opacity: .55; pointer-events: none; }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: flex; align-items: center; gap: 2px; padding-left: 14px; border-radius: 22px; background: var(--surface); border: 1px solid var(--border); font-weight: 600; }
+.chip-bort { min-width: 44px; min-height: 44px; border: 0; background: none; color: var(--text-2); font-size: 1.25rem; cursor: pointer; border-radius: 22px; }
+.ny-ingrediens { display: flex; gap: 8px; margin-top: 10px; }
+.ny-ingrediens .sokfalt { min-height: 48px; flex: 1; min-width: 0; }
+.ny-ingrediens .icon-btn { white-space: nowrap; }
+.recept-matchning .maltid-huvud { align-items: center; }
+.recept-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.recept-kort-knapp {
+  width: 100%; text-align: left; display: flex; flex-direction: column; gap: 4px; padding: 14px; min-height: 44px;
+  border-radius: 16px; background: var(--surface); border: 1px solid var(--border); color: var(--text); font: inherit; cursor: pointer;
+}
+.recept-kort-knapp .muted { margin: 0; }
+.recept-kort-huvud { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+.recept-kort-namn { font-weight: 700; }
+.stjarnor { color: var(--accent); letter-spacing: 1px; white-space: nowrap; }
+.anteckning { color: var(--text-2); font-style: italic; }
+.marke { flex: none; padding: 2px 10px; border-radius: 12px; font-size: .8rem; font-weight: 700; color: var(--pa-status); }
+.marke-ok { background: var(--ok); }
+.marke-over { background: var(--varn); }
+.saknas { color: var(--text-2); }
+.recept-namn { margin: 4px 0; font-size: 1.5rem; }
+.stjarnor-rad { margin: 0 0 8px; }
+.stegare { display: flex; align-items: center; justify-content: space-between; gap: 4px; font-family: var(--mono); font-size: 1.25rem; font-weight: 600; }
+.stegare button { min-width: 36px; min-height: 36px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text); font: inherit; font-size: 1.1rem; cursor: pointer; }
+.stegare button:disabled { opacity: .4; cursor: default; }
+.ruta-tal small { font-size: .75rem; color: var(--text-2); }
+.ing-lista { list-style: none; margin: 0; padding: 0; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); }
+.ing-lista li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border-top: 1px solid var(--border); }
+.ing-lista li:first-child { border-top: 0; }
+.ing-lista .muted { margin: 0; white-space: nowrap; }
+.steg-lista { margin: 0; padding-left: 1.4em; display: flex; flex-direction: column; gap: 8px; }
+.steg-lista li { padding-left: 4px; }
+.betyg-panel { padding: 16px; border-radius: 16px; background: var(--surface); border: 2px solid var(--accent); display: flex; flex-direction: column; gap: 6px; }
+.betyg-panel h2 { margin: 0; font-size: 1.2rem; }
+.betyg-panel p { margin: 0; }
+.betyg-panel .btn { margin-top: 8px; }
+.stjarnval { display: flex; gap: 6px; }
+.stjarna { width: 48px; height: 48px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); color: var(--text-2); font-size: 1.6rem; cursor: pointer; }
+.stjarna.vald { color: var(--accent); border-color: var(--accent); }
+.recept-kort { margin-top: 10px; }
+.bok-rad { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.bok-rad .muted { margin: 0; }
+.sortera { display: flex; align-items: center; gap: 6px; }
+.sortera select { min-height: 44px; padding: 0 10px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit; font-size: 16px; }
+.tre { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.segment-betyg label { font-size: .85rem; padding: 0 2px; }
+.rea-lista { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.rea-ing { display: grid; grid-template-columns: minmax(0, 1fr) 4.5em 3.5em 44px; gap: 6px; align-items: center; }
+.rea-steg { display: grid; grid-template-columns: minmax(0, 1fr) 44px; gap: 6px; align-items: start; }
+.rea-lista input, .rea-lista textarea {
+  width: 100%; min-height: 44px; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); font: inherit; font-size: 16px;
+}
+.rea-lista textarea { resize: vertical; }
