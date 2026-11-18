@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md D-10, US-08, D-29](../../specs/stories.md) |
-| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L124) – *ta bort sista raden tar bort miniatyren och den stora bilden* |
+| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L130) – *ta bort sista raden tar bort miniatyren och den stora bilden* |
 
 ## Förutsättningar
 

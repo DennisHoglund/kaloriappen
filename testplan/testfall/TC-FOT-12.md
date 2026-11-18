@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md D-21](../../specs/stories.md) |
-| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L160) – *foto från en tidigare dag sparas på den dagen* |
+| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L166) – *foto från en tidigare dag sparas på den dagen* |
 
 ## Förutsättningar
 

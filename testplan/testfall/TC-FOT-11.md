@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-05](../../specs/stories.md) |
-| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L147) – *ogiltiga rader stoppas innan något sparas* |
+| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L153) – *ogiltiga rader stoppas innan något sparas* |
 
 ## Förutsättningar
 

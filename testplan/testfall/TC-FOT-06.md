@@ -8,7 +8,7 @@
 | **Prioritet** | Hög |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-04 AC3](../../specs/stories.md) |
-| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L93) – *slut på gratiskvot visar meddelandet och erbjuder manuell sökning* |
+| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L99) – *slut på gratiskvot visar meddelandet och erbjuder manuell sökning* |
 
 ## Förutsättningar
 

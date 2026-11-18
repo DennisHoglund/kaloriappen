@@ -69,7 +69,7 @@ test.describe('Fota mat', () => {
     await expect(page.locator('#fot-summa')).toHaveText('492');
   });
 
-  test('spara sparar måltid, rader, en miniatyr på högst 30 kB och en stor bild på högst 180 kB', { annotation: { type: 'testfall', description: 'TC-FOT-05' } }, async ({ appen: page, api }) => {
+  test('spara sparar måltid, rader, en miniatyr på högst 30 kB och en stor bild på högst 180 kB', { annotation: { type: 'testfall', description: 'TC-FOT-05' } }, async ({ appen: page, api, browserName }) => {
     await fota(page);
     await page.locator('#form-foto').getByText('Middag', { exact: true }).click();
     await page.getByRole('button', { name: 'Spara' }).click();
@@ -83,10 +83,16 @@ test.describe('Fota mat', () => {
     expect(api.uppladdade).toHaveLength(2);
     const mini = api.uppladdade.find((u) => u.fil === m[0].miniatyr);
     const stor = api.uppladdade.find((u) => u.fil === m[0].bild);
-    expect(mini.storlek).toBeGreaterThan(0);
-    expect(mini.storlek).toBeLessThanOrEqual(30 * 1024);
-    expect(stor.storlek).toBeGreaterThan(mini.storlek);
-    expect(stor.storlek).toBeLessThanOrEqual(180 * 1024); // D-29
+    expect(mini).toBeTruthy();
+    expect(stor).toBeTruthy();
+    // WebKit i Playwright lämnar inte ut filinnehållet i uppladdningen (bara formulärhuvudet),
+    // så storlekarna kontrolleras i Chromium. Appens kod är densamma i båda.
+    if (browserName === 'chromium') {
+      expect(mini.storlek).toBeGreaterThan(1000);
+      expect(mini.storlek).toBeLessThanOrEqual(30 * 1024);
+      expect(stor.storlek).toBeGreaterThan(mini.storlek);
+      expect(stor.storlek).toBeLessThanOrEqual(180 * 1024); // D-29
+    }
     await expect(page.locator('#ida-atit')).toHaveText('534');
   });
 

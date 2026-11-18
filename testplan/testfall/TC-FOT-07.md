@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-04 AC3](../../specs/stories.md) |
-| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L102) – *ingen mat på bilden eller ingen kontakt ger begripligt fel* |
+| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L108) – *ingen mat på bilden eller ingen kontakt ger begripligt fel* |
 
 ## Förutsättningar
 
