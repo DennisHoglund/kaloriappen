@@ -13,6 +13,7 @@ module.exports = defineConfig({
   outputDir: 'test-results',
   reporter: [
     ['list'],
+    ...(CI ? [['github']] : []), // fel syns som annoteringar i GitHub Actions
     ['html', { outputFolder: 'rapport/playwright', open: 'never' }],
     ['./tests/rapport-reporter.js', { outputDir: 'rapport' }]
   ],
