@@ -1,0 +1,28 @@
+# Håller Jaktvinds Supabase-projekt vaket (D-28). Delas av Kaloriappen, Jaktvind och Svampkartan.
+# Gratisprojekt pausas efter 7 dagar utan aktivitet – det här jobbet anropar databasen varannan dag.
+# Blir jobbet rött är projektet troligen pausat: återställ det i Supabase (Restore project).
+name: Håll databasen vaken
+
+on:
+  schedule:
+    - cron: "23 4 */2 * *"   # varannan dag 04:23 UTC
+  workflow_dispatch:         # kan köras för hand under Actions
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Anropa databasen
+        run: |
+          URL=$(grep -oP "supabaseUrl:\s*'\K[^']+" config.js)
+          KEY=$(grep -oP "supabaseAnonKey:\s*'\K[^']+" config.js)
+          echo "Anropar $URL"
+          SVAR=$(curl -fsS --retry 3 --retry-delay 10 -X POST "$URL/rest/v1/rpc/kalori_keepalive" \
+            -H "apikey: $KEY" -H "Authorization: Bearer $KEY" \
+            -H "Content-Type: application/json" -d '{}')
+          echo "Svar: $SVAR"
+          if [ "$SVAR" != '"ok"' ]; then
+            echo "::error::Databasen svarade inte ok. Har du kört schema.sql efter 2026-11-18? Är projektet pausat?"
+            exit 1
+          fi

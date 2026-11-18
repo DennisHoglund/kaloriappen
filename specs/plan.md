@@ -76,7 +76,7 @@ iPhone (PWA, GitHub Pages)
 | `kalori_traning` | `id uuid`, `user_id`, `datum date`, `typ text (styrka/lopning/promenad/cykling/lopband)`, `minuter int`, `km numeric null`, `lutning_procent numeric(3,1) null` (bara löpband, 0–15), `kommentar text null`, `kcal numeric` | `id` |
 
 - Aktuell vikt = senaste raden i `kalori_vikt`. Profilen lagrar ingen vikt, så det finns bara en sanning (US-09 AC2).
-- RLS på alla tabeller: `(select auth.uid()) = user_id`. `revoke all from anon`, uttryckliga `grant` till `authenticated`.
+- RLS på alla tabeller: `(select auth.uid()) = user_id`. `revoke all from anon`, uttryckliga `grant` till `authenticated`. Enda undantaget: `anon` får anropa `kalori_keepalive()`, som bara svarar `ok` (D-28).
 - Bucket `kalori-foton` (privat), sökväg `<user_id>/<maltid_id>.jpg`. Policies på `storage.foldername(name)[1]`. Visas via signerad URL.
 - `kcal` för träning sparas vid loggning (vikten den dagen), så historiken inte ändras när vikten ändras.
 

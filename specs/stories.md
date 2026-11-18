@@ -1,6 +1,6 @@
 # Kaloriappen – User stories
 
-Status: **v1.5** (2026-11-16) – tillägg: recept från ingredienser och receptbok (US-16–US-20, D-25–D-27).
+Status: **v1.6** (2026-11-18) – tillägg: håll databasen vaken (D-28). v1.5: recept (US-16–US-20, D-25–D-27).
 
 ## Beslut
 
@@ -33,6 +33,7 @@ Status: **v1.5** (2026-11-16) – tillägg: recept från ingredienser och recept
 | D-25 | Recept skapas av Gemini Flash-Lite i en ny Edge Function `kalori-recept` med tre uppgifter: ingredienser från bilder, förslag på rätter och recept. Basvaror (salt, peppar, olja, smör, mjöl) antas finnas hemma. Svenska namn och svenska mått (g, dl, msk, tsk, st) |
 | D-26 | Receptboken: ett recept sparas när man trycker Spara eller sätter betyg efter att ha loggat en portion. Ett betyg (1–5) per recept, går att ändra. Allt i ett sparat recept går att ändra. Egna recept utan AI byggs inte nu. Var och en har sin egen receptbok (RLS) |
 | D-27 | Sökningen i receptboken görs i telefonen på alla användarens recept, med samma normalisering som livsmedelssökningen (versaler och accenter spelar ingen roll, alla ord måste finnas) |
+| D-28 | Jaktvinds Supabase-projekt (gratis) pausas efter 7 dagar utan aktivitet. GitHub Actions (`hall-vaken.yml`) anropar funktionen `kalori_keepalive()` varannan dag. Den returnerar bara `ok` och är det enda `anon` får anropa. Det håller hela projektet vaket, även för Jaktvind och Svampkartan |
 
 ## Stories
 

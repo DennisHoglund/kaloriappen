@@ -5,9 +5,9 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 157 |
+| **Testfall** | 158 |
 | **Automatiserade** | 151 (körs på iPhone/WebKit och Android/Chromium) |
-| **Manuella** | 6 (kräver riktig iPhone eller riktig Supabase) |
+| **Manuella** | 7 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
 | **Spårbarhet** | [sparbarhet.md](sparbarhet.md) – alla 66 acceptanskriterier har testfall |
@@ -276,9 +276,10 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 ## Databas
 
-Rättigheter och regler i `supabase/schema.sql` testas automatiskt i CI av `tests/schema.sh` (30 kontroller mot en tom Postgres).
+Rättigheter och regler i `supabase/schema.sql` testas automatiskt i CI av `tests/schema.sh` (31 kontroller mot en tom Postgres).
 
 | ID | Testfall | Prio | Typ |
 |---|---|---|---|
 | [TC-DB-01](testfall/TC-DB-01.md) | [Databasschemat körs i Supabase](testfall/TC-DB-01.md) | Hög | 🖐️ |
 | [TC-DB-02](testfall/TC-DB-02.md) | [Receptboken i databasen](testfall/TC-DB-02.md) | Hög | 🖐️ |
+| [TC-DB-03](testfall/TC-DB-03.md) | [Databasen hålls vaken](testfall/TC-DB-03.md) | Hög | 🖐️ |

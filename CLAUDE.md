@@ -16,7 +16,7 @@ Appen byggs **spec-drivet**. Läs `specs/stories.md` (krav och beslut), `specs/p
 - **Supabase-projektet delas med Jaktvind och Svampkartan.** Rör aldrig deras tabeller (`logg`, `platser`, `svamp_*` m.fl.), auth-inställningar eller mejlmallar.
   Allt eget har prefixet `kalori_` (tabeller, index, policies, secrets) och bucketen heter `kalori-foton`.
 - Schemaändringar görs i `supabase/schema.sql` och ska gå att köra flera gånger (`if not exists`, `drop policy if exists`).
-- RLS på alla tabeller: bara `auth.uid() = user_id`. `anon` får inget.
+- RLS på alla tabeller: bara `auth.uid() = user_id`. `anon` får inget, utom att anropa `kalori_keepalive()` (svarar bara `ok`, D-28).
 - Inga hemligheter i koden. Endast den publika publishable-nyckeln i `config.js`. Gemini-nyckeln finns bara som secret `KALORI_GEMINI_KEY`.
 - Dagsmålet får aldrig gå under golvet (1 500 kcal man / 1 200 kcal kvinna) och takten aldrig över 1 % av kroppsvikten per vecka.
 - Brända kcal från träning ändrar **inte** dagsmålet.

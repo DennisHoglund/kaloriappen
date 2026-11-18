@@ -123,6 +123,10 @@ do $$ begin
 end $$;
 set role anon;
 select pg_temp.forvanta_fel($$select * from kalori_recept$$, 'anon läser recept');
+do $$ begin
+  if public.kalori_keepalive() <> 'ok' then raise exception 'FEL: keepalive ska svara ok'; end if;
+  raise notice 'OK: anon kan anropa kalori_keepalive (D-28)';
+end $$;
 set role authenticated;
 set test.uid = 'aaaaaaaa-0000-0000-0000-000000000001';
 do $$ begin

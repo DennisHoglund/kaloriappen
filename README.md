@@ -31,7 +31,7 @@ Allt börjar i `specs/`. Ändringar görs först i specen, sedan i koden.
 | `specs/stories.md` | User stories US-01–20 med acceptanskriterier och beslut D-01–27 |
 | `specs/plan.md` | Principer, arkitektur, datamodell, beräkningar, bildanalys, tester |
 | `specs/tasks.md` | Tasks T-01–24 med status och spårbarhet |
-| `testplan/` | 157 testfall som docs-as-code, kopplade till krav och Playwright-tester |
+| `testplan/` | 158 testfall som docs-as-code, kopplade till krav och Playwright-tester |
 | `CLAUDE.md` | Regler för AI-assistenter (`AGENTS.md` pekar hit) |
 
 ## Kom igång
@@ -50,6 +50,7 @@ Lokalt räcker `npx playwright test --project="Android (Chromium)"`. Rapporten h
 | Del | Var | Hur |
 |---|---|---|
 | App + rapport | GitHub Pages | Arbetsflödet **Tester** vid varje push till `main` |
+| Håll vaken | Arbetsflödet **Håll databasen vaken** | Anropar `kalori_keepalive()` varannan dag så att Jaktvinds gratisprojekt inte pausas efter 7 dagar (D-28) |
 | Livsmedel | `data/livsmedel.json` | Arbetsflödet **Uppdatera livsmedel** varje måndag och vid behov |
 | Databas | Supabase (Jaktvinds projekt, delat) | Kör `supabase/schema.sql` i SQL Editor. Tabellprefix `kalori_`, bucket `kalori-foton` |
 | Bildanalys | Supabase Edge Function `kalori-analys` | Klistra in `supabase/functions/kalori-analys/index.ts` i editorn. Secret `KALORI_GEMINI_KEY` (Google AI Studio). Valfritt `KALORI_GEMINI_MODELL`, `KALORI_GEMINI_TANKANDE` |

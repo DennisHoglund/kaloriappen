@@ -161,3 +161,12 @@ create policy "kalori_foton_update" on storage.objects for update to authenticat
   with check (bucket_id = 'kalori-foton' and (storage.foldername(name))[1] = (select auth.uid())::text);
 create policy "kalori_foton_delete" on storage.objects for delete to authenticated
   using (bucket_id = 'kalori-foton' and (storage.foldername(name))[1] = (select auth.uid())::text);
+
+-- ---------------------------------------------------------------------------
+-- Håll databasen vaken (D-28, 2026-11-18). Gratisprojekt pausas efter 7 dagar utan aktivitet.
+-- GitHub Actions (.github/workflows/hall-vaken.yml) anropar funktionen varannan dag.
+-- Returnerar bara 'ok' – ingen data. Det enda anon får göra.
+create or replace function public.kalori_keepalive() returns text
+language sql stable as $$ select 'ok'::text $$;
+revoke all on function public.kalori_keepalive() from public;
+grant execute on function public.kalori_keepalive() to anon, authenticated;

@@ -67,6 +67,7 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 | T-22 | `recept.js`: skala, sök, filter, sortering, matchning. Enhetstester först | US-17 AC4, US-18 AC2, US-20, D-27 | – | ✅ |
 | T-23 | Laga mat: fota ingredienser, förslag, recept, logga en portion, Hur blev det? | US-16, US-17, US-18, US-19 AC1–3 | 📱 | ✅ |
 | T-24 | Receptbok: lista, sök, filter, sortering, visa, ändra allt, ta bort | US-19 AC4–5, US-20 | 📱 | ✅ |
+| T-25 | Håll databasen vaken: `kalori_keepalive()` i schemat + arbetsflödet `hall-vaken.yml` varannan dag | D-28 | Kör `schema.sql` igen | ✅ |
 
 ## Spårbarhet
 
