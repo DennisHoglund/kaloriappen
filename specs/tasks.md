@@ -68,6 +68,7 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 | T-23 | Laga mat: fota ingredienser, förslag, recept, logga en portion, Hur blev det? | US-16, US-17, US-18, US-19 AC1–3 | 📱 | ✅ |
 | T-24 | Receptbok: lista, sök, filter, sortering, visa, ändra allt, ta bort | US-19 AC4–5, US-20 | 📱 | ✅ |
 | T-25 | Håll databasen vaken: `kalori_keepalive()` i schemat + arbetsflödet `hall-vaken.yml` varannan dag | D-28 | Kör `schema.sql` igen | ✅ |
+| T-26 | Stor bild sparas vid foto (kolumn `bild`, bucket 200 kB) och visas i helskärm vid tryck (`bildvisare.js`) | US-21, D-29 | Kör `schema.sql` igen | ✅ |
 
 ## Spårbarhet
 
@@ -93,3 +94,4 @@ Status: ⬜ ej påbörjad · 🔄 pågår · ✅ klar · 📱 Dennis testar på 
 | US-18 | T-21, T-22, T-23 |
 | US-19 | T-20, T-23, T-24 |
 | US-20 | T-22, T-24 |
+| US-21 | T-26 |

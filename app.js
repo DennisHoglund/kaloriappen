@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  const VERSION = '1.3';
+  const VERSION = '1.4';
   const $ = (id) => document.getElementById(id);
   const THEME_KEY = 'kalori-theme';
 

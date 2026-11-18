@@ -5,12 +5,12 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 
 | | |
 |---|---|
-| **Testfall** | 158 |
-| **Automatiserade** | 151 (körs på iPhone/WebKit och Android/Chromium) |
-| **Manuella** | 7 (kräver riktig iPhone eller riktig Supabase) |
+| **Testfall** | 163 |
+| **Automatiserade** | 155 (körs på iPhone/WebKit och Android/Chromium) |
+| **Manuella** | 8 (kräver riktig iPhone eller riktig Supabase) |
 | **Senaste testrapport** | [dennishoglund.github.io/kaloriappen/rapport/](https://dennishoglund.github.io/kaloriappen/rapport/) |
 | **Krav** | [specs/stories.md](../specs/stories.md) |
-| **Spårbarhet** | [sparbarhet.md](sparbarhet.md) – alla 66 acceptanskriterier har testfall |
+| **Spårbarhet** | [sparbarhet.md](sparbarhet.md) – alla 70 acceptanskriterier har testfall |
 
 ## Manuella körningar
 
@@ -274,9 +274,19 @@ Automatiserade testfall körs dessutom av Playwright vid varje commit och är ko
 | [TC-BOK-08](testfall/TC-BOK-08.md) | [Ogiltiga värden när man ändrar stoppas](testfall/TC-BOK-08.md) | Medel | 🤖 |
 | [TC-BOK-09](testfall/TC-BOK-09.md) | [Ta bort ett recept efter bekräftelse](testfall/TC-BOK-09.md) | Hög | 🤖 |
 
+## Matfoto i helskärm
+
+| ID | Testfall | Prio | Typ |
+|---|---|---|---|
+| [TC-BIL-01](testfall/TC-BIL-01.md) | [Tryck på bilden visar den stora bilden i helskärm](testfall/TC-BIL-01.md) | Hög | 🤖 |
+| [TC-BIL-02](testfall/TC-BIL-02.md) | [Stängs med ✕, tryck bredvid bilden och Esc](testfall/TC-BIL-02.md) | Hög | 🤖 |
+| [TC-BIL-03](testfall/TC-BIL-03.md) | [Dubbeltryck zoomar in och ut](testfall/TC-BIL-03.md) | Medel | 🤖 |
+| [TC-BIL-04](testfall/TC-BIL-04.md) | [Äldre måltid utan stor bild visar miniatyren, varje bild öppnar sin egen](testfall/TC-BIL-04.md) | Medel | 🤖 |
+| [TC-BIL-05](testfall/TC-BIL-05.md) | [Matfoto i helskärm på iPhone](testfall/TC-BIL-05.md) | Hög | 🖐️ |
+
 ## Databas
 
-Rättigheter och regler i `supabase/schema.sql` testas automatiskt i CI av `tests/schema.sh` (31 kontroller mot en tom Postgres).
+Rättigheter och regler i `supabase/schema.sql` testas automatiskt i CI av `tests/schema.sh` (32 kontroller mot en tom Postgres).
 
 | ID | Testfall | Prio | Typ |
 |---|---|---|---|

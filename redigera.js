@@ -63,9 +63,10 @@
       if (r.error) throw r.error;
       const kvar = await sb.from('kalori_maltid_rad').select('id').eq('maltid_id', rad.maltid_id);
       if (!kvar.error && kvar.data.length === 0) {
-        // Sista raden: ta bort måltiden och dess miniatyr
-        const m = await sb.from('kalori_maltid').select('miniatyr').eq('id', rad.maltid_id).maybeSingle();
-        if (m.data && m.data.miniatyr) await sb.storage.from('kalori-foton').remove([m.data.miniatyr]).catch(() => {});
+        // Sista raden: ta bort måltiden och dess bilder
+        const m = await sb.from('kalori_maltid').select('miniatyr,bild').eq('id', rad.maltid_id).maybeSingle();
+        const filer = m.data ? [m.data.miniatyr, m.data.bild].filter(Boolean) : [];
+        if (filer.length) await sb.storage.from('kalori-foton').remove(filer).catch(() => {});
         await sb.from('kalori_maltid').delete().eq('id', rad.maltid_id);
       }
     } catch (err) {

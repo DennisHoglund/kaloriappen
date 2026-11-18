@@ -15,7 +15,7 @@ träning och vikt mot ett beräknat dagligt kalorimål.
 | Profil | Födelsedatum, kön, längd, vikt, aktivitet, målvikt och takt → dagsmål (Mifflin-St Jeor, golv 1 500/1 200 kcal, högst 1 %/vecka) |
 | Dagsöversikt | Ätit / mål / kvar, måltider per typ, bläddra mellan dagar. Status för avslutade dagar (i mål, under, för lite, över) och veckans prickar med snitt |
 | Logga mat | Sök bland 2 606 livsmedel, gram → kcal, föreslagen måltid, senaste livsmedel |
-| Fota maten | Bilden analyseras av Gemini Flash-Lite via Edge Function, justera och spara med miniatyr |
+| Fota maten | Bilden analyseras av Gemini Flash-Lite via Edge Function, justera och spara med miniatyr. Tryck på bilden för att se den stort i helskärm |
 | Ändra | Ändra mängd eller ta bort, med bekräftelse |
 | Träning | Styrka, löpning, promenad, cykling och gång på löpband (hastighet + lutning). Tempo/fart och uppskattad förbränning (påverkar inte dagsmålet). Veckohistorik |
 | Vikt | Logga per dag, graf med 7-dagars medel och målvikt |
@@ -28,10 +28,10 @@ Allt börjar i `specs/`. Ändringar görs först i specen, sedan i koden.
 
 | Fil | Innehåll |
 |---|---|
-| `specs/stories.md` | User stories US-01–20 med acceptanskriterier och beslut D-01–27 |
+| `specs/stories.md` | User stories US-01–21 med acceptanskriterier och beslut D-01–29 |
 | `specs/plan.md` | Principer, arkitektur, datamodell, beräkningar, bildanalys, tester |
-| `specs/tasks.md` | Tasks T-01–24 med status och spårbarhet |
-| `testplan/` | 158 testfall som docs-as-code, kopplade till krav och Playwright-tester |
+| `specs/tasks.md` | Tasks T-01–26 med status och spårbarhet |
+| `testplan/` | 163 testfall som docs-as-code, kopplade till krav och Playwright-tester |
 | `CLAUDE.md` | Regler för AI-assistenter (`AGENTS.md` pekar hit) |
 
 ## Kom igång

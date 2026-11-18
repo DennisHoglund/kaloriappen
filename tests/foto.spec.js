@@ -69,7 +69,7 @@ test.describe('Fota mat', () => {
     await expect(page.locator('#fot-summa')).toHaveText('492');
   });
 
-  test('spara sparar måltid, rader och en miniatyr på högst 30 kB', { annotation: { type: 'testfall', description: 'TC-FOT-05' } }, async ({ appen: page, api }) => {
+  test('spara sparar måltid, rader, en miniatyr på högst 30 kB och en stor bild på högst 180 kB', { annotation: { type: 'testfall', description: 'TC-FOT-05' } }, async ({ appen: page, api }) => {
     await fota(page);
     await page.locator('#form-foto').getByText('Middag', { exact: true }).click();
     await page.getByRole('button', { name: 'Spara' }).click();
@@ -77,13 +77,16 @@ test.describe('Fota mat', () => {
     await expect(page.locator('#toast')).toHaveText('Måltid sparad (534 kcal)');
     const m = api.tabeller.kalori_maltid;
     expect(m).toHaveLength(1);
-    expect(m[0]).toMatchObject({ user_id: U, typ: 'middag', kalla: 'foto', miniatyr: U + '/' + m[0].id + '.jpg' });
+    expect(m[0]).toMatchObject({ user_id: U, typ: 'middag', kalla: 'foto', miniatyr: U + '/' + m[0].id + '.jpg', bild: U + '/' + m[0].id + '-stor.jpg' });
     expect(api.tabeller.kalori_maltid_rad.map((r) => [r.namn, r.gram, r.kcal, r.livsmedel_nr, r.maltid_id]))
       .toEqual([['Köttbullar', 150, 330, null, m[0].id], ['Kokt potatis', 200, 156, null, m[0].id], ['Lingonsylt', 30, 48, null, m[0].id]]);
-    expect(api.uppladdade).toHaveLength(1);
-    expect(api.uppladdade[0].fil).toBe(m[0].miniatyr);
-    expect(api.uppladdade[0].storlek).toBeGreaterThan(0);
-    expect(api.uppladdade[0].storlek).toBeLessThanOrEqual(30 * 1024);
+    expect(api.uppladdade).toHaveLength(2);
+    const mini = api.uppladdade.find((u) => u.fil === m[0].miniatyr);
+    const stor = api.uppladdade.find((u) => u.fil === m[0].bild);
+    expect(mini.storlek).toBeGreaterThan(0);
+    expect(mini.storlek).toBeLessThanOrEqual(30 * 1024);
+    expect(stor.storlek).toBeGreaterThan(mini.storlek);
+    expect(stor.storlek).toBeLessThanOrEqual(180 * 1024); // D-29
     await expect(page.locator('#ida-atit')).toHaveText('534');
   });
 
@@ -118,8 +121,8 @@ test.describe('Fota mat', () => {
     await bild(page, 'Miniatyr i dagsöversikten');
   });
 
-  test('ta bort sista raden tar bort miniatyren', { annotation: { type: 'testfall', description: 'TC-FOT-09' } }, async ({ page, api }) => {
-    api.tabeller.kalori_maltid = [{ id: 'm1', user_id: U, tid: '2026-10-24T09:00:00Z', typ: 'lunch', kalla: 'foto', miniatyr: U + '/m1.jpg' }];
+  test('ta bort sista raden tar bort miniatyren och den stora bilden', { annotation: { type: 'testfall', description: 'TC-FOT-09' } }, async ({ page, api }) => {
+    api.tabeller.kalori_maltid = [{ id: 'm1', user_id: U, tid: '2026-10-24T09:00:00Z', typ: 'lunch', kalla: 'foto', miniatyr: U + '/m1.jpg', bild: U + '/m1-stor.jpg' }];
     api.tabeller.kalori_maltid_rad = [{ id: 'r1', maltid_id: 'm1', user_id: U, namn: 'Köttbullar', livsmedel_nr: null, gram: 150, kcal: 330 }];
     await inloggad(page);
     await page.goto('./');
@@ -127,7 +130,7 @@ test.describe('Fota mat', () => {
     await page.getByRole('button', { name: 'Ta bort' }).click();
     await page.locator('#red-ja').click();
     await expect(page.locator('#ida-atit')).toHaveText('0');
-    expect(api.borttagnaFoton).toEqual([U + '/m1.jpg']);
+    expect(api.borttagnaFoton).toEqual([U + '/m1.jpg', U + '/m1-stor.jpg']);
     expect(api.tabeller.kalori_maltid).toHaveLength(0);
   });
 
@@ -137,6 +140,7 @@ test.describe('Fota mat', () => {
     await page.getByRole('button', { name: 'Spara' }).click();
     await expect(page.locator('#view-app')).toBeVisible();
     expect(api.tabeller.kalori_maltid[0].miniatyr).toBeNull();
+    expect(api.tabeller.kalori_maltid[0].bild).toBeNull();
     expect(api.tabeller.kalori_maltid_rad).toHaveLength(3);
   });
 

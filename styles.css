@@ -1,6 +1,7 @@
 /* Färgprofil Blåbär (D-11). Ljust och mörkt läge. Använd alltid variablerna. */
 :root {
   --bg: #F4F6FC;
+  --visare-bg: #05070F; --visare-knapp: rgba(0, 0, 0, .55); --visare-kant: rgba(255, 255, 255, .25); --visare-text: #FFFFFF;
   --surface: #FFFFFF;
   --surface-2: #E8ECF8;
   --border: #D5DBEE;
@@ -210,7 +211,21 @@ h1 { margin: 0 0 8px; font-size: 1.6rem; }
 .fot-tal input { font-family: var(--mono); text-align: right; }
 .fot-bort { width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--danger); font-size: 1.4rem; cursor: pointer; }
 .maltid-bilder { display: flex; gap: 8px; margin-top: 8px; }
-.maltid-bilder img { width: 56px; height: 56px; object-fit: cover; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2); }
+.maltid-bilder img { width: 56px; height: 56px; object-fit: cover; border-radius: 10px; border: 1px solid var(--border); background: var(--surface-2); display: block; }
+.bild-knapp { padding: 0; border: 0; background: none; border-radius: 10px; cursor: zoom-in; min-width: 56px; min-height: 56px; }
+
+/* Matfoto i helskärm (US-21) – alltid mörk bakgrund, oavsett tema */
+.bildvisare { position: fixed; inset: 0; z-index: 4000; background: var(--visare-bg); animation: bv-in .15s ease-out; }
+@keyframes bv-in { from { opacity: 0; } }
+.bv-zoom { position: absolute; inset: 0; overflow: hidden; display: grid; place-items: center; touch-action: none; }
+.bv-zoom.zoomad { overflow: auto; overscroll-behavior: contain; place-items: start; touch-action: pan-x pan-y; }
+.bv-zoom img { width: 100%; height: 100%; object-fit: contain; user-select: none; -webkit-user-drag: none; cursor: zoom-in; }
+.bv-zoom.zoomad img { max-width: none; max-height: none; cursor: zoom-out; }
+.bv-stang {
+  position: absolute; top: calc(env(safe-area-inset-top) + 12px); right: 12px; width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--visare-kant); background: var(--visare-knapp); color: var(--visare-text); font-size: 20px; display: grid; place-items: center; cursor: pointer;
+}
+body.bv-oppen { overflow: hidden; }
 
 /* Träning */
 .traning-kort { margin-top: 10px; }

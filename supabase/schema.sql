@@ -39,6 +39,7 @@ create table if not exists public.kalori_maltid (
   typ       text not null check (typ in ('frukost', 'lunch', 'middag', 'mellanmal')),
   kalla     text not null,                                -- regel nedan: foto, manuell, recept
   miniatyr  text,                                         -- sökväg i bucketen kalori-foton
+  bild      text,                                         -- stor bild för helskärm (D-29)
   unique (id, user_id)                                    -- så att rader bara kan höra till egna måltider
 );
 
@@ -70,6 +71,7 @@ create table if not exists public.kalori_traning (
 
 -- Tillägg som kan köras på en befintlig databas (gång på löpband, D-23, 2026-10-25).
 -- Regeln för tillåtna typer byts ut, och lutning får bara anges för löpband.
+alter table public.kalori_maltid add column if not exists bild text;  -- stor bild (D-29, 2026-11-18)
 alter table public.kalori_traning add column if not exists lutning_procent numeric(3,1) check (lutning_procent between 0 and 15);
 alter table public.kalori_traning drop constraint if exists kalori_traning_typ_check;
 alter table public.kalori_traning add constraint kalori_traning_typ_check
@@ -138,10 +140,10 @@ begin
 end $$;
 
 -- ---------------------------------------------------------------------------
--- Miniatyrer av matfoton: privat bucket. Varje bild läggs under <user_id>/<maltid-id>.jpg
--- Appen krymper till högst ca 30 kB (D-10), så 1 GB räcker till tiotusentals måltider.
+-- Matfoton: privat bucket. Miniatyr <user_id>/<maltid-id>.jpg (≤ 30 kB, D-10) och stor bild
+-- <user_id>/<maltid-id>-stor.jpg (≤ 180 kB, D-29). Ca 200 MB per år med fyra fotomåltider om dagen.
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('kalori-foton', 'kalori-foton', false, 102400,  -- max 100 kB per bild
+values ('kalori-foton', 'kalori-foton', false, 204800,  -- max 200 kB per bild
         array['image/jpeg', 'image/webp'])
 on conflict (id) do update
   set public = excluded.public,

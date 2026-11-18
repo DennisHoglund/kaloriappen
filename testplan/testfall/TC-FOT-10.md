@@ -8,7 +8,7 @@
 | **Prioritet** | Låg |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md D-10](../../specs/stories.md) |
-| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L134) – *miniatyr som inte går att ladda upp stoppar inte sparningen* |
+| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L137) – *miniatyr som inte går att ladda upp stoppar inte sparningen* |
 
 ## Förutsättningar
 

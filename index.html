@@ -613,7 +613,12 @@
     </div>
   </main>
 
-  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div id="bildvisare" class="bildvisare" role="dialog" aria-modal="true" aria-label="Foto i helskärm" hidden>
+    <div class="bv-zoom"><img alt=""></div>
+    <button type="button" class="bv-stang" aria-label="Stäng bild">✕</button>
+  </div>
+
+  <div id="toast" class="toast role="status" aria-live="polite" hidden></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.75.0/dist/umd/supabase.js"></script>
   <script src="config.js"></script>
@@ -629,6 +634,7 @@
   <script src="recept.js"></script>
   <script src="receptbok.js"></script>
   <script src="laga.js"></script>
+  <script src="bildvisare.js"></script>
   <script src="idag.js"></script>
   <script src="app.js"></script>
 </body>

@@ -100,6 +100,7 @@ insert into kalori_recept (id, namn, portioner, kcal_portion, tid_min, ingredien
 insert into kalori_recept (namn, portioner, kcal_portion, ingredienser, steg) values ('Omelett', 1, 300, '[]', '[]');
 update kalori_recept set antal_lagad = antal_lagad + 1, senast_lagad = '2026-10-24' where namn = 'Omelett';
 insert into kalori_maltid (typ, kalla) values ('middag', 'recept');
+insert into kalori_maltid (typ, kalla, miniatyr, bild) values ('lunch', 'foto', 'a/m.jpg', 'a/m-stor.jpg');  -- stor bild (D-29)
 do $$ begin
   if (select count(*) from kalori_recept) <> 2 then raise exception 'FEL: A ska se sina recept'; end if;
   if (select betyg from kalori_recept where namn = 'Omelett') is not null then raise exception 'FEL: recept utan betyg ska gå'; end if;

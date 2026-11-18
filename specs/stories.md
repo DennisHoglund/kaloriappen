@@ -1,6 +1,6 @@
 # Kaloriappen – User stories
 
-Status: **v1.6** (2026-11-18) – tillägg: håll databasen vaken (D-28). v1.5: recept (US-16–US-20, D-25–D-27).
+Status: **v1.7** (2026-11-18) – tillägg: se matfotot stort (US-21, D-29). v1.6: håll databasen vaken (D-28). v1.5: recept (US-16–US-20, D-25–D-27).
 
 ## Beslut
 
@@ -34,6 +34,7 @@ Status: **v1.6** (2026-11-18) – tillägg: håll databasen vaken (D-28). v1.5: 
 | D-26 | Receptboken: ett recept sparas när man trycker Spara eller sätter betyg efter att ha loggat en portion. Ett betyg (1–5) per recept, går att ändra. Allt i ett sparat recept går att ändra. Egna recept utan AI byggs inte nu. Var och en har sin egen receptbok (RLS) |
 | D-27 | Sökningen i receptboken görs i telefonen på alla användarens recept, med samma normalisering som livsmedelssökningen (versaler och accenter spelar ingen roll, alla ord måste finnas) |
 | D-28 | Jaktvinds Supabase-projekt (gratis) pausas efter 7 dagar utan aktivitet. GitHub Actions (`hall-vaken.yml`) anropar funktionen `kalori_keepalive()` varannan dag. Den returnerar bara `ok` och är det enda `anon` får anropa. Det håller hela projektet vaket, även för Jaktvind och Svampkartan |
+| D-29 | Matfoton sparas i två storlekar: miniatyr (240 px, ≤ 30 kB) för översikten och stor bild (1 024 px, ≤ 180 kB) för helskärm, kolumn `bild`, fil `<user_id>/<måltid>-stor.jpg`. Bucketens gräns höjs till 200 kB. Ett foto per måltid, ingen karusell. Båda tas bort med måltiden |
 
 ## Stories
 
@@ -162,6 +163,13 @@ Som användare vill jag söka och filtrera i receptboken så att jag snabbt hitt
 - **AC1** Given receptboken, When jag skriver i sökfältet, Then visas recept där alla ord finns i namn, ingredienser eller anteckning, oavsett versaler och accenter.
 - **AC2** Given receptboken, When jag väljer Alla, ★3+, ★4+ eller ★5, Then visas bara recept med minst det betyget.
 - **AC3** Given receptboken, When jag väljer sortering, Then sorteras recepten på bäst betyg, senast lagad, flest gånger lagad eller lägst kcal.
+
+### US-21 Se matfotot stort
+Som användare vill jag se fotot på det jag ätit i stor storlek så att jag ser vad det var.
+- **AC1** Given en måltid med foto i dagsöversikten, When jag trycker på bilden, Then visas den stort i helskärm.
+- **AC2** Given bilden i helskärm, When jag trycker ✕, trycker bredvid bilden, drar nedåt eller trycker Esc, Then stängs den.
+- **AC3** Given bilden i helskärm, When jag nyper eller dubbeltrycker, Then zoomas bilden.
+- **AC4** Given en måltid som fotades innan stora bilder sparades, Then visas miniatyren i stället.
 
 ## Öppna frågor (❓)
 

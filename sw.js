@@ -1,5 +1,5 @@
 // Höj versionen vid varje deploy så att telefonen hämtar nya filer.
-const CACHE = 'kalori-v18';
+const CACHE = 'kalori-v19';
 
 const SHELL = [
   './',
@@ -18,6 +18,7 @@ const SHELL = [
   './recept.js',
   './receptbok.js',
   './laga.js',
+  './bildvisare.js',
   './idag.js',
   './data/livsmedel.json',
   './app.js',

@@ -51,6 +51,7 @@ iPhone (PWA, GitHub Pages)
 | `recept.js` | Rena funktioner för recept: skala mängder, sök, filter, sortering, matchning (testas i Node) |
 | `laga.js` | Laga mat: ingredienser från foto, matchning mot receptboken, förslag |
 | `receptbok.js` | Receptvyn (portioner, logga en portion, spara), Hur blev det? på översikten, receptboken (sök, filter, sortering), ändra och ta bort |
+| `bildvisare.js` | Helskärmsvisning av matfoto med nyp-/dubbeltryckszoom, stäng med ✕, tryck bredvid, dra nedåt eller Esc (US-21) |
 | `vecka.js` | Träning per ISO-vecka: antal pass, total tid och sträcka, ≈ kcal, per typ och alla pass. Bläddra bakåt |
 | `vikt.js` | Logga vikt (upsert per dag, ny vikt hämtar om profilen så att dagsmålet räknas om), SVG-graf med mätningar, 7-dagars medel och målvikt, period 30/90/allt, senaste mätningar, viktkort i dagsöversikten |
 | `traning.js` | Logga, ändra och ta bort träning. Förbränning (MET × vikt × tid) räknas vid sparning och lagras. Träningskortet i dagsöversikten ritas av `idag.js` |
@@ -70,7 +71,7 @@ iPhone (PWA, GitHub Pages)
 |---|---|---|
 | `kalori_profil` | `user_id`, `fodelsedatum date`, `kon text (man/kvinna)`, `langd_cm int`, `aktivitet text (stillasittande/latt/mattlig/hog)`, `malvikt_kg numeric`, `takt_kg_vecka numeric (0.25/0.5/0.75)`, `uppdaterad timestamptz` | `user_id` |
 | `kalori_vikt` | `user_id`, `datum date`, `vikt_kg numeric(5,1)` | `(user_id, datum)`. Ny mätning samma dag ersätter (US-09 AC1) |
-| `kalori_maltid` | `id uuid`, `user_id`, `tid timestamptz`, `typ text (frukost/lunch/middag/mellanmal)`, `kalla text (foto/manuell/recept)`, `miniatyr text null` | `id` |
+| `kalori_maltid` | `id uuid`, `user_id`, `tid timestamptz`, `typ text (frukost/lunch/middag/mellanmal)`, `kalla text (foto/manuell/recept)`, `miniatyr text null`, `bild text null` (sökvägar i `kalori-foton`, D-29) | `id` |
 | `kalori_maltid_rad` | `id uuid`, `maltid_id → kalori_maltid on delete cascade`, `user_id`, `namn text`, `livsmedel_nr int null`, `gram numeric`, `kcal numeric` | `id` |
 | `kalori_recept` | `id uuid`, `user_id`, `namn`, `beskrivning`, `portioner 1–20`, `kcal_portion`, `tid_min`, `ingredienser jsonb [{namn, mangd, enhet}]`, `steg jsonb [text]`, `betyg 1–5 null`, `anteckning`, `antal_lagad`, `senast_lagad date`, `skapad`, `uppdaterad` | `id` |
 | `kalori_traning` | `id uuid`, `user_id`, `datum date`, `typ text (styrka/lopning/promenad/cykling/lopband)`, `minuter int`, `km numeric null`, `lutning_procent numeric(3,1) null` (bara löpband, 0–15), `kommentar text null`, `kcal numeric` | `id` |

@@ -128,19 +128,22 @@
 
   async function hamtaDag(d) {
     const [start, slut] = B.dygnUTC(d);
-    const m = await sb.from('kalori_maltid').select('id,tid,typ,kalla,miniatyr').eq('user_id', userId).gte('tid', start).lt('tid', slut).order('tid');
+    const m = await sb.from('kalori_maltid').select('id,tid,typ,kalla,miniatyr,bild').eq('user_id', userId).gte('tid', start).lt('tid', slut).order('tid');
     if (m.error) throw m.error;
     if (!m.data.length) return [];
     const r = await sb.from('kalori_maltid_rad').select('id,maltid_id,namn,gram,kcal').in('maltid_id', m.data.map((x) => x.id));
     if (r.error) throw r.error;
     const maltider = m.data.map((x) => ({ ...x, rader: r.data.filter((y) => y.maltid_id === x.id) }));
-    // Signerade länkar till miniatyrerna (privat bucket). Fel här ska inte stoppa översikten.
-    const sokvagar = maltider.map((x) => x.miniatyr).filter(Boolean);
+    // Signerade länkar till bilderna (privat bucket). Fel här ska inte stoppa översikten.
+    const sokvagar = maltider.flatMap((x) => [x.miniatyr, x.bild]).filter(Boolean);
     if (sokvagar.length) {
       try {
         const s = await sb.storage.from('kalori-foton').createSignedUrls(sokvagar, 3600);
         const url = new Map((s.data || []).filter((x) => x.signedUrl).map((x) => [x.path, x.signedUrl]));
-        maltider.forEach((x) => { x.bildUrl = url.get(x.miniatyr) || null; });
+        maltider.forEach((x) => {
+          x.bildUrl = url.get(x.miniatyr) || null;
+          x.storUrl = url.get(x.bild) || x.bildUrl; // äldre måltider har bara miniatyr (US-21 AC4)
+        });
       } catch (e) { /* utan bilder */ }
     }
     return maltider;
@@ -169,7 +172,9 @@
     $('ida-maltider').innerHTML = TYPER.map(([typ, namn]) => {
       const dessa = maltider.filter((m) => m.typ === typ);
       const rader = dessa.flatMap((m) => m.rader.map((r) => ({ ...r, kalla: m.kalla })));
-      const bilder = dessa.filter((m) => m.bildUrl).map((m) => `<img src="${esc(m.bildUrl)}" alt="Foto av ${namn.toLowerCase()}" loading="lazy">`).join('');
+      const bilder = dessa.filter((m) => m.bildUrl).map((m) =>
+        `<button type="button" class="bild-knapp" data-stor="${esc(m.storUrl)}" aria-label="Visa foto av ${namn.toLowerCase()} i helskärm">` +
+        `<img src="${esc(m.bildUrl)}" alt="Foto av ${namn.toLowerCase()}" loading="lazy"></button>`).join('');
       const summa = rader.reduce((s, r) => s + Number(r.kcal), 0);
       const lista = rader.map((r) =>
         `<li><button type="button" class="rad-knapp" data-id="${esc(r.id)}" aria-label="Ändra ${esc(r.namn)}, ${fmt(r.gram)} gram, ${fmt(r.kcal)} kcal">` +
@@ -216,6 +221,8 @@
     $('ida-nasta').addEventListener('click', () => visa({ datum: B.flyttaDag(datum, 1) }));
     $('ida-tillbaka-idag').addEventListener('click', () => visa({ datum: window.KaloriApp.idag() }));
     $('ida-maltider').addEventListener('click', (e) => {
+      const bk = e.target.closest('.bild-knapp');
+      if (bk) { window.KaloriBildvisare.oppna(bk.dataset.stor, bk.querySelector('img').alt, bk); return; }
       const b = e.target.closest('button.lagg-till');
       if (b) { opts.loggaMat({ typ: b.dataset.typ, datum }); return; }
       const r = e.target.closest('button.rad-knapp');

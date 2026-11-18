@@ -5,8 +5,8 @@ Genereras av `tests/sparbarhet.js` (`npm run testplan`). Redigera inte för hand
 
 | | |
 |---|---|
-| **Acceptanskriterier** | 66 |
-| **Med testfall** | 66 |
+| **Acceptanskriterier** | 70 |
+| **Med testfall** | 70 |
 | **Utan testfall** | 0 |
 
 
@@ -175,6 +175,15 @@ Genereras av `tests/sparbarhet.js` (`npm run testplan`). Redigera inte för hand
 | AC1 | Given receptboken, When jag skriver i sökfältet, Then visas recept där alla ord finns i namn, ingredienser eller anteckning, oavsett versaler och accenter. | [TC-BOK-01](testfall/TC-BOK-01.md) 🤖, [TC-BOK-02](testfall/TC-BOK-02.md) 🤖, [TC-REC-02](testfall/TC-REC-02.md) 🤖 |
 | AC2 | Given receptboken, When jag väljer Alla, ★3+, ★4+ eller ★5, Then visas bara recept med minst det betyget. | [TC-BOK-03](testfall/TC-BOK-03.md) 🤖, [TC-REC-03](testfall/TC-REC-03.md) 🤖 |
 | AC3 | Given receptboken, When jag väljer sortering, Then sorteras recepten på bäst betyg, senast lagad, flest gånger lagad eller lägst kcal. | [TC-BOK-04](testfall/TC-BOK-04.md) 🤖, [TC-REC-03](testfall/TC-REC-03.md) 🤖 |
+
+## US-21 Se matfotot stort
+
+| AC | Kriterium | Testfall |
+|---|---|---|
+| AC1 | Given en måltid med foto i dagsöversikten, When jag trycker på bilden, Then visas den stort i helskärm. | [TC-BIL-01](testfall/TC-BIL-01.md) 🤖, [TC-BIL-05](testfall/TC-BIL-05.md) 🖐️ |
+| AC2 | Given bilden i helskärm, When jag trycker ✕, trycker bredvid bilden, drar nedåt eller trycker Esc, Then stängs den. | [TC-BIL-02](testfall/TC-BIL-02.md) 🤖, [TC-BIL-05](testfall/TC-BIL-05.md) 🖐️ |
+| AC3 | Given bilden i helskärm, When jag nyper eller dubbeltrycker, Then zoomas bilden. | [TC-BIL-03](testfall/TC-BIL-03.md) 🤖, [TC-BIL-05](testfall/TC-BIL-05.md) 🖐️ |
+| AC4 | Given en måltid som fotades innan stora bilder sparades, Then visas miniatyren i stället. | [TC-BIL-04](testfall/TC-BIL-04.md) 🤖 |
 
 ## Testfall som gäller hela storyn
 

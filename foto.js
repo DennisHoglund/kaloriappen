@@ -10,12 +10,14 @@
   const ANALYS_MAX_PX = 1024;
   const MINIATYR_MAX_PX = 240;
   const MINIATYR_MAX_BYTE = 30 * 1024;
+  const STOR_MAX_BYTE = 180 * 1024; // stor bild för helskärm (D-29)
 
   let sb = null;
   let userId = null;
   let klar = null;
   let rader = [];        // [{ namn, gram, kcal }]
   let miniatyr = null;   // Blob
+  let stor = null;       // Blob, 1 024 px (D-29)
   let forvaltTyp = null;
   let datum = null;
 
@@ -54,6 +56,15 @@
       if (blob && blob.size <= MINIATYR_MAX_BYTE) break;
     }
     return blob;
+  }
+
+  // Stor bild för helskärm: samma 1 024 px som analysen, högst 180 kB (D-29)
+  async function skapaStor(c) {
+    for (const q of [0.8, 0.7, 0.6, 0.5, 0.4]) {
+      const blob = await tillBlob(c, q);
+      if (blob && blob.size <= STOR_MAX_BYTE) return blob;
+    }
+    return null;
   }
 
   function summa() {
@@ -130,6 +141,7 @@
     setMsg('');
     rader = [];
     miniatyr = null;
+    stor = null;
     let bild;
     try {
       bild = await lasBild(fil);
@@ -141,6 +153,7 @@
     const c = rita(bild, ANALYS_MAX_PX);
     const base64 = c.toDataURL('image/jpeg', 0.8).split(',')[1];
     miniatyr = await skapaMiniatyr(bild).catch(() => null);
+    stor = await skapaStor(c).catch(() => null);
     if (miniatyr) $('fot-bild').src = URL.createObjectURL(miniatyr);
     $('fot-bild').hidden = !miniatyr;
 
@@ -183,8 +196,14 @@
       const up = await sb.storage.from('kalori-foton').upload(p, miniatyr, { contentType: 'image/jpeg', upsert: true }).catch((err) => ({ error: err }));
       if (!up.error) sokvag = p; // utan miniatyr går det ändå att spara
     }
+    let storSokvag = null;
+    if (stor && sokvag) {
+      const p = userId + '/' + id + '-stor.jpg';
+      const up = await sb.storage.from('kalori-foton').upload(p, stor, { contentType: 'image/jpeg', upsert: true }).catch((err) => ({ error: err }));
+      if (!up.error) storSokvag = p; // utan stor bild visas miniatyren
+    }
     try {
-      const m = await sb.from('kalori_maltid').insert({ id, user_id: userId, tid: window.KaloriMaltid.tidFor(datum), typ: typEl.value, kalla: 'foto', miniatyr: sokvag });
+      const m = await sb.from('kalori_maltid').insert({ id, user_id: userId, tid: window.KaloriMaltid.tidFor(datum), typ: typEl.value, kalla: 'foto', miniatyr: sokvag, bild: storSokvag });
       if (m.error) throw m.error;
       const r = await sb.from('kalori_maltid_rad').insert(rader.map((x) => ({
         maltid_id: id, user_id: userId, namn: String(x.namn).trim(), livsmedel_nr: null,
@@ -195,7 +214,8 @@
         throw r.error;
       }
     } catch (err) {
-      if (sokvag) await sb.storage.from('kalori-foton').remove([sokvag]).catch(() => {});
+      const filer = [sokvag, storSokvag].filter(Boolean);
+      if (filer.length) await sb.storage.from('kalori-foton').remove(filer).catch(() => {});
       knapp.disabled = false;
       setMsg('Kunde inte spara. Kontrollera nätet och försök igen.', 'error');
       return;

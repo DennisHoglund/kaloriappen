@@ -8,7 +8,7 @@
 | **Prioritet** | Medel |
 | **Typ** | 🤖 Automatiserad |
 | **Krav** | [specs/stories.md US-05 AC4, D-10](../../specs/stories.md) |
-| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L110) – *miniatyren visas i dagsöversikten* |
+| **Playwright** | [`tests/foto.spec.js`](../../tests/foto.spec.js#L113) – *miniatyren visas i dagsöversikten* |
 
 ## Förutsättningar
 
